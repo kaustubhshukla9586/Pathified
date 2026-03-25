@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pathify — Find Your CS Path</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -39,20 +39,20 @@
 
   <!-- HOW IT WORKS -->
   <section class="section">
-    <div class="section-label">How it works</div>
-    <div class="section-title">Three steps to clarity</div>
+    <div class="section-label reveal">How it works</div>
+    <div class="section-title reveal">Three steps to clarity</div>
     <div class="steps">
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">01</div>
         <h3>Answer deep questions</h3>
         <p>Not surface-level. We ask about how you think, what drains you, and what kind of work actually feels alive to you.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">02</div>
         <h3>AI builds your profile</h3>
         <p>Your answers shape the next question. No two people get the same quiz — it adapts to you in real time.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">03</div>
         <h3>Get your roadmap</h3>
         <p>A ranked list of fields, a clear explanation of why they fit you, and a concrete plan to get started today.</p>
@@ -64,9 +64,9 @@
 
   <!-- RESULT PREVIEW -->
   <section class="section">
-    <div class="section-label">Sample output</div>
-    <div class="section-title">What you'll walk away with</div>
-    <div class="result-card">
+    <div class="section-label reveal">Sample output</div>
+    <div class="section-title reveal">What you'll walk away with</div>
+    <div class="result-card reveal">
       <div class="result-badge">Sample result</div>
       <h3>Arjun's Career Profile</h3>
       <div class="result-sub">Based on 24 responses &middot; Completed in 8 minutes</div>
@@ -112,15 +112,34 @@
   <!-- FINAL CTA -->
   <section class="final-cta">
     <div class="cta-glow"></div>
-    <h2>Your path is waiting.<br><em>Find it in 8 minutes.</em></h2>
-    <p>Free. No signup required. Just honest answers.</p>
-    <button class="btn-primary btn-lg">Start the quiz &rarr;</button>
+    <h2 class="reveal">Your path is waiting.<br><em>Find it in 8 minutes.</em></h2>
+    <p class="reveal">Free. No signup required. Just honest answers.</p>
+    <button class="btn-primary btn-lg reveal">Start the quiz &rarr;</button>
   </section>
 
   <footer>
     <div class="logo">Path<span>ify</span></div>
     <p>Made for CS students who refuse to guess.</p>
   </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      // stagger siblings inside .steps
+      if (el.classList.contains('step')) {
+        el.style.transitionDelay = (el.parentElement.querySelector('.step') === el ? '0ms' :
+          el === el.parentElement.children[1] ? '100ms' : '200ms');
+      }
+      observer.observe(el);
+    });
+  </script>
 
 </body>
 </html>
