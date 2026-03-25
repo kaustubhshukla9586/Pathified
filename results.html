@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pathify — Your Results</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="results.css"/>
+</head>
+<body>
+
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <nav class="results-nav">
+    <a href="index.html" class="logo">Pathify</a>
+  </nav>
+
+  <main class="results-container">
+    <div class="results-header reveal">
+      <h1>Your path, <em>mapped.</em></h1>
+      <p>Based on your 25 answers, here's what we found.</p>
+    </div>
+
+    <!-- Cards container -->
+    <div class="results-grid reveal" id="results-grid">
+      <!-- Injected by JS -->
+    </div>
+  </main>
+
+  <!-- Detail Modal -->
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <div class="modal-content">
+      <div class="modal-badge" id="m-rank">Top match</div>
+      <h2 class="modal-title" id="m-field">AI / Machine Learning</h2>
+      <div class="modal-pct" id="m-pct">92%</div>
+      
+      <div class="modal-section-title">Why this fits you</div>
+      <p class="modal-desc" id="m-desc">...</p>
+      
+      <div class="modal-section-title">Strengths</div>
+      <div class="tags-row" id="m-strengths">
+        <!-- Tags injected -->
+      </div>
+      
+      <div class="modal-section-title">Considerations</div>
+      <div class="tags-row neutral" id="m-considerations">
+        <!-- Tags injected -->
+      </div>
+      
+      <div class="modal-footer">
+        <a href="#" class="modal-link disabled">Explore a roadmap for this path &rarr; <br><small>(Coming soon)</small></a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="results.js"></script>
+</body>
+</html>
