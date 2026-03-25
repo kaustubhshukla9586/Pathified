@@ -4,43 +4,81 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pathify — Find Your CS Path</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <div class="grain"></div>
-  <div class="bg-glow"></div>
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
 
   <nav>
-    <div class="logo">Path<span>ify</span></div>
-    <button class="btn-nav">Find My Path &rarr;</button>
+    <div class="logo">Pathify</div>
+    <div class="nav-links">
+      <a href="#">How it works</a>
+      <a href="#">Sample result</a>
+    </div>
+    <button class="btn-nav" onclick="window.location.href='quiz.html'">Start the quiz</button>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-tag">For CS students</div>
-    <h1>Still unsure what to do<br>after your <em>CS degree?</em></h1>
-    <p>Answer 25 deep questions. Pathify's AI maps your strengths, values, and work style to give you a clear, honest recommendation — not a generic list.</p>
-    <div class="hero-btns">
-      <button class="btn-primary">Start the quiz &rarr;</button>
-      <button class="btn-ghost">See a sample result</button>
+    <div class="hero-inner">
+      <div class="hero-tag reveal">For CS students</div>
+      <h1 class="reveal">
+        Still unsure<br>
+        <em>where you're going</em><br>
+        after CS?
+      </h1>
+      <p class="hero-sub reveal">
+        25 deep questions. Real answers.<br>
+        A path built around you — not copied from a template.
+      </p>
+      <div class="hero-btns reveal">
+        <button class="btn-primary" onclick="window.location.href='quiz.html'">Find my path &rarr;</button>
+        <button class="btn-ghost" onclick="document.querySelector('.hiw').scrollIntoView()">See a sample result</button>
+      </div>
+      <div class="hero-float-card reveal">
+        <div class="float-badge">Top match</div>
+        <div class="float-title">AI / Machine Learning</div>
+        <div class="float-pct">92% fit</div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num">8 min</span><span class="stat-label">avg. time</span></div>
-      <div class="stat-sep"></div>
-      <div class="stat"><span class="stat-num">25</span><span class="stat-label">questions</span></div>
-      <div class="stat-sep"></div>
-      <div class="stat"><span class="stat-num">Free</span><span class="stat-label">no signup</span></div>
-    </div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
   </section>
 
-  <div class="divider"></div>
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>AI / Machine Learning</span><span class="dot">&bull;</span>
+      <span>Cybersecurity</span><span class="dot">&bull;</span>
+      <span>Data Engineering</span><span class="dot">&bull;</span>
+      <span>Web Development</span><span class="dot">&bull;</span>
+      <span>Cloud & DevOps</span><span class="dot">&bull;</span>
+      <span>Embedded Systems</span><span class="dot">&bull;</span>
+      <span>Game Development</span><span class="dot">&bull;</span>
+      <span>Blockchain</span><span class="dot">&bull;</span>
+      <span>UI / UX Engineering</span><span class="dot">&bull;</span>
+      <span>AI / Machine Learning</span><span class="dot">&bull;</span>
+      <span>Cybersecurity</span><span class="dot">&bull;</span>
+      <span>Data Engineering</span><span class="dot">&bull;</span>
+      <span>Web Development</span><span class="dot">&bull;</span>
+      <span>Cloud & DevOps</span><span class="dot">&bull;</span>
+      <span>Embedded Systems</span><span class="dot">&bull;</span>
+      <span>Game Development</span><span class="dot">&bull;</span>
+      <span>Blockchain</span><span class="dot">&bull;</span>
+      <span>UI / UX Engineering</span><span class="dot">&bull;</span>
+    </div>
+  </div>
 
   <!-- HOW IT WORKS -->
-  <section class="section">
-    <div class="section-label reveal">How it works</div>
-    <div class="section-title reveal">Three steps to clarity</div>
+  <section class="section hiw">
+    <div class="section-header reveal">
+      <div class="section-label">How it works</div>
+      <h2>Three steps.<br>One clear direction.</h2>
+    </div>
     <div class="steps">
       <div class="step reveal">
         <div class="step-num">01</div>
@@ -50,7 +88,7 @@
       <div class="step reveal">
         <div class="step-num">02</div>
         <h3>AI builds your profile</h3>
-        <p>Your answers shape the next question. No two people get the same quiz — it adapts to you in real time.</p>
+        <p>Every answer shapes the next question. No two people get the same quiz — it adapts around you in real time.</p>
       </div>
       <div class="step reveal">
         <div class="step-num">03</div>
@@ -60,24 +98,32 @@
     </div>
   </section>
 
-  <div class="divider"></div>
-
   <!-- RESULT PREVIEW -->
-  <section class="section">
-    <div class="section-label reveal">Sample output</div>
-    <div class="section-title reveal">What you'll walk away with</div>
+  <section class="section result-section">
+    <div class="section-header reveal">
+      <div class="section-label">Sample output</div>
+      <h2>What you'll walk<br>away with</h2>
+    </div>
     <div class="result-card reveal">
-      <div class="result-badge">Sample result</div>
-      <h3>Arjun's Career Profile</h3>
-      <div class="result-sub">Based on 24 responses &middot; Completed in 8 minutes</div>
+      <div class="result-top">
+        <div>
+          <div class="result-badge">Sample result</div>
+          <div class="result-name">Yash's Career Profile</div>
+          <div class="result-meta">24 responses &middot; 8 minutes</div>
+        </div>
+        <div class="result-match">
+          <div class="match-num">92%</div>
+          <div class="match-label">top match</div>
+        </div>
+      </div>
       <div class="paths">
-        <div class="path-item path-top">
+        <div class="path-item">
           <div class="path-left">
             <span class="path-rank">#1</span>
             <span class="path-name">AI / Machine Learning</span>
           </div>
           <div class="path-right">
-            <div class="path-bar"><div class="path-fill" style="width:92%"></div></div>
+            <div class="path-bar"><div class="path-fill animated-bar" data-width="92"></div></div>
             <span class="path-pct">92%</span>
           </div>
         </div>
@@ -87,7 +133,7 @@
             <span class="path-name">Data Engineering</span>
           </div>
           <div class="path-right">
-            <div class="path-bar"><div class="path-fill" style="width:74%"></div></div>
+            <div class="path-bar"><div class="path-fill animated-bar" data-width="74"></div></div>
             <span class="path-pct">74%</span>
           </div>
         </div>
@@ -97,49 +143,34 @@
             <span class="path-name">Cybersecurity</span>
           </div>
           <div class="path-right">
-            <div class="path-bar"><div class="path-fill" style="width:58%"></div></div>
+            <div class="path-bar"><div class="path-fill animated-bar" data-width="58"></div></div>
             <span class="path-pct">58%</span>
           </div>
         </div>
       </div>
       <div class="why-box">
-        <div class="why-label">Why AI / ML fits Arjun</div>
-        <div class="why-text">You scored high on abstract thinking, prefer working independently on hard problems, and said financial growth matters to you. AI/ML has one of the highest earning ceilings in CS and rewards exactly the kind of deep, focused problem-solving you described.</div>
+        <div class="why-label">Why AI / ML fits Yash</div>
+        <div class="why-text">You scored high on abstract thinking, prefer working independently on hard problems, and said financial growth matters to you. AI/ML rewards exactly the kind of deep, focused problem-solving you described — and has one of the highest earning ceilings in CS.</div>
       </div>
     </div>
   </section>
 
   <!-- FINAL CTA -->
   <section class="final-cta">
-    <div class="cta-glow"></div>
-    <h2 class="reveal">Your path is waiting.<br><em>Find it in 8 minutes.</em></h2>
-    <p class="reveal">Free. No signup required. Just honest answers.</p>
-    <button class="btn-primary btn-lg reveal">Start the quiz &rarr;</button>
+    <div class="cta-inner reveal">
+      <h2>Your path is waiting.<br><em>Find it in 8 minutes.</em></h2>
+      <p>Free. No signup. Just honest answers.</p>
+      <button class="btn-primary btn-lg" onclick="window.location.href='quiz.html'">Start the quiz &rarr;</button>
+    </div>
+    <div class="orb orb-cta1"></div>
+    <div class="orb orb-cta2"></div>
   </section>
 
   <footer>
-    <div class="logo">Path<span>ify</span></div>
+    <div class="logo">Pathify</div>
     <p>Made for CS students who refuse to guess.</p>
   </footer>
 
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach((el, i) => {
-      // stagger siblings inside .steps
-      if (el.classList.contains('step')) {
-        el.style.transitionDelay = (el.parentElement.querySelector('.step') === el ? '0ms' :
-          el === el.parentElement.children[1] ? '100ms' : '200ms');
-      }
-      observer.observe(el);
-    });
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>

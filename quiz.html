@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pathify — Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="quiz.css"/>
+</head>
+<body>
+
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <nav class="quiz-nav">
+    <a href="index.html" class="logo">Pathify</a>
+  </nav>
+
+  <div class="quiz-progress-wrap">
+    <div class="quiz-progress-bar" id="progress-bar"></div>
+  </div>
+  <div class="quiz-nav-meta">
+    <span id="question-counter">Question 1 of 25</span>
+  </div>
+
+  <section class="quiz-container">
+    <div class="quiz-inner" id="quiz-inner">
+      <!-- Question will be injected here -->
+      <h2 class="quiz-question" id="question-text"></h2>
+      
+      <!-- Options will be injected here -->
+      <div class="quiz-options" id="options-container"></div>
+      
+      <!-- Optional input for Q26 -->
+      <div class="quiz-optional" id="optional-container" style="display: none;">
+        <p class="optional-subtext">Optional — this won't change your score but may add nuance.</p>
+        <textarea id="optional-input" placeholder="Type here..."></textarea>
+        <div class="optional-btns">
+          <button class="btn-primary" id="submit-btn" style="padding: 0.9rem 2.5rem; font-size: 1rem;">Submit & see my results</button>
+          <button class="btn-ghost" id="skip-btn" style="padding: 0.9rem 2.5rem; font-size: 1rem;">Skip</button>
+        </div>
+      </div>
+
+      <div class="quiz-back-wrap">
+        <button id="back-btn" class="back-link" style="display: none;">&larr; Back</button>
+      </div>
+    </div>
+    
+    <!-- Loading overlay inside quiz area -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+      <div class="pixel-loader">
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+      </div>
+      <div class="loading-text" id="loading-text">Reading between the lines...</div>
+    </div>
+    
+    <!-- Full page loader for final submission -->
+    <div class="full-loader" id="full-loader" style="display: none;">
+      <div class="orb orb1" style="animation: none;"></div>
+      <div class="orb orb3" style="animation: none;"></div>
+      <div class="pixel-loader" style="transform: scale(1.5);">
+         <!-- Same pixels -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+      </div>
+      <div class="loading-text" style="font-size: 1.25rem;">Synthesizing your profile...</div>
+    </div>
+
+  </section>
+
+  <!-- IMPORTANT: Load config.js for the API keys BEFORE quiz.js -->
+  <script src="config.js" onerror="console.warn('config.js missing, please create it')"></script>
+  <script src="script.js"></script>
+  <script src="quiz.js"></script>
+</body>
+</html>
