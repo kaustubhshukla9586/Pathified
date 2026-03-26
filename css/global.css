@@ -1,0 +1,213 @@
+/* ================================
+   global.css
+   Covers: CSS reset, :root variables, html/body base styles,
+   font imports, overflow-x, utility classes used across pages,
+   custom cursor, touch device overrides, safe image rules
+   Used by: index.html, quiz.html, results.html
+   Do NOT add page-specific styles here
+================================ */
+
+/* --- RESET --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- CSS VARIABLES --- */
+:root {
+  --cream: #f5f0e8;
+  --cream-alt: #ede8de;
+  --brown: #1a1208;
+  --brown-mid: #4a3f2f;
+  --brown-soft: #8a7a66;
+  --amber: #c8830a;
+  --amber-light: rgba(200, 131, 10, 0.12);
+  --amber-border: rgba(200, 131, 10, 0.25);
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --transition: 0.2s ease;
+
+  /* Legacy aliases used throughout existing rules */
+  --cream-dark: #ede8df;
+  --brown-muted: #9a8f80;
+  --amber-pale: #fdf0da;
+}
+
+/* --- BASE HTML & BODY --- */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--brown);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* --- UTILITY: SCROLL REVEAL --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(12);
+}
+
+/* --- UTILITY: BUTTONS --- */
+.btn-primary {
+  background: var(--brown);
+  color: var(--cream);
+  border: none;
+  padding: 1rem 2.2rem;
+  border-radius: 100px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: none;
+  transition: background var(--transition), transform 0.15s;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  background: var(--amber);
+  transform: translateY(-2px);
+}
+
+.btn-primary.btn-lg {
+  font-size: 1.05rem;
+  padding: 1.15rem 3rem;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--brown-mid);
+  border: 1.5px solid rgba(26, 18, 8, 0.18);
+  padding: 1rem 2.2rem;
+  border-radius: 100px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 400;
+  cursor: none;
+  transition: border-color var(--transition), color var(--transition), transform 0.15s;
+}
+
+.btn-ghost:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+  transform: translateY(-2px);
+}
+
+/* --- UTILITY: SECTION LABEL & TITLE --- */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1rem;
+}
+
+.section-header {
+  margin-bottom: 4rem;
+}
+
+.section-header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--brown);
+}
+
+/* --- CUSTOM CURSOR --- */
+.cursor {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--amber);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, opacity 0.2s;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--amber);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s;
+}
+
+body:has(button:hover) .cursor,
+body:has(a:hover) .cursor {
+  transform: translate(-50%, -50%) scale(1.6);
+  background: rgba(200, 132, 42, 0.08);
+}
+
+/* --- TOUCH DEVICE: DISABLE CURSOR --- */
+@media (hover: none) and (pointer: coarse) {
+  .cursor,
+  .cursor-dot {
+    display: none;
+  }
+
+  body {
+    cursor: auto;
+  }
+
+  button,
+  a,
+  .quiz-option,
+  .r-card,
+  .modal-close {
+    cursor: pointer;
+  }
+}
+
+/* --- MOBILE BASE --- */
+@media (max-width: 639px) {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    font-size: 15px;
+    cursor: auto;
+  }
+
+  .cursor,
+  .cursor-dot {
+    display: none;
+  }
+
+  button,
+  a,
+  .clickable {
+    min-height: 44px;
+  }
+}
