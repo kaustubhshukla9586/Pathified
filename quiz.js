@@ -155,23 +155,17 @@ async function callGroq(messages, maxRetries = 2) {
   let retries = 0;
   while (retries <= maxRetries) {
     try {
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      const response = await fetch("/.netlify/functions/chat", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${GROQ_API_KEY}`
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          model: GROQ_MODEL,
-          messages: messages,
-          max_tokens: 800,
-          temperature: 0.7
-        })
+        body: JSON.stringify({ messages: messages })
       });
 
       if (!response.ok) {
         const errText = await response.text();
-        throw new Error(`Groq API error (${response.status}): ${errText}`);
+        throw new Error(`Server error (${response.status}): ${errText}`);
       }
 
       const data = await response.json();
