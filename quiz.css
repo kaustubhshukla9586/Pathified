@@ -244,3 +244,52 @@
   justify-content: center;
   align-items: center;
 }
+
+/* Pen Toggle Button */
+.pen-toggle {
+  display: block;
+  margin: 1.5rem auto 0;
+  background: transparent;
+  border: none;
+  color: var(--brown-soft, #8a7a66);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0.4rem 0.8rem;
+}
+
+.pen-toggle:hover {
+  color: var(--amber);
+}
+
+/* Extra Context Textarea */
+.extra-context-box {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  margin: 1rem auto 0;
+  height: 100px;
+  background: var(--cream);
+  border: 1px solid rgba(26, 18, 8, 0.18);
+  border-bottom: 2px solid rgba(26, 18, 8, 0.18);
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--brown);
+  resize: none;
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+
+.extra-context-box:focus {
+  outline: none;
+  border-color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+.extra-context-box::placeholder {
+  color: var(--brown-soft, #8a7a66);
+  font-weight: 300;
+}

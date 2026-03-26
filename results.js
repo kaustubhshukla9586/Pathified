@@ -134,6 +134,28 @@ function openModal(item) {
     considerationsRow.innerHTML = '<span class="tag">Not specified</span>';
   }
   
+  // Roles — dynamically create or update
+  let rolesContainer = document.querySelector('.modal-roles');
+  if (rolesContainer) rolesContainer.remove();
+  
+  if (item.roles && item.roles.length) {
+    rolesContainer = document.createElement('div');
+    rolesContainer.className = 'modal-roles';
+    rolesContainer.innerHTML = `
+      <div class="modal-section-title">Roles you could grow into</div>
+      <div class="tags-row roles">
+        ${item.roles.map(r => `<span class="role-tag">${r}</span>`).join('')}
+      </div>
+    `;
+    // Insert before modal-footer
+    const footer = document.querySelector('.modal-footer');
+    if (footer) {
+      footer.before(rolesContainer);
+    } else {
+      document.querySelector('.modal-content').appendChild(rolesContainer);
+    }
+  }
+
   modal.classList.add('active');
   backdrop.classList.add('active');
   document.body.style.overflow = 'hidden';

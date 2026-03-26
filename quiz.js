@@ -1,132 +1,198 @@
-// quiz.js
+// quiz.js — Batch-of-4 Quiz Engine
 
+// ==========================================
+// HARDCODED QUESTIONS (Q1–Q3)
+// ==========================================
 const HARDCODED_QUESTIONS = [
   {
-    question: "When you imagine yourself 5 years from now, what does your day look like?",
+    question: "It's 11pm. You have no deadline, no one is checking on you. What are you most likely doing on your laptop?",
     options: [
-      "Solving deep technical problems alone",
-      "Leading a team building something big",
-      "Researching something no one fully understands yet",
-      "Creating tools that directly help people",
-      "I genuinely have no idea"
-    ]
+      "Going deep into something that broke and figuring out why",
+      "Building something small just to see if I can",
+      "Reading or watching something to understand how things work",
+      "Planning or organising something — a project, a system, an idea"
+    ],
+    category: "PERSONALITY"
   },
   {
-    question: "Which of these tasks would you actually enjoy doing for hours?",
+    question: "Your college gives you 6 free months — no classes, no exams, no pressure. You have to work on something CS related. What do you actually do?",
     options: [
-      "Debugging why a system broke",
-      "Designing how something should work",
-      "Analyzing patterns in large datasets",
-      "Building something you can see and use",
-      "Reading about how technologies work conceptually"
-    ]
+      "Build a real working product, even if it's messy",
+      "Go deep into one topic I never had time to properly understand",
+      "Find a real problem around me and try to solve it with code",
+      "Learn whatever gets me the best job after this"
+    ],
+    category: "SITUATION"
   },
   {
-    question: "Be honest — what's your relationship with mathematics?",
+    question: "Be honest — when you hit a really hard math or logic problem in your coursework, what actually happens?",
     options: [
-      "I genuinely enjoy it, it comes naturally",
-      "I can do it but I wouldn't choose it",
-      "I find it painful but I push through",
-      "I actively avoid it wherever possible"
-    ]
+      "I get stuck in it until I figure it out, I can't let it go",
+      "I understand it when someone explains it but I won't go looking for more",
+      "I get through it because I have to but I don't enjoy it",
+      "I find a way around it or look for the answer — I'd rather spend time elsewhere"
+    ],
+    category: "CSE DISCIPLINE"
   }
 ];
 
-const QUESTION_SYSTEM_PROMPT = `You are a deep psychological profiler disguised as a career guidance AI for Computer Science students. Your real job is not to ask about careers — it is to excavate who this person actually is at their core. You do this by asking questions that feel slightly invasive, uncomfortably accurate, and impossible to answer without genuine self-reflection.
+// ==========================================
+// SYSTEM PROMPTS
+// ==========================================
+const QUESTION_SYSTEM_PROMPT = `You are a career guidance AI helping Computer Science students figure out which field of CS actually fits them. You ask questions one batch at a time. Each batch of 4 questions must be generated together, based on everything the student has answered so far.
 
-The goal is to understand:
-- How their mind actually works under pressure
-- What they are secretly afraid of professionally
-- Whether they are driven by ego, curiosity, security, impact, or money — and in what order
-- How they behave when no one is watching or grading them
-- What they would do if failure was impossible vs if failure was guaranteed
-- Whether they think in systems, in people, in abstractions, or in things they can touch
-- What kind of pain they are willing to tolerate for years
+Your questions must cover these 4 categories — one question per category per batch, in any order:
+1. PERSONALITY — how this person thinks, what drives them, what they fear, what kind of work energises or drains them
+2. SITUATION — a real scenario (college life or workplace) where they have to make a choice or react. Describe the situation in 2-3 simple sentences then ask what they would do
+3. CSE DISCIPLINE — something directly related to CS topics, subjects, or skills. Ask about their real experience or honest feelings about things like algorithms, building systems, data, networks, security, design, etc
+4. VALUES — what they actually care about: money, impact, recognition, learning, stability, freedom, competition
 
-Rules:
-- Ask only ONE question per response
-- Provide exactly 4 options
-- Never ask about job roles, career fields, or what they want to "do" professionally
-- Never ask surface questions like "do you prefer working alone or in teams"
-- Every question must create a moment of pause — the user should feel slightly seen or slightly uncomfortable
-- Questions must get progressively more probing based on previous answers — if someone reveals they are driven by ego, dig into that. If someone reveals fear of irrelevance, probe that fear
-- Rotate between: hypothetical scenarios, brutal forced choices, introspective confessions, and behavioral patterns
-- Options must feel genuinely different from each other — not just rephrased versions of the same answer
-- No option should feel like the "safe" or "correct" answer
-- Options should occasionally include one that is uncomfortably honest — the one people think but never say out loud
-- Keep question text under 30 words
-- Keep each option under 12 words
+Rules for questions:
+- Use simple, everyday English. Imagine you are texting a friend, not writing a report. No big words.
+- Every question must feel like it was written specifically for this person based on what they already said
+- Situation questions must describe a real scenario first (2-3 sentences), then ask what the person would do
+- Never ask the same theme twice across the whole quiz
+- Questions should make the person pause and actually think — not give an easy answer
+- Do not mention specific career paths or job titles in questions
+- The 4 options for each question must feel genuinely different from each other
+- One of the 4 options should always be the honest uncomfortable answer that people think but don't usually say
+- No option should feel like the "obviously correct" answer
+- If the user added any extra text context to a previous answer, use that context to make this batch more specific and personal
 
-Examples of the kind of questions to ask (do not repeat these exactly, use as inspiration):
-- "A project you built gets praised — but for the wrong reasons. You feel:" 
-- "You have 10 years of expertise. Someone younger figures it out in 10 days. Your honest reaction:"
-- "Which failure would haunt you longer?"
-- "You can be exceptional at something you find meaningless, or decent at something you love. You pick:"
-- "What would make you secretly respect yourself less?"
-- "The part of group projects you quietly resent most:"
+Keep question text between 15-40 words.
+Keep each option under 15 words.
+Use simple words a non-native English speaker can understand.
 
-Respond in this exact JSON format only, no other text:
+Respond with exactly this JSON format — all 4 questions in one response, no extra text:
 {
-  "question": "question text here",
-  "options": ["option 1", "option 2", "option 3", "option 4"]
-}`;
-
-
-const FINAL_ANALYSIS_PROMPT = `You are a career guidance AI. Based on the conversation history provided, analyze the user's psychological profile, cognitive style, strengths, and preferences. Generate exactly 3 CS career path recommendations.
-
-Rules:
-- Recommendation 1: strongest overall match (strength-based)
-- Recommendation 2: best interest/passion match
-- Recommendation 3: a hybrid or surprising but valid match
-- Percentages must be independent match scores (not summing to 100)
-- Round percentages to nearest 5. Min 55, max 95. No two the same.
-- Career paths are NOT limited to a preset list — suggest any valid CS specialization
-- Do not add disclaimers or hedging language
-- Be direct and confident
-
-Respond in this exact JSON format with all 3 results fully filled in:
-{
-  "results": [
+  "batch": [
     {
-      "rank": 1,
-      "field": "field name",
-      "percentage": 90,
-      "type": "Strength-based recommendation",
-      "explanation": "3-5 sentence explanation",
-      "strengths": ["tag1", "tag2", "tag3"],
-      "considerations": ["tag1", "tag2"]
+      "question": "question text",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "category": "PERSONALITY"
     },
     {
-      "rank": 2,
-      "field": "field name",
-      "percentage": 80,
-      "type": "Interest-based recommendation",
-      "explanation": "3-5 sentence explanation",
-      "strengths": ["tag1", "tag2", "tag3"],
-      "considerations": ["tag1", "tag2"]
+      "question": "question text",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "category": "SITUATION"
     },
     {
-      "rank": 3,
-      "field": "field name",
-      "percentage": 70,
-      "type": "Hybrid recommendation",
-      "explanation": "3-5 sentence explanation",
-      "strengths": ["tag1", "tag2", "tag3"],
-      "considerations": ["tag1", "tag2"]
+      "question": "question text",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "category": "CSE DISCIPLINE"
+    },
+    {
+      "question": "question text",
+      "options": ["option 1", "option 2", "option 3", "option 4"],
+      "category": "VALUES"
     }
   ]
 }`;
 
-// State
+const FINAL_ANALYSIS_PROMPT = `You are a career guidance AI. You have just finished a deep quiz with a CS student. Based on everything they answered — including any extra context they typed — analyse their full profile and give them 3 specific CS career path recommendations.
+
+Rules:
+- Each recommendation must be a specific, real field within CS — not a vague label like "tech leadership" or "software development"
+- Good examples of specific fields: Machine Learning Engineering, Cybersecurity & Ethical Hacking, Frontend Engineering, DevOps & Cloud Infrastructure, Data Engineering, Embedded Systems, Game Development, NLP & Conversational AI, Computer Vision, Blockchain Development, Mobile Development, Systems Programming
+- Recommendation 1: the field that best matches their natural strengths based on how they think and work
+- Recommendation 2: the field that best matches what they seem genuinely interested in and excited by
+- Recommendation 3: a field that combines both, or one that might surprise them but fits well based on their answers
+- Percentages are independent match scores — they do not add up to 100
+- Round all percentages to nearest 5. Minimum 55, maximum 95. No two can be the same.
+- The explanation must feel personal — reference things they actually said or chose. Use simple, clear English.
+- Strengths: 3 short tags describing why this field suits them specifically
+- Considerations (weaknesses): 2 short tags — phrased softly, like "something worth being aware of"
+- Specific roles: 3 actual job titles within that field they could realistically aim for
+- Do not use disclaimers. Do not hedge. Be direct and confident but warm.
+
+Respond in exactly this JSON format with all 3 results fully complete:
+{
+  "results": [
+    {
+      "rank": 1,
+      "field": "specific field name",
+      "percentage": 90,
+      "type": "Strength-based recommendation",
+      "explanation": "3-5 sentence personal explanation referencing their actual answers in simple English",
+      "strengths": ["tag1", "tag2", "tag3"],
+      "considerations": ["something worth being aware of 1", "something worth being aware of 2"],
+      "roles": ["Job Title 1", "Job Title 2", "Job Title 3"]
+    },
+    {
+      "rank": 2,
+      "field": "specific field name",
+      "percentage": 80,
+      "type": "Interest-based recommendation",
+      "explanation": "3-5 sentence personal explanation",
+      "strengths": ["tag1", "tag2", "tag3"],
+      "considerations": ["something worth being aware of 1", "something worth being aware of 2"],
+      "roles": ["Job Title 1", "Job Title 2", "Job Title 3"]
+    },
+    {
+      "rank": 3,
+      "field": "specific field name",
+      "percentage": 70,
+      "type": "Hybrid recommendation",
+      "explanation": "3-5 sentence personal explanation",
+      "strengths": ["tag1", "tag2", "tag3"],
+      "considerations": ["something worth being aware of 1", "something worth being aware of 2"],
+      "roles": ["Job Title 1", "Job Title 2", "Job Title 3"]
+    }
+  ]
+}`;
+
+// ==========================================
+// STATE
+// ==========================================
 let currentQuestionIndex = 0;
-const totalQuestions = 25;
+let currentBatchIndex = 0;
+let questionBatch = [];
+const totalQuestions = 25; // 3 hardcoded + 5 batches of 4 (=20) + 2 spare = 25
 let conversationHistory = [
   { role: "system", content: QUESTION_SYSTEM_PROMPT }
 ];
+let allAnswers = []; // { question, answer, extraContext, category }
 let currentQuestion = null;
 let isGenerating = false;
 
-// DOM Elements
+// ==========================================
+// CACHE / RESUME
+// ==========================================
+function saveProgress() {
+  localStorage.setItem('pathify_progress', JSON.stringify({
+    currentQuestionIndex,
+    currentBatchIndex,
+    questionBatch,
+    allAnswers,
+    conversationHistory
+  }));
+}
+
+function restoreProgress() {
+  const saved = localStorage.getItem('pathify_progress');
+  if (!saved) return false;
+  try {
+    const state = JSON.parse(saved);
+    currentQuestionIndex = state.currentQuestionIndex;
+    currentBatchIndex = state.currentBatchIndex;
+    questionBatch = state.questionBatch || [];
+    allAnswers = state.allAnswers || [];
+    conversationHistory = state.conversationHistory || [
+      { role: "system", content: QUESTION_SYSTEM_PROMPT }
+    ];
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function clearProgress() {
+  localStorage.removeItem('pathify_progress');
+}
+
+// ==========================================
+// DOM ELEMENTS
+// ==========================================
 const innerEls = document.getElementById('quiz-inner');
 const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
@@ -142,24 +208,28 @@ const optionalInput = document.getElementById('optional-input');
 const submitBtn = document.getElementById('submit-btn');
 const skipBtn = document.getElementById('skip-btn');
 
-// Messages loop
+// ==========================================
+// LOADING MESSAGES
+// ==========================================
 const loadingMessages = [
   "Reading between the lines...",
   "Building your profile...",
   "Thinking deeper...",
-  "Connecting patterns..."
+  "Connecting patterns...",
+  "Analysing your style..."
 ];
 let msgInterval;
 
+// ==========================================
+// API CALL (via Netlify function)
+// ==========================================
 async function callGroq(messages, maxRetries = 2) {
   let retries = 0;
   while (retries <= maxRetries) {
     try {
       const response = await fetch("/.netlify/functions/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: messages })
       });
 
@@ -182,12 +252,32 @@ async function callGroq(messages, maxRetries = 2) {
   }
 }
 
+// ==========================================
+// FETCH NEXT BATCH OF 4 QUESTIONS
+// ==========================================
+async function fetchNextBatch() {
+  const contextSummary = allAnswers.map((a, i) =>
+    `Q${i + 1} [${a.category || 'GENERAL'}]: ${a.question}\nAnswer: ${a.answer}${a.extraContext ? `\nExtra context: ${a.extraContext}` : ''}`
+  ).join('\n\n');
+
+  const messages = [
+    { role: "system", content: QUESTION_SYSTEM_PROMPT },
+    { role: "user", content: `Here are all the answers so far:\n\n${contextSummary}\n\nGenerate the next batch of 4 questions. Each question must be in a different category: PERSONALITY, SITUATION, CSE DISCIPLINE, VALUES. Base the questions on everything above.` }
+  ];
+
+  const parsed = await callGroq(messages);
+  return parsed.batch; // array of 4 questions
+}
+
+// ==========================================
+// LOADING UI
+// ==========================================
 function startLoading() {
   isGenerating = true;
   loadingOverlay.style.display = 'block';
   innerEls.style.opacity = '0';
   backBtn.disabled = true;
-  
+
   let msgIdx = 0;
   loadingText.textContent = loadingMessages[msgIdx];
   msgInterval = setInterval(() => {
@@ -203,9 +293,12 @@ function stopLoading() {
     loadingOverlay.style.display = 'none';
     innerEls.style.opacity = '1';
     backBtn.disabled = false;
-  }, 300); // Small transition
+  }, 300);
 }
 
+// ==========================================
+// PROGRESS BAR
+// ==========================================
 function updateProgress() {
   const qNum = currentQuestionIndex + 1;
   const pct = (qNum / totalQuestions) * 100;
@@ -218,12 +311,21 @@ function updateProgress() {
   }
 }
 
+// ==========================================
+// RENDER QUESTION
+// ==========================================
 function renderQuestion() {
   questionText.textContent = currentQuestion.question;
   optionsContainer.innerHTML = '';
   optionsContainer.style.display = 'flex';
-  
-  // Custom fade in
+
+  // Remove any previous pen toggle / extra box
+  const oldPen = document.querySelector('.pen-toggle');
+  const oldBox = document.querySelector('.extra-context-box');
+  if (oldPen) oldPen.remove();
+  if (oldBox) oldBox.remove();
+
+  // Fade in question
   questionText.style.opacity = 0;
   questionText.style.transform = 'translateY(10px)';
   setTimeout(() => {
@@ -232,143 +334,250 @@ function renderQuestion() {
     questionText.style.transform = 'translateY(0)';
   }, 50);
 
+  // Render option buttons
   currentQuestion.options.forEach((opt, index) => {
     const btn = document.createElement('button');
     btn.className = 'quiz-option';
     btn.textContent = opt;
     btn.style.opacity = 0;
     btn.style.transform = 'translateY(10px)';
-    
-    // Staggered reveal
+
     setTimeout(() => {
       btn.style.transition = 'all 0.3s ease';
       btn.style.opacity = 1;
       btn.style.transform = 'translateY(0)';
     }, 100 + (index * 50));
-    
+
     btn.onclick = () => handleSelectOption(btn, opt);
     optionsContainer.appendChild(btn);
   });
-  
+
+  // --- Pen icon + expandable text box ---
+  const penToggle = document.createElement('button');
+  penToggle.className = 'pen-toggle';
+  penToggle.innerHTML = '✏️ Add context';
+  penToggle.title = 'Add more context to your answer';
+
+  const extraBox = document.createElement('textarea');
+  extraBox.className = 'extra-context-box';
+  extraBox.placeholder = 'Add anything extra here — the more specific you are, the better your result will be...';
+  extraBox.style.display = 'none';
+  extraBox.id = 'current-extra-context';
+
+  penToggle.onclick = (e) => {
+    e.preventDefault();
+    const isHidden = extraBox.style.display === 'none';
+    extraBox.style.display = isHidden ? 'block' : 'none';
+    penToggle.textContent = isHidden ? '✏️ Hide context box' : '✏️ Add context';
+  };
+
+  optionsContainer.after(penToggle);
+  penToggle.after(extraBox);
+
+  // Update UI
   backBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
   optionalContainer.style.display = 'none';
   updateProgress();
 }
 
+// ==========================================
+// HANDLE OPTION SELECTION
+// ==========================================
 async function handleSelectOption(btn, selectedOption) {
   if (isGenerating) return;
-  
-  // Visual state
+
+  // Visual feedback
   document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
-  
-  // Append to history
+
+  // Grab extra context if any
+  const extraEl = document.getElementById('current-extra-context');
+  const extraContext = extraEl ? extraEl.value.trim() : '';
+
+  // Record answer
+  allAnswers.push({
+    question: currentQuestion.question,
+    answer: selectedOption,
+    extraContext: extraContext || '',
+    category: currentQuestion.category || 'GENERAL'
+  });
+
+  // Also append to conversationHistory for final analysis
+  const historyContent = selectedOption + (extraContext ? ` [Extra context: ${extraContext}]` : '');
   conversationHistory.push({ role: "assistant", content: JSON.stringify(currentQuestion) });
-  conversationHistory.push({ role: "user", content: selectedOption });
-  
+  conversationHistory.push({ role: "user", content: historyContent });
+
   currentQuestionIndex++;
-  
-  // Highlight briefly before advancing
+  saveProgress();
+
+  // Brief highlight before advancing
   setTimeout(advanceStep, 600);
 }
 
+// ==========================================
+// ADVANCE STEP
+// ==========================================
 async function advanceStep() {
   if (currentQuestionIndex < 3) {
-    // Show next hardcoded question
+    // Hardcoded questions
     currentQuestion = HARDCODED_QUESTIONS[currentQuestionIndex];
     renderQuestion();
   } else if (currentQuestionIndex < totalQuestions) {
-    // Generate next question via AI
-    startLoading();
-    
-    // Ensure 1.5s min load time
-    const startT = Date.now();
-    try {
-      const gptNext = await callGroq(conversationHistory);
-      currentQuestion = gptNext;
-      
-      const diff = Date.now() - startT;
-      if (diff < 1500) await new Promise(r => setTimeout(r, 1500 - diff));
-      
-      stopLoading();
+    // Check if current batch has more questions
+    if (currentBatchIndex < questionBatch.length) {
+      // Serve from batch — no API call
+      currentQuestion = questionBatch[currentBatchIndex];
+      currentBatchIndex++;
+      saveProgress();
       renderQuestion();
-    } catch (e) {
-      alert("Error generating next question: " + e.message);
-      console.error(e);
-      stopLoading();
-      currentQuestionIndex--;
-      conversationHistory.splice(-2, 2); // Revert failed save
-      document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
+    } else {
+      // Need a new batch from AI
+      startLoading();
+      const startT = Date.now();
+      try {
+        const batch = await fetchNextBatch();
+        questionBatch = batch;
+        currentBatchIndex = 0;
+
+        currentQuestion = questionBatch[currentBatchIndex];
+        currentBatchIndex++;
+
+        // Ensure minimum 1.5s loading
+        const diff = Date.now() - startT;
+        if (diff < 1500) await new Promise(r => setTimeout(r, 1500 - diff));
+
+        saveProgress();
+        stopLoading();
+        renderQuestion();
+      } catch (e) {
+        console.error(e);
+        alert("Error generating next questions: " + e.message);
+        stopLoading();
+        // Revert
+        currentQuestionIndex--;
+        allAnswers.pop();
+        if (conversationHistory.length >= 3) conversationHistory.splice(-2, 2);
+        document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
+      }
     }
   } else {
-    // Q26 - Optional Step
+    // Q26 — Optional
     showOptionalStep();
   }
 }
 
+// ==========================================
+// Q26 OPTIONAL STEP
+// ==========================================
 function showOptionalStep() {
   updateProgress();
   questionText.textContent = "Anything else you'd like us to know?";
   optionsContainer.style.display = 'none';
   optionalContainer.style.display = 'block';
   backBtn.style.display = 'inline-block';
+
+  // Remove pen toggle/box if present
+  const oldPen = document.querySelector('.pen-toggle');
+  const oldBox = document.querySelector('.extra-context-box');
+  if (oldPen) oldPen.remove();
+  if (oldBox) oldBox.remove();
 }
 
+// ==========================================
+// FINAL SUBMIT
+// ==========================================
 async function handleFinalSubmit(optionalText) {
-  if (optionalText && optionalText.trim().length > 0) {
-    conversationHistory.push({ role: "user", content: `Additional context: ${optionalText}` });
-  }
-  
-  // Replace the system prompt for final analysis
-  const finalMessages = [...conversationHistory];
-  finalMessages[0] = { role: "system", content: FINAL_ANALYSIS_PROMPT };
-  
+  // Build full context summary for analysis
+  const contextSummary = allAnswers.map((a, i) =>
+    `Q${i + 1} [${a.category}]: ${a.question}\nAnswer: ${a.answer}${a.extraContext ? `\nExtra context: ${a.extraContext}` : ''}`
+  ).join('\n\n');
+
+  const finalMessages = [
+    { role: "system", content: FINAL_ANALYSIS_PROMPT },
+    { role: "user", content: `Here is the full quiz conversation:\n\n${contextSummary}${optionalText && optionalText.trim() ? `\n\nAdditional context from user: ${optionalText.trim()}` : ''}\n\nAnalyse this person and generate 3 career path recommendations.` }
+  ];
+
   fullLoader.style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  
+
   try {
     const finalData = await callGroq(finalMessages, 3);
+    clearProgress();
     sessionStorage.setItem('pathifyResults', JSON.stringify(finalData));
     window.location.href = 'results.html';
   } catch (e) {
-    alert("Error generating your roadmap. Please check your API key and try again.");
+    alert("Error generating your results. Please try again.");
     fullLoader.style.display = 'none';
     document.body.style.overflow = '';
   }
 }
 
-// Handlers
+// ==========================================
+// BACK BUTTON
+// ==========================================
 backBtn.onclick = () => {
   if (isGenerating || currentQuestionIndex === 0) return;
+
   currentQuestionIndex--;
-  // pop user response and the question config
-  if (conversationHistory.length >= 3) {
-      conversationHistory.splice(-2, 2);
-  }
-  
+
+  // Remove last answer
+  if (allAnswers.length > 0) allAnswers.pop();
+
+  // Remove last conversation pair
+  if (conversationHistory.length >= 3) conversationHistory.splice(-2, 2);
+
+  // Figure out which question to show
   if (currentQuestionIndex < 3) {
     currentQuestion = HARDCODED_QUESTIONS[currentQuestionIndex];
-  } else if (conversationHistory.length > 0) {
-    // We get the last question from history
-    const lastAsst = conversationHistory[conversationHistory.length - 1];
-    if (lastAsst.role === "assistant") {
-      try {
-        currentQuestion = JSON.parse(lastAsst.content);
-        conversationHistory.pop(); // Remove it so user can answer again
-      } catch (e) { }
+  } else {
+    // Go back one within the batch
+    if (currentBatchIndex > 0) {
+      currentBatchIndex--;
+    }
+    // The current question is the one at the decremented batch index
+    if (questionBatch.length > 0 && currentBatchIndex < questionBatch.length) {
+      currentQuestion = questionBatch[currentBatchIndex];
     }
   }
+
+  saveProgress();
   renderQuestion();
 };
 
+// ==========================================
+// SUBMIT / SKIP HANDLERS
+// ==========================================
 submitBtn.onclick = () => handleFinalSubmit(optionalInput.value);
 skipBtn.onclick = () => handleFinalSubmit("");
 
-// Init
+// ==========================================
+// INIT
+// ==========================================
 window.addEventListener('DOMContentLoaded', () => {
-  if (typeof GROQ_API_KEY === 'undefined' || !GROQ_API_KEY || GROQ_API_KEY === 'your-groq-key-here') {
-    console.warn("Groq API key missing — update config.js");
+  const resumed = restoreProgress();
+  if (resumed && currentQuestionIndex > 0) {
+    // Restored — figure out which question to show
+    if (currentQuestionIndex < 3) {
+      currentQuestion = HARDCODED_QUESTIONS[currentQuestionIndex];
+    } else if (currentQuestionIndex >= totalQuestions) {
+      showOptionalStep();
+      return;
+    } else if (questionBatch.length > 0 && currentBatchIndex > 0 && currentBatchIndex <= questionBatch.length) {
+      // We were in the middle of a batch
+      currentQuestion = questionBatch[currentBatchIndex - 1];
+    } else {
+      // Edge case — start fresh
+      currentQuestionIndex = 0;
+      currentBatchIndex = 0;
+      questionBatch = [];
+      allAnswers = [];
+      conversationHistory = [{ role: "system", content: QUESTION_SYSTEM_PROMPT }];
+      currentQuestion = HARDCODED_QUESTIONS[0];
+    }
+    renderQuestion();
+  } else {
+    // Fresh start
+    currentQuestion = HARDCODED_QUESTIONS[0];
+    renderQuestion();
   }
-  currentQuestion = HARDCODED_QUESTIONS[0];
-  renderQuestion();
 });
