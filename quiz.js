@@ -264,11 +264,40 @@ async function fetchNextBatch() {
 
   const messages = [
     { role: "system", content: QUESTION_SYSTEM_PROMPT },
-    { role: "user", content: `Here are all the answers so far:\n\n${contextSummary}\n\nGenerate the next batch of 4 questions. Each question must be in a different category: PERSONALITY, SITUATION, CSE DISCIPLINE, VALUES. Base the questions on everything above.` }
+    { role: "user", content: `Here are all the answers so far:\n\n${contextSummary}\n\nGenerate the next batch of 4 questions. Each question must be in a different category: PERSONALITY, SITUATION, CSE DISCIPLINE, VALUES. Base the questions on everything above. You MUST respond with valid JSON only containing a "batch" array of exactly 4 questions.` }
   ];
 
   const parsed = await callGroq(messages);
-  return parsed.batch; // array of 4 questions
+
+  // Defensive: handle different response shapes the AI might return
+  let batch = null;
+
+  if (parsed && Array.isArray(parsed.batch)) {
+    batch = parsed.batch;
+  } else if (parsed && Array.isArray(parsed.questions)) {
+    batch = parsed.questions;
+  } else if (Array.isArray(parsed)) {
+    batch = parsed;
+  }
+
+  // Validate batch exists and has items
+  if (!batch || !Array.isArray(batch) || batch.length === 0) {
+    throw new Error('AI returned an invalid batch format. Please try again.');
+  }
+
+  // Filter out any malformed questions
+  const valid = batch.filter(q => q && q.question && Array.isArray(q.options) && q.options.length >= 2);
+  if (valid.length === 0) {
+    throw new Error('AI returned questions with missing fields. Please try again.');
+  }
+
+  // Fill category if missing
+  const categories = ['PERSONALITY', 'SITUATION', 'CSE DISCIPLINE', 'VALUES'];
+  valid.forEach((q, i) => {
+    if (!q.category) q.category = categories[i % categories.length];
+  });
+
+  return valid;
 }
 
 // ==========================================
