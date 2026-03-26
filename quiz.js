@@ -223,7 +223,7 @@ const loadingMessages = [
 let msgInterval;
 
 // ==========================================
-// API CALL (via Netlify function)
+// API CALL (via vercel function)
 // ==========================================
 async function callGroq(messages, maxRetries = 2) {
   let retries = 0;
@@ -232,24 +232,36 @@ async function callGroq(messages, maxRetries = 2) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: messages })
+        body: JSON.stringify({ messages })
       });
 
+      const data = await response.json();
+
+      // Log what we actually got back
+      console.log("API response status:", response.status);
+      console.log("API response data:", JSON.stringify(data));
+
       if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`Server error (${response.status}): ${errText}`);
+        throw new Error(`Server error ${response.status}: ${data.error || JSON.stringify(data)}`);
       }
 
-      const data = await response.json();
+      if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+        console.error("Unexpected response shape:", JSON.stringify(data));
+        throw new Error("Unexpected response from API: " + JSON.stringify(data));
+      }
+
       const text = data.choices[0].message.content;
-      const cleaned = text.replace(/```json|```/g, '').trim();
+      const cleaned = text.replace(/```json[\s\S]*?```|```[\s\S]*?```/g, match => {
+        return match.replace(/```json\n?|```\n?/g, '').trim();
+      }).trim();
+
       return JSON.parse(cleaned);
 
     } catch (e) {
-      console.error(e);
+      console.error("callGroq error (attempt " + (retries + 1) + "):", e.message);
       retries++;
       if (retries > maxRetries) throw e;
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 1500));
     }
   }
 }

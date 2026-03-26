@@ -6,7 +6,12 @@ export default async function handler(req, res) {
   try {
     const { messages } = req.body;
 
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    if (!process.env.GROQ_API_KEY) {
+      console.error("GROQ_API_KEY is not set");
+      return res.status(500).json({ error: "API key not configured" });
+    }
+
+    const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,10 +25,23 @@ export default async function handler(req, res) {
       })
     });
 
-    const data = await response.json();
+    const data = await groqRes.json();
+
+    // Log full response for debugging
+    console.log("Groq status:", groqRes.status);
+    console.log("Groq response:", JSON.stringify(data));
+
+    if (!groqRes.ok) {
+      return res.status(groqRes.status).json({ 
+        error: data.error?.message || "Groq API error",
+        details: data 
+      });
+    }
+
     return res.status(200).json(data);
 
   } catch (err) {
+    console.error("Handler error:", err.message);
     return res.status(500).json({ error: err.message });
   }
 }
