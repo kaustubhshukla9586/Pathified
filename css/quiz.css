@@ -1,30 +1,14 @@
-/* quiz.css */
+/* ================================
+   quiz.css
+   Covers: quiz page background, progress bar, question counter,
+   question text, options, selected state, pen toggle, extra
+   context textarea, back button, loading overlay, pixel loader,
+   full page loader, Q26 optional container
+   Used by: quiz.html only
+   Do NOT add page-specific styles here
+================================ */
 
-.quiz-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: none;
-  background: var(--cream);
-  position: relative;
-  z-index: 100;
-}
-
-.quiz-nav .logo {
-  text-decoration: none;
-  pointer-events: none; /* User is mid-flow, shouldn't click away easily */
-}
-
-.quiz-nav-meta {
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--brown-muted);
-  font-weight: 500;
-  margin-top: 1.5rem;
-  margin-bottom: -1rem;
-}
-
+/* --- QUIZ PROGRESS BAR --- */
 .quiz-progress-wrap {
   width: 100%;
   height: 2px;
@@ -42,6 +26,17 @@
   transition: width 0.4s ease;
 }
 
+/* --- QUESTION COUNTER --- */
+.quiz-nav-meta {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--brown-muted);
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: -1rem;
+}
+
+/* --- QUIZ CONTAINER --- */
 .quiz-container {
   min-height: 85vh;
   display: flex;
@@ -49,7 +44,7 @@
   justify-content: center;
   padding: 4rem 1.5rem;
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   background: var(--cream);
 }
 
@@ -62,8 +57,9 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* --- QUESTION TEXT --- */
 .quiz-question {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-serif);
   font-size: clamp(2rem, 4vw, 3.2rem);
   font-weight: 400;
   line-height: 1.25;
@@ -72,6 +68,7 @@
   margin-bottom: 3.5rem;
 }
 
+/* --- OPTIONS CONTAINER --- */
 .quiz-options {
   display: flex;
   flex-direction: row;
@@ -80,13 +77,14 @@
   justify-content: center;
 }
 
+/* --- OPTION BUTTONS --- */
 .quiz-option {
   background: transparent;
   color: var(--brown-mid);
   border: 1px solid rgba(26, 18, 8, 0.18);
   padding: 1rem 2rem;
   border-radius: 100px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   font-weight: 400;
   cursor: none;
@@ -97,12 +95,12 @@
 
 .quiz-option:hover {
   border-color: var(--amber);
-  background: rgba(200, 131, 10, 0.05); /* Slight amber tint */
+  background: rgba(200, 131, 10, 0.05);
   transform: translateY(-2px);
   color: var(--amber);
 }
 
-/* Option Selected State */
+/* --- SELECTED OPTION STATE --- */
 .quiz-option.selected {
   background: var(--amber);
   border-color: var(--amber);
@@ -111,7 +109,7 @@
   transform: translateY(0) scale(0.98);
 }
 
-/* Back Link */
+/* --- BACK BUTTON --- */
 .quiz-back-wrap {
   margin-top: 3rem;
 }
@@ -120,10 +118,10 @@
   background: transparent;
   border: none;
   color: var(--brown-muted);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
   cursor: none;
-  transition: color 0.2s;
+  transition: color var(--transition);
   display: inline-block;
 }
 
@@ -136,7 +134,56 @@
   pointer-events: none;
 }
 
-/* Q26 Subtext */
+/* --- PEN TOGGLE BUTTON --- */
+.pen-toggle {
+  display: block;
+  margin: 1.5rem auto 0;
+  background: transparent;
+  border: none;
+  color: var(--brown-soft);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0.4rem 0.8rem;
+}
+
+.pen-toggle:hover {
+  color: var(--amber);
+}
+
+/* --- EXTRA CONTEXT TEXTAREA --- */
+.extra-context-box {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  margin: 1rem auto 0;
+  height: 100px;
+  background: var(--cream);
+  border: 1px solid rgba(26, 18, 8, 0.18);
+  border-bottom: 2px solid rgba(26, 18, 8, 0.18);
+  padding: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--brown);
+  resize: none;
+  border-radius: 12px;
+  transition: border-color var(--transition);
+}
+
+.extra-context-box:focus {
+  outline: none;
+  border-color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+.extra-context-box::placeholder {
+  color: var(--brown-soft);
+  font-weight: 300;
+}
+
+/* --- Q26 OPTIONAL CONTAINER --- */
 .optional-subtext {
   font-size: 0.95rem;
   color: var(--brown-muted);
@@ -144,7 +191,6 @@
   margin-bottom: 2rem;
 }
 
-/* Q26 Textarea */
 #optional-input {
   width: 100%;
   max-width: 680px;
@@ -153,13 +199,13 @@
   border: 1px solid rgba(26, 18, 8, 0.2);
   border-bottom: 2px solid rgba(26, 18, 8, 0.2);
   padding: 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 1.05rem;
   color: var(--brown);
   resize: none;
   border-radius: 12px;
   margin-bottom: 2rem;
-  transition: border-color 0.2s;
+  transition: border-color var(--transition);
 }
 
 #optional-input:focus {
@@ -175,7 +221,7 @@
   flex-wrap: wrap;
 }
 
-/* Loading Overlay */
+/* --- LOADING OVERLAY --- */
 .loading-overlay {
   position: absolute;
   top: 50%;
@@ -185,7 +231,7 @@
   z-index: 10;
 }
 
-/* Pixel Loader Animation */
+/* --- PIXEL LOADER --- */
 .pixel-loader {
   display: grid;
   grid-template-columns: repeat(3, 16px);
@@ -214,14 +260,8 @@
 .pixel:nth-child(8) { animation-delay: 0.7s; }
 .pixel:nth-child(9) { animation-delay: 0.8s; }
 
-@keyframes pulse-pixel {
-  0% { opacity: 0.2; }
-  50% { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0.2; }
-}
-
 .loading-text {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   color: var(--amber);
   font-weight: 500;
   font-size: 0.95rem;
@@ -229,82 +269,54 @@
   animation: fade-text 2s infinite ease-in-out;
 }
 
-@keyframes fade-text {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-/* Full Page Loader */
+/* --- FULL PAGE LOADER --- */
 .full-loader {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: var(--cream);
   z-index: 999;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-/* Pen Toggle Button */
-.pen-toggle {
-  display: block;
-  margin: 1.5rem auto 0;
-  background: transparent;
-  border: none;
-  color: var(--brown-soft, #8a7a66);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  padding: 0.4rem 0.8rem;
+/* Orbs inside full-loader don't animate */
+.full-loader .orb {
+  animation: none;
 }
 
-.pen-toggle:hover {
-  color: var(--amber);
+/* Scaled-up loader inside full-loader */
+.full-loader .pixel-loader {
+  transform: scale(1.5);
 }
 
-/* Extra Context Textarea */
-.extra-context-box {
-  display: block;
-  width: 100%;
-  max-width: 680px;
-  margin: 1rem auto 0;
-  height: 100px;
-  background: var(--cream);
-  border: 1px solid rgba(26, 18, 8, 0.18);
-  border-bottom: 2px solid rgba(26, 18, 8, 0.18);
-  padding: 1rem;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  color: var(--brown);
-  resize: none;
-  border-radius: 12px;
-  transition: border-color 0.2s;
+/* Larger loading text inside full-loader */
+.full-loader .loading-text {
+  font-size: 1.25rem;
 }
 
-.extra-context-box:focus {
-  outline: none;
-  border-color: var(--amber);
-  border-bottom-color: var(--amber);
+/* --- DEFAULT HIDDEN STATES (JS controls visibility) --- */
+.loading-overlay {
+  display: none;
 }
 
-.extra-context-box::placeholder {
-  color: var(--brown-soft, #8a7a66);
-  font-weight: 300;
+.quiz-optional {
+  display: none;
 }
 
-/* ==========================================
-   QUIZ RESPONSIVE
-   ========================================== */
+#back-btn {
+  display: none;
+}
 
-/* Mobile */
+/* Optional step submit/skip button sizing */
+.optional-btns > button {
+  padding: 0.9rem 2.5rem;
+  font-size: 1rem;
+}
+
+/* --- QUIZ RESPONSIVE: MOBILE --- */
 @media (max-width: 639px) {
-  .quiz-nav {
-    padding: 0.75rem 1.25rem;
-  }
-
   .quiz-container {
     padding: 2.5rem 1.25rem;
     min-height: 80vh;
@@ -350,13 +362,11 @@
     margin-top: 2rem;
   }
 
-  /* Pen toggle */
   .pen-toggle {
     font-size: 0.82rem;
     margin-top: 1rem;
   }
 
-  /* Extra context box */
   .extra-context-box {
     max-width: 100%;
     min-height: 80px;
@@ -364,7 +374,6 @@
     font-size: 0.88rem;
   }
 
-  /* Loading overlay */
   .loading-overlay {
     max-width: 90vw;
   }
@@ -373,7 +382,6 @@
     font-size: 0.88rem;
   }
 
-  /* Q26 optional */
   #optional-input {
     max-width: 100%;
     font-size: 0.92rem;
@@ -396,7 +404,7 @@
   }
 }
 
-/* Tablet */
+/* --- QUIZ RESPONSIVE: TABLET --- */
 @media (min-width: 640px) and (max-width: 1023px) {
   .quiz-container {
     padding: 3rem 2rem;
