@@ -13,10 +13,10 @@
   <div class="cursor-dot"></div>
 
   <nav>
-    <div class="logo">Pathify</div>
+    <a href="#" class="logo" style="text-decoration:none; color:inherit;">Pathify</a>
     <div class="nav-links">
-      <a href="#">How it works</a>
-      <a href="#">Sample result</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#sample-result">Sample result</a>
     </div>
     <button class="btn-nav" onclick="window.location.href='quiz.html'">Start the quiz</button>
   </nav>
@@ -36,7 +36,7 @@
       </p>
       <div class="hero-btns reveal">
         <button class="btn-primary" onclick="window.location.href='quiz.html'">Find my path &rarr;</button>
-        <button class="btn-ghost" onclick="document.querySelector('.hiw').scrollIntoView()">See a sample result</button>
+        <button class="btn-ghost" onclick="document.querySelector('#sample-result').scrollIntoView()">See a sample result</button>
       </div>
       <div class="hero-float-card reveal">
         <div class="float-badge">Top match</div>
@@ -74,7 +74,7 @@
   </div>
 
   <!-- HOW IT WORKS -->
-  <section class="section hiw">
+  <section id="how-it-works" class="section hiw">
     <div class="section-header reveal">
       <div class="section-label">How it works</div>
       <h2>Three steps.<br>One clear direction.</h2>
@@ -99,7 +99,7 @@
   </section>
 
   <!-- RESULT PREVIEW -->
-  <section class="section result-section">
+  <section id="sample-result" class="section result-section">
     <div class="section-header reveal">
       <div class="section-label">Sample output</div>
       <h2>What you'll walk<br>away with</h2>

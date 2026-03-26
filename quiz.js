@@ -32,23 +32,45 @@ const HARDCODED_QUESTIONS = [
   }
 ];
 
-const QUESTION_SYSTEM_PROMPT = `You are a career guidance AI for Computer Science students. Your job is to ask one deep, psychologically insightful question at a time to understand a student's strengths, cognitive style, work preferences, values, and behavioral tendencies.
+const QUESTION_SYSTEM_PROMPT = `You are a deep psychological profiler disguised as a career guidance AI for Computer Science students. Your real job is not to ask about careers — it is to excavate who this person actually is at their core. You do this by asking questions that feel slightly invasive, uncomfortably accurate, and impossible to answer without genuine self-reflection.
+
+The goal is to understand:
+- How their mind actually works under pressure
+- What they are secretly afraid of professionally
+- Whether they are driven by ego, curiosity, security, impact, or money — and in what order
+- How they behave when no one is watching or grading them
+- What they would do if failure was impossible vs if failure was guaranteed
+- Whether they think in systems, in people, in abstractions, or in things they can touch
+- What kind of pain they are willing to tolerate for years
 
 Rules:
 - Ask only ONE question per response
-- Provide exactly 4 answer options
-- Questions must be progressively deeper based on previous answers
-- Never repeat themes already covered
-- Questions should feel slightly uncomfortable — they should make the user think, not just pick an easy answer
-- Do not mention specific career paths in the questions — stay behavioral and psychological
-- Keep question text under 25 words
-- Keep each option under 10 words
+- Provide exactly 4 options
+- Never ask about job roles, career fields, or what they want to "do" professionally
+- Never ask surface questions like "do you prefer working alone or in teams"
+- Every question must create a moment of pause — the user should feel slightly seen or slightly uncomfortable
+- Questions must get progressively more probing based on previous answers — if someone reveals they are driven by ego, dig into that. If someone reveals fear of irrelevance, probe that fear
+- Rotate between: hypothetical scenarios, brutal forced choices, introspective confessions, and behavioral patterns
+- Options must feel genuinely different from each other — not just rephrased versions of the same answer
+- No option should feel like the "safe" or "correct" answer
+- Options should occasionally include one that is uncomfortably honest — the one people think but never say out loud
+- Keep question text under 30 words
+- Keep each option under 12 words
 
-Respond in this exact JSON format:
+Examples of the kind of questions to ask (do not repeat these exactly, use as inspiration):
+- "A project you built gets praised — but for the wrong reasons. You feel:" 
+- "You have 10 years of expertise. Someone younger figures it out in 10 days. Your honest reaction:"
+- "Which failure would haunt you longer?"
+- "You can be exceptional at something you find meaningless, or decent at something you love. You pick:"
+- "What would make you secretly respect yourself less?"
+- "The part of group projects you quietly resent most:"
+
+Respond in this exact JSON format only, no other text:
 {
   "question": "question text here",
   "options": ["option 1", "option 2", "option 3", "option 4"]
 }`;
+
 
 const FINAL_ANALYSIS_PROMPT = `You are a career guidance AI. Based on the conversation history provided, analyze the user's psychological profile, cognitive style, strengths, and preferences. Generate exactly 3 CS career path recommendations.
 
@@ -62,7 +84,7 @@ Rules:
 - Do not add disclaimers or hedging language
 - Be direct and confident
 
-Respond in this exact JSON format:
+Respond in this exact JSON format with all 3 results fully filled in:
 {
   "results": [
     {
@@ -70,12 +92,28 @@ Respond in this exact JSON format:
       "field": "field name",
       "percentage": 90,
       "type": "Strength-based recommendation",
-      "explanation": "3-5 sentence explanation of why this fits them specifically based on their answers",
+      "explanation": "3-5 sentence explanation",
       "strengths": ["tag1", "tag2", "tag3"],
       "considerations": ["tag1", "tag2"]
     },
-    { "rank": 2, ... },
-    { "rank": 3, ... }
+    {
+      "rank": 2,
+      "field": "field name",
+      "percentage": 80,
+      "type": "Interest-based recommendation",
+      "explanation": "3-5 sentence explanation",
+      "strengths": ["tag1", "tag2", "tag3"],
+      "considerations": ["tag1", "tag2"]
+    },
+    {
+      "rank": 3,
+      "field": "field name",
+      "percentage": 70,
+      "type": "Hybrid recommendation",
+      "explanation": "3-5 sentence explanation",
+      "strengths": ["tag1", "tag2", "tag3"],
+      "considerations": ["tag1", "tag2"]
+    }
   ]
 }`;
 
@@ -113,29 +151,34 @@ const loadingMessages = [
 ];
 let msgInterval;
 
-async function callOpenAI(messages, maxRetries = 2) {
+async function callGroq(messages, maxRetries = 2) {
   let retries = 0;
   while (retries <= maxRetries) {
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${typeof OPENAI_API_KEY !== 'undefined' ? OPENAI_API_KEY : ''}`
+          "Authorization": `Bearer ${GROQ_API_KEY}`
         },
         body: JSON.stringify({
-          model: "gpt-4o-mini",
+          model: GROQ_MODEL,
           messages: messages,
           max_tokens: 800,
-          temperature: 0.7,
-          response_format: { type: "json_object" }
+          temperature: 0.7
         })
       });
-      
-      if (!response.ok) throw new Error("API response not ok");
-      
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Groq API error (${response.status}): ${errText}`);
+      }
+
       const data = await response.json();
-      return JSON.parse(data.choices[0].message.content);
+      const text = data.choices[0].message.content;
+      const cleaned = text.replace(/```json|```/g, '').trim();
+      return JSON.parse(cleaned);
+
     } catch (e) {
       console.error(e);
       retries++;
@@ -247,7 +290,7 @@ async function advanceStep() {
     // Ensure 1.5s min load time
     const startT = Date.now();
     try {
-      const gptNext = await callOpenAI(conversationHistory);
+      const gptNext = await callGroq(conversationHistory);
       currentQuestion = gptNext;
       
       const diff = Date.now() - startT;
@@ -256,7 +299,8 @@ async function advanceStep() {
       stopLoading();
       renderQuestion();
     } catch (e) {
-      alert("Error generating next question. Please try again or check API key.");
+      alert("Error generating next question: " + e.message);
+      console.error(e);
       stopLoading();
       currentQuestionIndex--;
       conversationHistory.splice(-2, 2); // Revert failed save
@@ -289,7 +333,7 @@ async function handleFinalSubmit(optionalText) {
   document.body.style.overflow = 'hidden';
   
   try {
-    const finalData = await callOpenAI(finalMessages, 3);
+    const finalData = await callGroq(finalMessages, 3);
     sessionStorage.setItem('pathifyResults', JSON.stringify(finalData));
     window.location.href = 'results.html';
   } catch (e) {
@@ -328,8 +372,8 @@ skipBtn.onclick = () => handleFinalSubmit("");
 
 // Init
 window.addEventListener('DOMContentLoaded', () => {
-  if (!OPENAI_API_KEY || OPENAI_API_KEY === 'your-key-here') {
-    alert("Please update config.js with a valid OPENAI_API_KEY to test AI generation.");
+  if (typeof GROQ_API_KEY === 'undefined' || !GROQ_API_KEY || GROQ_API_KEY === 'your-groq-key-here') {
+    console.warn("Groq API key missing — update config.js");
   }
   currentQuestion = HARDCODED_QUESTIONS[0];
   renderQuestion();
