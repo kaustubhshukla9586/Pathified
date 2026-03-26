@@ -227,7 +227,7 @@ async function callGroq(messages, maxRetries = 2) {
   let retries = 0;
   while (retries <= maxRetries) {
     try {
-      const response = await fetch("/.netlify/functions/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: messages })
