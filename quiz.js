@@ -270,46 +270,29 @@ async function callGroq(messages, maxRetries = 2) {
 // FETCH NEXT BATCH OF 4 QUESTIONS
 // ==========================================
 async function fetchNextBatch() {
-  const contextSummary = allAnswers.map((a, i) =>
-    `Q${i + 1} [${a.category || 'GENERAL'}]: ${a.question}\nAnswer: ${a.answer}${a.extraContext ? `\nExtra context: ${a.extraContext}` : ''}`
-  ).join('\n\n');
+  // Build compact summary — only what's needed, not full history
+  const summary = allAnswers.map((a, i) =>
+    `Q${i+1}[${a.category[0]}]: ${a.answer}${a.extraContext ? ` (+${a.extraContext})` : ''}`
+  ).join(' | ');
 
   const messages = [
     { role: "system", content: QUESTION_SYSTEM_PROMPT },
-    { role: "user", content: `Here are all the answers so far:\n\n${contextSummary}\n\nGenerate the next batch of 4 questions. Each question must be in a different category: PERSONALITY, SITUATION, CSE DISCIPLINE, VALUES. Base the questions on everything above. You MUST respond with valid JSON only containing a "batch" array of exactly 4 questions.` }
+    { role: "user", content: `Answers so far: ${summary}\n\nGenerate next batch of 4 questions (PERSONALITY, SITUATION, CSE DISCIPLINE, VALUES). Must be based on patterns above.` }
   ];
 
-  const parsed = await callGroq(messages);
-
-  // Defensive: handle different response shapes the AI might return
-  let batch = null;
-
-  if (parsed && Array.isArray(parsed.batch)) {
-    batch = parsed.batch;
-  } else if (parsed && Array.isArray(parsed.questions)) {
-    batch = parsed.questions;
-  } else if (Array.isArray(parsed)) {
-    batch = parsed;
+  const response = await callGroq(messages);
+  
+  let batch = response?.batch || response?.questions || response;
+  if (!Array.isArray(batch)) {
+    const key = Object.keys(response).find(k => Array.isArray(response[k]));
+    if (key) batch = response[key];
+    else throw new Error("Could not find question array in response");
   }
-
-  // Validate batch exists and has items
-  if (!batch || !Array.isArray(batch) || batch.length === 0) {
-    throw new Error('AI returned an invalid batch format. Please try again.');
-  }
-
-  // Filter out any malformed questions
-  const valid = batch.filter(q => q && q.question && Array.isArray(q.options) && q.options.length >= 2);
-  if (valid.length === 0) {
-    throw new Error('AI returned questions with missing fields. Please try again.');
-  }
-
-  // Fill category if missing
-  const categories = ['PERSONALITY', 'SITUATION', 'CSE DISCIPLINE', 'VALUES'];
-  valid.forEach((q, i) => {
-    if (!q.category) q.category = categories[i % categories.length];
-  });
-
-  return valid;
+  
+  return batch.filter(q => q && q.question && Array.isArray(q.options)).map(q => ({
+    ...q,
+    category: q.category || 'PERSONALITY'
+  }));
 }
 
 // ==========================================
@@ -572,13 +555,14 @@ async function handleFinalSubmit(optionalText) {
   if (summaryScreen) summaryScreen.style.display = 'none';
 
   // Build full context summary for analysis
+  // Compact context for final analysis — question text not needed, answers tell the story
   const contextSummary = allAnswers.map((a, i) =>
-    `Q${i + 1} [${a.category}]: ${a.question}\nAnswer: ${a.answer}${a.extraContext ? `\nExtra context: ${a.extraContext}` : ''}`
-  ).join('\n\n');
+    `Q${i+1}[${a.category}]: ${a.answer}${a.extraContext ? ` | extra: ${a.extraContext}` : ''}`
+  ).join('\n');
 
   const finalMessages = [
     { role: "system", content: FINAL_ANALYSIS_PROMPT },
-    { role: "user", content: `Here is the full quiz conversation:\n\n${contextSummary}${optionalText && optionalText.trim() ? `\n\nAdditional context from user: ${optionalText.trim()}` : ''}\n\nAnalyse this person and generate 3 career path recommendations.` }
+    { role: "user", content: `Student answers:\n${contextSummary}${optionalText?.trim() ? `\nExtra: ${optionalText.trim()}` : ''}\n\nGenerate 3 career recommendations.` }
   ];
 
   fullLoader.style.display = 'flex';
@@ -599,21 +583,22 @@ async function handleFinalSubmit(optionalText) {
 }
 
 async function showProgressSummary() {
-  const traitMessages = [
-    ...conversationHistory,
-    {
-      role: "user",
-      content: 'Based on all the answers above, identify exactly 4 short personality or work-style traits this person has shown. Each trait must be 2-4 words maximum. Simple, direct language. No career fields. Return ONLY a JSON array of 4 strings, nothing else: ["trait1", "trait2", "trait3", "trait4"]'
-    }
+  const summary = allAnswers.map((a, i) =>
+    `Q${i+1}: ${a.answer}${a.extraContext ? ` (${a.extraContext})` : ''}`
+  ).join(' | ');
+
+  const messages = [
+    { role: "system", content: "You identify personality traits from quiz answers. Be brief." },
+    { role: "user", content: `Quiz answers: ${summary}\n\nReturn ONLY a JSON array of exactly 4 short traits (2-4 words each). Example: ["analytical thinker","avoids repetition","driven by impact","works best alone"]` }
   ];
 
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages: traitMessages })
+    body: JSON.stringify({ messages })
   });
 
-  if (!response.ok) throw new Error('Trait API request failed');
+  if (!response.ok) throw new Error('Trait API failed');
   const data = await response.json();
   const text = data.choices[0].message.content;
   const cleaned = text.replace(/```json|```/g, '').trim();
