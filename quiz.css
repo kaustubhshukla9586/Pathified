@@ -293,3 +293,125 @@
   color: var(--brown-soft, #8a7a66);
   font-weight: 300;
 }
+
+/* ==========================================
+   QUIZ RESPONSIVE
+   ========================================== */
+
+/* Mobile */
+@media (max-width: 639px) {
+  .quiz-nav {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .quiz-container {
+    padding: 2.5rem 1.25rem;
+    min-height: 80vh;
+  }
+
+  .quiz-inner {
+    max-width: 100%;
+  }
+
+  .quiz-question {
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+    margin-bottom: 2rem;
+    max-width: 100%;
+  }
+
+  .quiz-nav-meta {
+    font-size: 0.78rem;
+    margin-top: 1rem;
+    margin-bottom: -0.5rem;
+  }
+
+  .quiz-options {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quiz-option {
+    width: 100%;
+    font-size: 0.88rem;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    text-align: left;
+    min-width: 0;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .back-link {
+    font-size: 0.82rem;
+  }
+
+  .quiz-back-wrap {
+    margin-top: 2rem;
+  }
+
+  /* Pen toggle */
+  .pen-toggle {
+    font-size: 0.82rem;
+    margin-top: 1rem;
+  }
+
+  /* Extra context box */
+  .extra-context-box {
+    max-width: 100%;
+    min-height: 80px;
+    height: 80px;
+    font-size: 0.88rem;
+  }
+
+  /* Loading overlay */
+  .loading-overlay {
+    max-width: 90vw;
+  }
+
+  .loading-text {
+    font-size: 0.88rem;
+  }
+
+  /* Q26 optional */
+  #optional-input {
+    max-width: 100%;
+    font-size: 0.92rem;
+    height: 100px;
+  }
+
+  .optional-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .optional-btns button {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .optional-subtext {
+    font-size: 0.85rem;
+    margin-top: -1rem;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .quiz-container {
+    padding: 3rem 2rem;
+  }
+
+  .quiz-question {
+    font-size: clamp(1.3rem, 3vw, 2rem);
+  }
+
+  .quiz-options {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .quiz-option {
+    max-width: 48%;
+    flex: 0 0 48%;
+  }
+}
