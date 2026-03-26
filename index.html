@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pathify — Find Your CS Path</title>
+  <title>Pathified — Find Your CS Path</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/global.css"/>
   <link rel="stylesheet" href="css/animations.css"/>
@@ -16,12 +16,12 @@
   <div class="cursor-dot"></div>
 
   <nav>
-    <a href="#" class="logo">Pathify</a>
+    <a href="#" class="logo">Pathified</a>
     <div class="nav-links">
       <a href="#how-it-works">How it works</a>
       <a href="#sample-result">Sample result</a>
     </div>
-    <button class="btn-nav" onclick="window.location.href='quiz.html'">Start the quiz</button>
+    <button class="btn-nav start-quiz-btn" onclick="window.location.href='quiz.html'">Start the quiz</button>
   </nav>
 
   <!-- HERO -->
@@ -38,9 +38,13 @@
         A path built around you — not copied from a template.
       </p>
       <div class="hero-btns reveal">
-        <button class="btn-primary" onclick="window.location.href='quiz.html'">Find my path &rarr;</button>
+        <button class="btn-primary start-quiz-btn" onclick="window.location.href='quiz.html'">Find my path &rarr;</button>
         <button class="btn-ghost" onclick="document.querySelector('#sample-result').scrollIntoView()">See a sample result</button>
       </div>
+      <p class="not-cs-text reveal">
+        Not from CS?
+        <button class="not-cs-btn" id="not-cs-btn">Click here</button>
+      </p>
       <div class="hero-float-card reveal">
         <div class="float-badge">Top match</div>
         <div class="float-title">AI / Machine Learning</div>
@@ -51,6 +55,23 @@
     <div class="orb orb2"></div>
     <div class="orb orb3"></div>
   </section>
+
+  <div class="modal-overlay" id="not-cs-modal">
+    <div class="not-cs-modal-card">
+      <button class="modal-close" id="not-cs-close" aria-label="Close">&times;</button>
+      <div class="not-cs-icon">🚧</div>
+      <h3>We're building this for you</h3>
+      <p>Pathified is currently built for CS college students. We're working on versions for students from all backgrounds and streams.</p>
+      <p class="not-cs-sub">Drop your email and we'll let you know the moment it's ready.</p>
+      <div class="not-cs-form" id="not-cs-form">
+        <input type="email" id="not-cs-email" placeholder="your@email.com"/>
+        <button class="btn-primary" id="not-cs-submit">Notify me</button>
+      </div>
+      <p class="not-cs-confirm" id="not-cs-confirm">
+        ✓ You're on the list. We'll reach out soon.
+      </p>
+    </div>
+  </div>
 
   <!-- MARQUEE -->
   <div class="marquee-wrap">
@@ -98,6 +119,39 @@
         <h3>Get your roadmap</h3>
         <p>A ranked list of fields, a clear explanation of why they fit you, and a concrete plan to get started today.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="section who-for">
+    <div class="section-header reveal">
+      <div class="section-label">Who is this for</div>
+      <h2>Built for students at a crossroads</h2>
+    </div>
+    <div class="who-grid">
+      <article class="who-card who-live reveal">
+        <div class="who-icon">🎓</div>
+        <div class="who-head">
+          <h3>CS College Students</h3>
+          <span class="who-badge who-badge-live">Available now</span>
+        </div>
+        <p>You're in your first or second year, you picked CS but now you're not sure which direction to go. Pathified helps you figure out your specific path before it's too late to choose.</p>
+      </article>
+      <article class="who-card who-soon reveal" aria-disabled="true">
+        <div class="who-icon">📘</div>
+        <div class="who-head">
+          <h3>Class 12 Students</h3>
+          <span class="who-badge who-badge-soon">Coming soon</span>
+        </div>
+        <p>Deciding between engineering branches? Pathified will help you figure out if CS is even right for you before you commit.</p>
+      </article>
+      <article class="who-card who-soon reveal" aria-disabled="true">
+        <div class="who-icon">🧭</div>
+        <div class="who-head">
+          <h3>Class 10 Students</h3>
+          <span class="who-badge who-badge-soon">Coming soon</span>
+        </div>
+        <p>Too early to decide? Not really. Pathified will help you understand your strengths early so you can make the right stream choice.</p>
+      </article>
     </div>
   </section>
 
@@ -163,14 +217,14 @@
     <div class="cta-inner reveal">
       <h2>Your path is waiting.<br><em>Find it in 8 minutes.</em></h2>
       <p>Free. No signup. Just honest answers.</p>
-      <button class="btn-primary btn-lg" onclick="window.location.href='quiz.html'">Start the quiz &rarr;</button>
+      <button class="btn-primary btn-lg start-quiz-btn" onclick="window.location.href='quiz.html'">Start the quiz &rarr;</button>
     </div>
     <div class="orb orb-cta1"></div>
     <div class="orb orb-cta2"></div>
   </section>
 
   <footer>
-    <div class="logo">Pathify</div>
+    <div class="logo">Pathified</div>
     <p>Made for CS students who refuse to guess.</p>
   </footer>
 

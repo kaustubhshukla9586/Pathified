@@ -5,6 +5,7 @@ const cursor = document.querySelector('.cursor');
 const cursorDot = document.querySelector('.cursor-dot');
 
 document.addEventListener('mousemove', (e) => {
+  if (!cursor || !cursorDot) return;
   cursor.style.left = e.clientX + 'px';
   cursor.style.top = e.clientY + 'px';
   cursorDot.style.left = e.clientX + 'px';
@@ -12,10 +13,12 @@ document.addEventListener('mousemove', (e) => {
 });
 
 document.addEventListener('mousedown', () => {
+  if (!cursor) return;
   cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
 });
 
 document.addEventListener('mouseup', () => {
+  if (!cursor) return;
   cursor.style.transform = 'translate(-50%, -50%) scale(1)';
 });
 
@@ -60,3 +63,63 @@ const barObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 
 bars.forEach(bar => barObserver.observe(bar));
+
+// ================================
+// PAGE FADE IN/OUT
+// ================================
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.style.opacity = '0';
+  requestAnimationFrame(() => {
+    document.body.style.transition = 'opacity 0.4s ease';
+    document.body.style.opacity = '1';
+  });
+
+  document.querySelectorAll('.start-quiz-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => {
+        window.location.href = 'quiz.html';
+      }, 300);
+    });
+  });
+});
+
+// ================================
+// NOT FROM CS MODAL
+// ================================
+const notCsBtn = document.getElementById('not-cs-btn');
+const notCsModal = document.getElementById('not-cs-modal');
+const notCsClose = document.getElementById('not-cs-close');
+const notCsSubmit = document.getElementById('not-cs-submit');
+const notCsEmail = document.getElementById('not-cs-email');
+const notCsForm = document.getElementById('not-cs-form');
+const notCsConfirm = document.getElementById('not-cs-confirm');
+
+if (notCsBtn && notCsModal && notCsClose) {
+  notCsBtn.addEventListener('click', () => {
+    notCsModal.classList.add('active');
+  });
+
+  notCsClose.addEventListener('click', () => {
+    notCsModal.classList.remove('active');
+  });
+
+  notCsModal.addEventListener('click', (e) => {
+    if (e.target.id === 'not-cs-modal') {
+      notCsModal.classList.remove('active');
+    }
+  });
+}
+
+if (notCsSubmit && notCsEmail && notCsForm && notCsConfirm) {
+  notCsSubmit.addEventListener('click', () => {
+    const email = notCsEmail.value.trim();
+    if (email && email.includes('@')) {
+      notCsConfirm.style.display = 'block';
+      notCsForm.style.display = 'none';
+      localStorage.setItem('notcs_email', email);
+    }
+  });
+}

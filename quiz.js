@@ -159,7 +159,7 @@ let isGenerating = false;
 // CACHE / RESUME
 // ==========================================
 function saveProgress() {
-  localStorage.setItem('pathify_progress', JSON.stringify({
+  localStorage.setItem('pathified_progress', JSON.stringify({
     currentQuestionIndex,
     currentBatchIndex,
     questionBatch,
@@ -169,7 +169,7 @@ function saveProgress() {
 }
 
 function restoreProgress() {
-  const saved = localStorage.getItem('pathify_progress');
+  const saved = localStorage.getItem('pathified_progress');
   if (!saved) return false;
   try {
     const state = JSON.parse(saved);
@@ -187,7 +187,7 @@ function restoreProgress() {
 }
 
 function clearProgress() {
-  localStorage.removeItem('pathify_progress');
+  localStorage.removeItem('pathified_progress');
 }
 
 // ==========================================
@@ -207,6 +207,8 @@ const optionalContainer = document.getElementById('optional-container');
 const optionalInput = document.getElementById('optional-input');
 const submitBtn = document.getElementById('submit-btn');
 const skipBtn = document.getElementById('skip-btn');
+const summaryScreen = document.getElementById('summary-screen');
+const traitsContainer = document.getElementById('traits-container');
 
 // ==========================================
 // LOADING MESSAGES
@@ -317,7 +319,7 @@ function updateProgress() {
 function renderQuestion() {
   questionText.textContent = currentQuestion.question;
   optionsContainer.innerHTML = '';
-  optionsContainer.style.display = 'flex';
+  optionsContainer.style.display = 'grid';
 
   // Remove any previous pen toggle / extra box
   const oldPen = document.querySelector('.pen-toggle');
@@ -380,6 +382,18 @@ function renderQuestion() {
   updateProgress();
 }
 
+function animateQuestionTransition(renderFn) {
+  innerEls.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+  innerEls.style.opacity = '0';
+  innerEls.style.transform = 'translateY(12px)';
+
+  setTimeout(() => {
+    renderFn();
+    innerEls.style.opacity = '1';
+    innerEls.style.transform = 'translateY(0)';
+  }, 200);
+}
+
 // ==========================================
 // HANDLE OPTION SELECTION
 // ==========================================
@@ -421,7 +435,7 @@ async function advanceStep() {
   if (currentQuestionIndex < 3) {
     // Hardcoded questions
     currentQuestion = HARDCODED_QUESTIONS[currentQuestionIndex];
-    renderQuestion();
+    animateQuestionTransition(renderQuestion);
   } else if (currentQuestionIndex < totalQuestions) {
     // Check if current batch has more questions
     if (currentBatchIndex < questionBatch.length) {
@@ -429,7 +443,7 @@ async function advanceStep() {
       currentQuestion = questionBatch[currentBatchIndex];
       currentBatchIndex++;
       saveProgress();
-      renderQuestion();
+      animateQuestionTransition(renderQuestion);
     } else {
       // Need a new batch from AI
       startLoading();
@@ -448,7 +462,7 @@ async function advanceStep() {
 
         saveProgress();
         stopLoading();
-        renderQuestion();
+        animateQuestionTransition(renderQuestion);
       } catch (e) {
         console.error(e);
         alert("Error generating next questions: " + e.message);
@@ -487,6 +501,35 @@ function showOptionalStep() {
 // FINAL SUBMIT
 // ==========================================
 async function handleFinalSubmit(optionalText) {
+  if (optionalText?.trim()) {
+    conversationHistory.push({
+      role: "user",
+      content: `Additional context: ${optionalText.trim()}`
+    });
+  }
+
+  innerEls.style.display = 'none';
+  if (summaryScreen) summaryScreen.style.display = 'flex';
+
+  if (traitsContainer) traitsContainer.innerHTML = '';
+  try {
+    const traits = await showProgressSummary();
+    if (traitsContainer && Array.isArray(traits)) {
+      traits.forEach((trait, i) => {
+        const tag = document.createElement('div');
+        tag.className = 'trait-tag';
+        tag.textContent = trait;
+        tag.style.animationDelay = `${i * 0.15}s`;
+        traitsContainer.appendChild(tag);
+      });
+    }
+  } catch (e) {
+    console.error('Summary trait generation failed:', e);
+  }
+
+  await new Promise((r) => setTimeout(r, 3000));
+  if (summaryScreen) summaryScreen.style.display = 'none';
+
   // Build full context summary for analysis
   const contextSummary = allAnswers.map((a, i) =>
     `Q${i + 1} [${a.category}]: ${a.question}\nAnswer: ${a.answer}${a.extraContext ? `\nExtra context: ${a.extraContext}` : ''}`
@@ -503,13 +546,38 @@ async function handleFinalSubmit(optionalText) {
   try {
     const finalData = await callGroq(finalMessages, 3);
     clearProgress();
-    sessionStorage.setItem('pathifyResults', JSON.stringify(finalData));
+    sessionStorage.setItem('pathifiedResults', JSON.stringify(finalData));
     window.location.href = 'results.html';
   } catch (e) {
     alert("Error generating your results. Please try again.");
     fullLoader.style.display = 'none';
+    if (summaryScreen) summaryScreen.style.display = 'none';
+    innerEls.style.display = 'flex';
     document.body.style.overflow = '';
   }
+}
+
+async function showProgressSummary() {
+  const traitMessages = [
+    ...conversationHistory,
+    {
+      role: "user",
+      content: 'Based on all the answers above, identify exactly 4 short personality or work-style traits this person has shown. Each trait must be 2-4 words maximum. Simple, direct language. No career fields. Return ONLY a JSON array of 4 strings, nothing else: ["trait1", "trait2", "trait3", "trait4"]'
+    }
+  ];
+
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages: traitMessages })
+  });
+
+  if (!response.ok) throw new Error('Trait API request failed');
+  const data = await response.json();
+  const text = data.choices[0].message.content;
+  const cleaned = text.replace(/```json|```/g, '').trim();
+  const traits = JSON.parse(cleaned);
+  return Array.isArray(traits) ? traits.slice(0, 4) : [];
 }
 
 // ==========================================

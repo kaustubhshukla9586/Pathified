@@ -71,6 +71,25 @@
   flex-wrap: wrap;
 }
 
+/* --- NOT FROM CS LINE --- */
+.not-cs-text {
+  font-size: 0.82rem;
+  color: var(--brown-soft);
+  margin-top: 1.5rem;
+  font-weight: 300;
+}
+
+.not-cs-btn {
+  background: none;
+  border: none;
+  color: var(--amber);
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-family: var(--font-sans);
+}
+
 /* --- FLOATING HERO CARD --- */
 .hero-float-card {
   background: white;
@@ -241,6 +260,83 @@
   color: var(--brown-muted);
   line-height: 1.7;
   font-weight: 300;
+}
+
+/* --- WHO IS THIS FOR SECTION --- */
+.who-for {
+  padding-top: 0;
+}
+
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.who-card {
+  border-radius: 16px;
+  border: 1px solid rgba(26, 18, 8, 0.1);
+  padding: 1.35rem;
+}
+
+.who-live {
+  background: white;
+  border-top: 2px solid var(--amber);
+}
+
+.who-soon {
+  background: var(--cream-alt);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.who-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.who-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.who-head h3 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--brown);
+}
+
+.who-card p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--brown-mid);
+  font-weight: 300;
+}
+
+.who-badge {
+  display: inline-block;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+}
+
+.who-badge-live {
+  background: var(--amber-pale);
+  color: var(--amber);
+  border: 1px solid rgba(200, 132, 42, 0.2);
+}
+
+.who-badge-soon {
+  background: rgba(26, 18, 8, 0.06);
+  color: var(--brown-soft);
+  border: 1px solid rgba(26, 18, 8, 0.12);
 }
 
 /* --- SAMPLE OUTPUT RESULT CARD --- */
@@ -429,6 +525,97 @@
   font-weight: 300;
 }
 
+/* --- NOT FROM CS MODAL --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 18, 8, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.not-cs-modal-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.not-cs-modal-card .modal-close {
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--brown-soft);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.not-cs-icon {
+  font-size: 1.35rem;
+  margin-bottom: 0.8rem;
+}
+
+.not-cs-modal-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--brown);
+  font-weight: 400;
+}
+
+.not-cs-modal-card p {
+  font-size: 0.9rem;
+  color: var(--brown-soft);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+.not-cs-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.not-cs-form input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  border-radius: 100px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  outline: none;
+  color: var(--brown);
+}
+
+.not-cs-form input:focus {
+  border-color: var(--amber);
+}
+
+.not-cs-confirm {
+  display: none;
+  color: var(--amber);
+  font-weight: 500;
+}
+
 /* --- FINAL CTA SECTION --- */
 .final-cta {
   padding: 8rem 3rem;
@@ -515,6 +702,14 @@ footer p {
 
   .hero-float-card {
     display: none;
+  }
+
+  .who-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .not-cs-form {
+    flex-direction: column;
   }
 
   .section {

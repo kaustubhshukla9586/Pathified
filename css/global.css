@@ -55,6 +55,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   cursor: none;
+  transition: opacity 0.3s ease;
 }
 
 /* --- UTILITY: SCROLL REVEAL --- */

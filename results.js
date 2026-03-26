@@ -1,9 +1,10 @@
 // results.js
 
 let resultsData = [];
+let currentResult = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const stored = sessionStorage.getItem('pathifyResults');
+  const stored = sessionStorage.getItem('pathifiedResults');
   if (!stored) {
     // If accessed directly without data, bounce to index
     window.location.href = 'index.html';
@@ -38,6 +39,36 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   renderCards();
+
+  const retakeBtn = document.getElementById('retake-btn');
+  if (retakeBtn) {
+    retakeBtn.addEventListener('click', () => {
+      localStorage.removeItem('pathify_progress');
+      localStorage.removeItem('pathified_progress');
+      sessionStorage.removeItem('pathifyResults');
+      sessionStorage.removeItem('pathifiedResults');
+      window.location.href = 'quiz.html';
+    });
+  }
+
+  const emailBtn = document.getElementById('results-email-btn');
+  const emailInput = document.getElementById('results-email');
+  const emailConfirm = document.getElementById('email-confirm');
+  if (emailBtn && emailInput && emailConfirm) {
+    emailBtn.addEventListener('click', () => {
+      const email = emailInput.value.trim();
+      if (email && email.includes('@')) {
+        const results = JSON.parse(sessionStorage.getItem('pathifiedResults') || 'null');
+        localStorage.setItem('pathify_email_request', JSON.stringify({
+          email,
+          results,
+          timestamp: new Date().toISOString()
+        }));
+        emailConfirm.style.display = 'block';
+        emailBtn.disabled = true;
+      }
+    });
+  }
 });
 
 function getRankLabel(rank) {
@@ -101,6 +132,7 @@ const backdrop = document.getElementById('modal-backdrop');
 const modalClose = document.getElementById('modal-close');
 
 function openModal(item) {
+  currentResult = item;
   document.getElementById('m-rank').textContent = item.rank === 1 ? 'Top match' : `Rank #${item.rank}`;
   document.getElementById('m-field').textContent = item.field;
   document.getElementById('m-pct').textContent = `${item.percentage}%`;
@@ -173,3 +205,18 @@ backdrop.addEventListener('click', closeModal);
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
 });
+
+const shareBtn = document.getElementById('share-btn');
+const shareConfirm = document.getElementById('share-confirm');
+if (shareBtn && shareConfirm) {
+  shareBtn.addEventListener('click', () => {
+    if (!currentResult) return;
+    const shareText = `I got ${currentResult.field} on Pathified — find your CS path at pathified.com`;
+    navigator.clipboard.writeText(shareText).then(() => {
+      shareConfirm.style.opacity = '1';
+      setTimeout(() => {
+        shareConfirm.style.opacity = '0';
+      }, 2500);
+    });
+  });
+}

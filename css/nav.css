@@ -14,8 +14,8 @@ nav {
   padding: 1.4rem 3rem;
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: rgba(245, 240, 232, 0.88);
+  z-index: 1000;
+  background: rgba(245, 240, 232, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(200, 132, 42, 0.1);

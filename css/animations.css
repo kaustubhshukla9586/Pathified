@@ -40,6 +40,24 @@
   50%       { opacity: 1; }
 }
 
+/* --- TRAIT TAG FADE UP --- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- SUMMARY SUBTLE PULSE --- */
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
 /* --- DELAY UTILITIES --- */
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.2s; }
