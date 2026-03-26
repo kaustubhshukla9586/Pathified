@@ -1,4 +1,39 @@
 // ================================
+// DARK MODE
+// ================================
+(function() {
+  const saved = localStorage.getItem('pathified_theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  const updateIcon = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.querySelector('.theme-icon-light').style.display = isDark ? 'none' : 'block';
+    btn.querySelector('.theme-icon-dark').style.display = isDark ? 'block' : 'none';
+  };
+
+  updateIcon();
+
+  btn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('pathified_theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('pathified_theme', 'dark');
+    }
+    updateIcon();
+  });
+});
+
+// ================================
 // CUSTOM CURSOR
 // ================================
 const cursor = document.querySelector('.cursor');
