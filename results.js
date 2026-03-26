@@ -51,25 +51,85 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const emailBtn = document.getElementById('results-email-btn');
-  const emailInput = document.getElementById('results-email');
-  const emailConfirm = document.getElementById('email-confirm');
-  if (emailBtn && emailInput && emailConfirm) {
-    emailBtn.addEventListener('click', () => {
-      const email = emailInput.value.trim();
-      if (email && email.includes('@')) {
-        const results = JSON.parse(sessionStorage.getItem('pathifiedResults') || 'null');
-        localStorage.setItem('pathify_email_request', JSON.stringify({
-          email,
-          results,
-          timestamp: new Date().toISOString()
-        }));
-        emailConfirm.style.display = 'block';
-        emailBtn.disabled = true;
-      }
-    });
-  }
-});
+  // Initialize EmailJS
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+const emailBtn = document.getElementById('results-email-btn');
+const emailInput = document.getElementById('results-email');
+const emailConfirm = document.getElementById('email-confirm');
+
+if (emailBtn && emailInput && emailConfirm) {
+  emailBtn.addEventListener('click', async () => {
+    const email = emailInput.value.trim();
+    if (!email || !email.includes('@')) return;
+
+    // Button loading state
+    emailBtn.textContent = 'Sending...';
+    emailBtn.disabled = true;
+
+    const results = JSON.parse(sessionStorage.getItem('pathifiedResults') || 'null');
+    if (!results || !results.results) {
+      emailBtn.textContent = 'Error — try again';
+      emailBtn.disabled = false;
+      return;
+    }
+
+    const r = results.results;
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: email,
+
+        // Result 1
+        field_1: r[0].field,
+        percentage_1: r[0].percentage,
+        explanation_1: r[0].explanation,
+        strength_1_a: r[0].strengths[0] || '',
+        strength_1_b: r[0].strengths[1] || '',
+        strength_1_c: r[0].strengths[2] || '',
+        consideration_1_a: r[0].considerations[0] || '',
+        consideration_1_b: r[0].considerations[1] || '',
+        role_1_a: r[0].roles[0] || '',
+        role_1_b: r[0].roles[1] || '',
+        role_1_c: r[0].roles[2] || '',
+
+        // Result 2
+        field_2: r[1].field,
+        percentage_2: r[1].percentage,
+        explanation_2: r[1].explanation,
+        strength_2_a: r[1].strengths[0] || '',
+        strength_2_b: r[1].strengths[1] || '',
+        strength_2_c: r[1].strengths[2] || '',
+        consideration_2_a: r[1].considerations[0] || '',
+        consideration_2_b: r[1].considerations[1] || '',
+        role_2_a: r[1].roles[0] || '',
+        role_2_b: r[1].roles[1] || '',
+        role_2_c: r[1].roles[2] || '',
+
+        // Result 3
+        field_3: r[2].field,
+        percentage_3: r[2].percentage,
+        explanation_3: r[2].explanation,
+        strength_3_a: r[2].strengths[0] || '',
+        strength_3_b: r[2].strengths[1] || '',
+        strength_3_c: r[2].strengths[2] || '',
+        consideration_3_a: r[2].considerations[0] || '',
+        consideration_3_b: r[2].considerations[1] || '',
+        role_3_a: r[2].roles[0] || '',
+        role_3_b: r[2].roles[1] || '',
+        role_3_c: r[2].roles[2] || '',
+      });
+
+      // Success
+      emailConfirm.style.display = 'block';
+      emailBtn.textContent = '✓ Sent';
+
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      emailBtn.textContent = 'Failed — try again';
+      emailBtn.disabled = false;
+    }
+  });
 
 function getRankLabel(rank) {
   if (rank === 1) return "#1 Best Match";
