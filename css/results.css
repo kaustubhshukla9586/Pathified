@@ -1,13 +1,12 @@
-/* ================================
-   results.css
-   Covers: results page heading/subtext, result cards (all 3),
-   rank label, field name, percentage, path bars on results,
-   modal overlay and blur, modal card, modal close button,
-   strengths tags, considerations tags, roles tags,
-   share/retake buttons, email input on results
-   Used by: results.html only
-   Do NOT add page-specific styles here
-================================ */
+/* ============================================================
+   FILE: css/results.css
+   PURPOSE: Results page specific styles — results grid, result
+            cards (rank-1 highlight), percentage bars, modal
+            overlay and card, strengths/considerations/roles
+            tags, email form, share button, retake button
+   USED BY: results.html
+   DO NOT ADD: styles that belong in global.css or nav.css
+   ============================================================ */
 
 /* --- RESULTS CONTAINER --- */
 .results-container {

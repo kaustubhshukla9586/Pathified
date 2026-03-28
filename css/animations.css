@@ -1,64 +1,71 @@
-/* ================================
-   animations.css
-   Covers: all @keyframes declarations, float animation,
-   orb breathe animation, marquee scroll, pixel loader,
-   bar fill, modal transitions, delay utilities
-   Used by: index.html, quiz.html, results.html
-   Do NOT add page-specific styles here
-================================ */
+/* ============================================================
+   FILE: css/animations.css
+   PURPOSE: All @keyframes declarations, scroll reveal utility
+            (.reveal / .reveal.visible), animated bar fill,
+            page fade transitions, delay utility classes
+   USED BY: index.html, quiz.html, results.html
+   DO NOT ADD: page-specific styles — those belong in their
+               own CSS files
+   ============================================================ */
 
-/* --- ORB BREATHE --- */
+/* ── SECTION: Scroll Reveal ──────────────────────────────────── */
+.reveal {
+  opacity:    0;
+  transform:  translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.visible {
+  opacity:   1;
+  transform: translateY(0);
+}
+
+/* ── SECTION: Orb Breathe ────────────────────────────────────── */
 @keyframes breathe {
-  0%, 100% { transform: scale(1) translate(0, 0); opacity: 1; }
+  0%, 100% { transform: scale(1) translate(0, 0);       opacity: 1;    }
   33%       { transform: scale(1.08) translate(10px, -12px); opacity: 0.85; }
-  66%       { transform: scale(0.95) translate(-8px, 8px); opacity: 0.95; }
+  66%       { transform: scale(0.95) translate(-8px, 8px);   opacity: 0.95; }
 }
 
-/* --- HERO FLOAT CARD --- */
+/* ── SECTION: Hero Float Card ────────────────────────────────── */
 @keyframes float {
-  0%   { transform: translateY(0); }
+  0%   { transform: translateY(0);    }
   50%  { transform: translateY(-12px); }
-  100% { transform: translateY(0); }
+  100% { transform: translateY(0);    }
 }
 
-/* --- MARQUEE --- */
+/* ── SECTION: Marquee ────────────────────────────────────────── */
 @keyframes marquee {
-  from { transform: translateX(0); }
+  from { transform: translateX(0);    }
   to   { transform: translateX(-50%); }
 }
 
-/* --- PIXEL LOADER --- */
+/* ── SECTION: Pixel Loader ───────────────────────────────────── */
 @keyframes pulse-pixel {
   0%   { opacity: 0.2; }
   50%  { opacity: 1; transform: scale(1.1); }
   100% { opacity: 0.2; }
 }
 
-/* --- LOADING TEXT FADE --- */
+/* ── SECTION: Loading Text Fade ──────────────────────────────── */
 @keyframes fade-text {
   0%, 100% { opacity: 0.6; }
-  50%       { opacity: 1; }
+  50%       { opacity: 1;   }
 }
 
-/* --- TRAIT TAG FADE UP --- */
+/* ── SECTION: Trait Tag Fade Up ──────────────────────────────── */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* --- SUMMARY SUBTLE PULSE --- */
+/* ── SECTION: Summary Pulse ──────────────────────────────────── */
 @keyframes pulse {
   0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  50%       { opacity: 1;   }
 }
 
-/* --- DELAY UTILITIES --- */
+/* ── SECTION: Delay Utilities ────────────────────────────────── */
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.2s; }
 .delay-3 { animation-delay: 0.3s; }

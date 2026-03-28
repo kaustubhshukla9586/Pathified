@@ -1,10 +1,10 @@
-/* ================================
-   nav.css
-   Covers: sticky navbar, logo, nav links, nav CTA button,
-   quiz-nav variant, results-nav variant, mobile nav
-   Used by: index.html, quiz.html, results.html
-   Do NOT add page-specific styles here
-================================ */
+/* ============================================================
+   FILE: css/nav.css
+   PURPOSE: Sticky navbar — logo, nav links, CTA button,
+            quiz-nav and results-nav variants, mobile nav
+   USED BY: index.html, quiz.html, results.html
+   DO NOT ADD: styles that belong in global.css or page CSS
+   ============================================================ */
 
 /* --- STICKY NAVBAR --- */
 nav {

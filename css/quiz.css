@@ -1,12 +1,13 @@
-/* ================================
-   quiz.css
-   Covers: quiz page background, progress bar, question counter,
-   question text, options, selected state, pen toggle, extra
-   context textarea, back button, loading overlay, pixel loader,
-   full page loader, Q26 optional container
-   Used by: quiz.html only
-   Do NOT add page-specific styles here
-================================ */
+/* ============================================================
+   FILE: css/quiz.css
+   PURPOSE: Quiz page specific styles — progress bar, question
+            counter, question text, option cards, pen toggle,
+            extra context textarea, back button, loading overlay,
+            pixel loader, full-page loader, Q26 optional step,
+            summary screen, trait tags
+   USED BY: quiz.html
+   DO NOT ADD: styles that belong in global.css or nav.css
+   ============================================================ */
 
 /* --- QUIZ PROGRESS BAR --- */
 .quiz-progress-wrap {

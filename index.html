@@ -21,7 +21,7 @@
       <a href="#how-it-works">How it works</a>
       <a href="#sample-result">Sample result</a>
     </div>
-    <button class="btn-nav start-quiz-btn" onclick="window.location.href='quiz.html'">Start the quiz</button>
+    <button class="btn-nav start-quiz-btn">Start the quiz</button>
   </nav>
 
   <!-- HERO -->
@@ -38,8 +38,8 @@
         A path built around you — not copied from a template.
       </p>
       <div class="hero-btns reveal">
-        <button class="btn-primary start-quiz-btn" onclick="window.location.href='quiz.html'">Find my path &rarr;</button>
-        <button class="btn-ghost" onclick="document.querySelector('#sample-result').scrollIntoView()">See a sample result</button>
+        <button class="btn-primary start-quiz-btn">Find my path &rarr;</button>
+        <a href="#sample-result" class="btn-ghost">See a sample result</a>
       </div>
       <p class="not-cs-text reveal">
         Not from CS?
@@ -56,6 +56,7 @@
     <div class="orb orb3"></div>
   </section>
 
+  <!-- NOT FROM CS MODAL -->
   <div class="modal-overlay" id="not-cs-modal">
     <div class="not-cs-modal-card">
       <button class="modal-close" id="not-cs-close" aria-label="Close">&times;</button>
@@ -122,6 +123,7 @@
     </div>
   </section>
 
+  <!-- WHO IS THIS FOR -->
   <section class="section who-for">
     <div class="section-header reveal">
       <div class="section-label">Who is this for</div>
@@ -155,7 +157,7 @@
     </div>
   </section>
 
-  <!-- RESULT PREVIEW -->
+  <!-- SAMPLE RESULT PREVIEW -->
   <section id="sample-result" class="section result-section">
     <div class="section-header reveal">
       <div class="section-label">Sample output</div>
@@ -212,12 +214,38 @@
     </div>
   </section>
 
+  <!-- ABOUT -->
+  <section id="about-section" class="section">
+    <div class="section-header reveal">
+      <div class="section-label">About</div>
+      <h2>Why we built<br>Pathified</h2>
+    </div>
+    <div class="about-content">
+      <p class="reveal">Pathified was built because too many CS students graduate without knowing where they actually belong in the field. Most career tools give you a list of jobs. We ask the questions that matter — how you think, what drains you, what kind of work makes you lose track of time.</p>
+      <p class="reveal">The result is a personalised career map — not a generic recommendation, but a genuine read of who you are and where you'll thrive in CS.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-section" class="section">
+    <div class="section-header reveal">
+      <div class="section-label">Get in touch</div>
+      <h2>Have a question?<br>We're here.</h2>
+    </div>
+    <form class="contact-form reveal" id="contact-form" novalidate>
+      <input type="text"  id="contact-name"  class="contact-input" placeholder="Your name"/>
+      <input type="email" id="contact-email" class="contact-input" placeholder="your@email.com"/>
+      <input type="tel"   id="contact-phone" class="contact-input" placeholder="Phone (optional)"/>
+      <button type="button" class="btn-primary" id="contact-submit">Send message</button>
+    </form>
+  </section>
+
   <!-- FINAL CTA -->
   <section class="final-cta">
     <div class="cta-inner reveal">
       <h2>Your path is waiting.<br><em>Find it in 8 minutes.</em></h2>
       <p>Free. No signup. Just honest answers.</p>
-      <button class="btn-primary btn-lg start-quiz-btn" onclick="window.location.href='quiz.html'">Start the quiz &rarr;</button>
+      <button class="btn-primary btn-lg start-quiz-btn">Start the quiz &rarr;</button>
     </div>
     <div class="orb orb-cta1"></div>
     <div class="orb orb-cta2"></div>
@@ -226,6 +254,10 @@
   <footer>
     <div class="logo">Pathified</div>
     <p>Made for CS students who refuse to guess.</p>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/kaustubhshukla9586/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/kaustubhshukla9586" target="_blank" rel="noopener">GitHub</a>
+    </div>
   </footer>
 
   <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
@@ -233,6 +265,9 @@
     <span class="theme-icon-dark">☽</span>
   </button>
 
-  <script src="script.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/landing.js"></script>
 </body>
 </html>

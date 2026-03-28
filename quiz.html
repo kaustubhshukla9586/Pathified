@@ -26,22 +26,21 @@
     <span id="question-counter">Question 1 of 25</span>
   </div>
 
-  <section class="quiz-container">
+  <section class="quiz-container" id="quiz-container">
     <div class="quiz-inner" id="quiz-inner">
-      <!-- Question will be injected here -->
+
       <h2 class="quiz-question" id="question-text"></h2>
-      
-      <!-- Options will be injected here -->
+
       <div class="quiz-options" id="options-container"></div>
-      
-      <!-- Optional input for Q26 -->
+
+      <!-- Q26 optional step — id="optional-container" is what quiz.js expects -->
       <div class="quiz-optional" id="optional-container">
         <br>
         <p class="optional-subtext">Optional — this won't change your score but may add nuance.</p>
-        <textarea id="optional-input" placeholder="Type here..."></textarea>
+        <textarea id="optional-q26-input" placeholder="Type here..."></textarea>
         <div class="optional-btns">
           <button class="btn-primary" id="submit-btn">Submit &amp; see my results</button>
-          <button class="btn-ghost" id="skip-btn">Skip</button>
+          <button class="btn-ghost"   id="skip-btn">Skip</button>
         </div>
       </div>
 
@@ -50,6 +49,7 @@
       </div>
     </div>
 
+    <!-- Summary screen shown while traits are extracted -->
     <div class="summary-screen" id="summary-screen">
       <div class="summary-inner">
         <p class="summary-label">Building your profile</p>
@@ -58,9 +58,9 @@
         <p class="summary-sub">Generating your career matches...</p>
       </div>
     </div>
-    
-    <!-- Loading overlay inside quiz area -->
-    <div class="loading-overlay" id="loading-overlay">
+
+    <!-- Loading overlay inside quiz area — JS controls display -->
+    <div class="loading-overlay" id="loading-overlay" style="display:none;">
       <div class="pixel-loader">
         <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
         <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
@@ -68,13 +68,12 @@
       </div>
       <div class="loading-text" id="loading-text">Reading between the lines...</div>
     </div>
-    
-    <!-- Full page loader for final submission -->
-    <div class="full-loader" id="full-loader">
+
+    <!-- Full page loader for final submission — JS controls display -->
+    <div class="full-loader" id="full-loader" style="display:none;">
       <div class="orb orb1"></div>
       <div class="orb orb3"></div>
       <div class="pixel-loader">
-         <!-- Same pixels -->
         <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
         <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
         <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
@@ -89,7 +88,10 @@
     <span class="theme-icon-dark">☽</span>
   </button>
 
-  <script src="script.js"></script>
-  <script src="quiz.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="config.js"></script>
+  <script src="js/quiz.js"></script>
 </body>
 </html>

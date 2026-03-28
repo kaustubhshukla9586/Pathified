@@ -25,10 +25,9 @@
       <p>Based on your 25 answers, here's what we found.</p>
     </div>
 
-    <!-- Cards container -->
-    <div class="results-grid reveal" id="results-grid">
-      <!-- Injected by JS -->
-    </div>
+    <!-- Cards injected by js/results.js -->
+    <div class="results-grid reveal" id="results-grid"></div>
+
     <div class="email-results-wrap reveal">
       <p class="email-results-label">Want to save your results?</p>
       <div class="email-results-form" id="email-results-form">
@@ -39,6 +38,7 @@
         ✓ Results saved — check your inbox shortly.
       </p>
     </div>
+
     <div class="retake-wrap reveal">
       <p class="retake-text">Want to try again with different answers?</p>
       <button class="btn-ghost" id="retake-btn">Retake the quiz</button>
@@ -50,23 +50,23 @@
   <div class="modal" id="modal">
     <button class="modal-close" id="modal-close">&times;</button>
     <div class="modal-content">
+
       <div class="modal-badge" id="m-rank">Top match</div>
-      <h2 class="modal-title" id="m-field">AI / Machine Learning</h2>
-      <div class="modal-pct" id="m-pct">92%</div>
-      
+      <h2 class="modal-title"  id="m-field">Field Name</h2>
+      <div class="modal-pct"   id="m-pct">0%</div>
+
       <div class="modal-section-title">Why this fits you</div>
-      <p class="modal-desc" id="m-desc">...</p>
-      
+      <p class="modal-desc" id="m-desc"></p>
+
       <div class="modal-section-title">Strengths</div>
-      <div class="tags-row" id="m-strengths">
-        <!-- Tags injected -->
-      </div>
-      
+      <div class="tags-row" id="m-strengths"></div>
+
       <div class="modal-section-title">Considerations</div>
-      <div class="tags-row neutral" id="m-considerations">
-        <!-- Tags injected -->
-      </div>
-      
+      <div class="tags-row neutral" id="m-considerations"></div>
+
+      <div class="modal-section-title">Roles you could grow into</div>
+      <div class="tags-row roles" id="m-growth-roles"></div>
+
       <div class="modal-footer">
         <a href="#" class="modal-link disabled">Explore a roadmap for this path &rarr; <br><small>(Coming soon)</small></a>
         <div class="share-wrap">
@@ -74,16 +74,20 @@
           <span class="share-confirm" id="share-confirm">✓ Copied to clipboard</span>
         </div>
       </div>
+
     </div>
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="config.js"></script>
+
   <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
     <span class="theme-icon-light">☀︎</span>
     <span class="theme-icon-dark">☽</span>
   </button>
-  <script src="script.js"></script>
-  <script src="results.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="config.js"></script>
+  <script src="js/results.js"></script>
 </body>
 </html>
