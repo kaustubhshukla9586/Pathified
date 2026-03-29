@@ -35,11 +35,6 @@ img, video {
   --radius-md: 16px;
   --radius-lg: 22px;
   --transition: 0.2s ease;
-
-  /* Legacy aliases used throughout existing rules */
-  --cream-dark: #ede8df;
-  --brown-muted: #9a8f80;
-  --amber-pale: #fdf0da;
 }
 
 /* --- BASE HTML & BODY --- */
