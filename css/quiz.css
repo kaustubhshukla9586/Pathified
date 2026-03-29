@@ -13,7 +13,7 @@
 .quiz-progress-wrap {
   width: 100%;
   height: 2px;
-  background: var(--cream-dark);
+  background: var(--color-bg-alt);
   position: relative;
   top: 0;
   left: 0;
@@ -22,7 +22,7 @@
 
 .quiz-progress-bar {
   height: 100%;
-  background: var(--amber);
+  background: var(--color-accent);
   width: 0%;
   transition: width 0.4s ease;
 }
@@ -31,7 +31,7 @@
 .quiz-nav-meta {
   text-align: center;
   font-size: 0.8rem;
-  color: rgba(200, 131, 10, 0.85);
+  color: var(--color-accent);
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -50,7 +50,7 @@
   padding: 1rem 1.5rem 1.5rem;
   position: relative;
   overflow: hidden;
-  background: var(--cream);
+  background: var(--color-bg);
 }
 
 .quiz-inner {
@@ -71,12 +71,12 @@
 
 /* --- QUESTION TEXT --- */
 .quiz-question {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: -0.02em;
-  color: var(--brown);
+  color: var(--color-text);
   max-width: 680px;
   margin-bottom: 1.5rem;
 }
@@ -93,14 +93,14 @@
 
 /* --- OPTION BUTTONS --- */
 .quiz-option {
-  background: white;
-  border: 1px solid rgba(26, 18, 8, 0.1);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1rem 1.25rem;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 400;
-  color: var(--brown);
+  color: var(--color-text);
   text-align: left;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, transform 0.15s;
@@ -113,15 +113,15 @@
 }
 
 .quiz-option:hover {
-  border-color: var(--amber);
-  background: var(--amber-light);
+  border-color: var(--color-accent);
+  background: var(--color-accent-light);
   transform: translateY(-2px);
 }
 
 /* --- SELECTED OPTION STATE --- */
 .quiz-option.selected {
-  border-color: var(--amber);
-  background: var(--amber-light);
+  border-color: var(--color-accent);
+  background: var(--color-accent-light);
 }
 
 /* --- BACK BUTTON --- */
@@ -132,8 +132,8 @@
 .back-link {
   background: transparent;
   border: none;
-  color: var(--brown-muted);
-  font-family: var(--font-sans);
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   cursor: none;
   transition: color var(--transition);
@@ -141,7 +141,7 @@
 }
 
 .back-link:hover {
-  color: var(--brown);
+  color: var(--color-text);
 }
 
 .back-link:disabled {
@@ -155,8 +155,8 @@
   margin: 1.5rem auto 0;
   background: transparent;
   border: none;
-  color: var(--brown-soft);
-  font-family: var(--font-sans);
+  color: var(--color-text-faint);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 400;
   cursor: pointer;
@@ -165,7 +165,7 @@
 }
 
 .pen-toggle:hover {
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 /* --- EXTRA CONTEXT TEXTAREA --- */
@@ -175,13 +175,13 @@
   max-width: 680px;
   margin: 1rem auto 0;
   height: 100px;
-  background: var(--cream);
-  border: 1px solid rgba(26, 18, 8, 0.18);
-  border-bottom: 2px solid rgba(26, 18, 8, 0.18);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-bottom: 2px solid var(--color-border-strong);
   padding: 1rem;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.95rem;
-  color: var(--brown);
+  color: var(--color-text);
   resize: none;
   border-radius: 12px;
   transition: border-color var(--transition);
@@ -189,19 +189,19 @@
 
 .extra-context-box:focus {
   outline: none;
-  border-color: var(--amber);
-  border-bottom-color: var(--amber);
+  border-color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
 }
 
 .extra-context-box::placeholder {
-  color: var(--brown-soft);
+  color: var(--color-text-faint);
   font-weight: 300;
 }
 
 /* --- Q26 OPTIONAL CONTAINER --- */
 .optional-subtext {
   font-size: 0.95rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   margin-top: -2rem;
   margin-bottom: 2rem;
 }
@@ -210,13 +210,13 @@
   width: 100%;
   max-width: 680px;
   height: 120px;
-  background: var(--cream);
-  border: 1px solid rgba(26, 18, 8, 0.2);
-  border-bottom: 2px solid rgba(26, 18, 8, 0.2);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-bottom: 2px solid var(--color-border-strong);
   padding: 1rem;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.05rem;
-  color: var(--brown);
+  color: var(--color-text);
   resize: none;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -225,8 +225,8 @@
 
 #optional-input:focus {
   outline: none;
-  border-color: var(--amber);
-  border-bottom-color: var(--amber);
+  border-color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
 }
 
 .optional-btns {
@@ -259,7 +259,7 @@
 .pixel {
   width: 16px;
   height: 16px;
-  background-color: var(--amber);
+  background-color: var(--color-accent);
   opacity: 0.2;
   animation: pulse-pixel 1.5s infinite;
   border-radius: 2px;
@@ -276,8 +276,8 @@
 .pixel:nth-child(9) { animation-delay: 0.8s; }
 
 .loading-text {
-  font-family: var(--font-sans);
-  color: var(--amber);
+  font-family: var(--font-body);
+  color: var(--color-accent);
   font-weight: 500;
   font-size: 0.95rem;
   letter-spacing: 0.05em;
@@ -288,7 +288,7 @@
 .full-loader {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--cream);
+  background: var(--color-bg);
   z-index: 999;
   display: none;
   flex-direction: column;
@@ -334,7 +334,7 @@
 .summary-screen {
   position: fixed;
   inset: 0;
-  background: var(--cream);
+  background: var(--color-bg);
   display: none;
   align-items: center;
   justify-content: center;
@@ -349,14 +349,14 @@
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--color-accent);
   margin-bottom: 1rem;
 }
 
 .summary-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--brown);
+  color: var(--color-text);
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin-bottom: 2.5rem;
@@ -364,7 +364,7 @@
 
 .summary-title em {
   font-style: italic;
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 .traits-container {
@@ -377,9 +377,9 @@
 }
 
 .trait-tag {
-  background: white;
-  border: 1px solid var(--amber-border);
-  color: var(--brown);
+  background: var(--color-card);
+  border: 1px solid var(--color-accent-border);
+  color: var(--color-text);
   padding: 0.6rem 1.25rem;
   border-radius: 100px;
   font-size: 0.9rem;
@@ -389,7 +389,7 @@
 
 .summary-sub {
   font-size: 0.85rem;
-  color: var(--brown-soft);
+  color: var(--color-text-faint);
   font-weight: 300;
   animation: pulse 1.5s ease-in-out infinite;
 }

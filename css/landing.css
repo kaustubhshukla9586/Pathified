@@ -28,9 +28,9 @@
 
 .hero-tag {
   display: inline-block;
-  background: var(--amber-pale);
-  color: var(--amber);
-  border: 1px solid rgba(200, 132, 42, 0.25);
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -41,23 +41,23 @@
 }
 
 .hero h1 {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: clamp(3.5rem, 8vw, 6.5rem);
   font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.03em;
-  color: var(--brown);
+  color: var(--color-text);
   margin-bottom: 1.75rem;
 }
 
 .hero h1 em {
   font-style: italic;
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 .hero-sub {
   font-size: clamp(1rem, 2vw, 1.2rem);
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   line-height: 1.8;
   font-weight: 300;
   max-width: 480px;
@@ -75,7 +75,7 @@
 /* --- NOT FROM CS LINE --- */
 .not-cs-text {
   font-size: 0.82rem;
-  color: var(--brown-soft);
+  color: var(--color-text-faint);
   margin-top: 1.5rem;
   font-weight: 300;
 }
@@ -83,21 +83,21 @@
 .not-cs-btn {
   background: none;
   border: none;
-  color: var(--amber);
+  color: var(--color-accent);
   font-size: 0.82rem;
   cursor: pointer;
   text-decoration: underline;
   padding: 0;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
 }
 
 /* --- FLOATING HERO CARD --- */
 .hero-float-card {
-  background: white;
-  border: 1px solid rgba(200, 132, 42, 0.15);
+  background: var(--color-card);
+  border: 1px solid var(--color-accent-border);
   border-radius: 20px;
   padding: 1.5rem 2rem;
-  box-shadow: 0 16px 40px rgba(200, 132, 42, 0.1);
+  box-shadow: 0 16px 40px rgba(98, 129, 65, 0.1);
   display: inline-block;
   margin-top: 4rem;
   animation: float 4s ease-in-out infinite;
@@ -107,22 +107,22 @@
 .float-badge {
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--color-accent);
   letter-spacing: 0.1em;
   font-weight: 500;
   margin-bottom: 0.5rem;
 }
 
 .float-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 1.25rem;
-  color: var(--brown);
+  color: var(--color-text);
   margin-bottom: 0.25rem;
 }
 
 .float-pct {
   font-size: 0.9rem;
-  color: var(--amber);
+  color: var(--color-accent);
   font-weight: 500;
 }
 
@@ -138,7 +138,7 @@
 .orb1 {
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(200, 132, 42, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(98, 129, 65, 0.18) 0%, transparent 70%);
   top: -80px;
   right: -60px;
   animation-delay: 0s;
@@ -147,7 +147,7 @@
 .orb2 {
   width: 280px;
   height: 280px;
-  background: radial-gradient(circle, rgba(200, 132, 42, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(98, 129, 65, 0.12) 0%, transparent 70%);
   bottom: 40px;
   left: -40px;
   animation-delay: 2s;
@@ -156,7 +156,7 @@
 .orb3 {
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(240, 192, 112, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 174, 102, 0.15) 0%, transparent 70%);
   top: 40%;
   left: 10%;
   animation-delay: 4s;
@@ -165,7 +165,7 @@
 .orb-cta1 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(200, 132, 42, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(98, 129, 65, 0.15) 0%, transparent 70%);
   top: -100px;
   right: -100px;
   animation-delay: 1s;
@@ -174,7 +174,7 @@
 .orb-cta2 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(240, 192, 112, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 174, 102, 0.12) 0%, transparent 70%);
   bottom: -60px;
   left: -60px;
   animation-delay: 3s;
@@ -183,9 +183,9 @@
 /* --- MARQUEE --- */
 .marquee-wrap {
   overflow: hidden;
-  border-top: 1px solid rgba(200, 132, 42, 0.15);
-  border-bottom: 1px solid rgba(200, 132, 42, 0.15);
-  background: var(--amber-pale);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-accent-light);
   padding: 1rem 0;
 }
 
@@ -202,12 +202,12 @@
   font-size: 0.82rem;
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: var(--brown-mid);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
 .marquee-track .dot {
-  color: var(--amber);
+  color: var(--color-accent);
   font-size: 0.6rem;
 }
 
@@ -226,8 +226,8 @@
 }
 
 .step {
-  background: white;
-  border: 1px solid rgba(200, 132, 42, 0.12);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   border-radius: 20px;
   padding: 2.25rem 2rem;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
@@ -235,15 +235,15 @@
 
 .step:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(200, 132, 42, 0.1);
-  border-color: rgba(200, 132, 42, 0.3);
+  box-shadow: 0 20px 50px rgba(98, 129, 65, 0.1);
+  border-color: var(--color-accent-border);
 }
 
 .step-num {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 3.5rem;
   font-weight: 400;
-  color: rgba(200, 131, 42, 0.545);
+  color: rgba(98, 129, 65, 0.55);
   line-height: 1;
   margin-bottom: 1.25rem;
 }
@@ -251,14 +251,14 @@
 .step h3 {
   font-size: 1rem;
   font-weight: 500;
-  color: var(--brown);
+  color: var(--color-text);
   margin-bottom: 0.65rem;
   letter-spacing: -0.01em;
 }
 
 .step p {
   font-size: 0.88rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   line-height: 1.7;
   font-weight: 300;
 }
@@ -276,17 +276,17 @@
 
 .who-card {
   border-radius: 16px;
-  border: 1px solid rgba(26, 18, 8, 0.1);
+  border: 1px solid var(--color-border);
   padding: 1.35rem;
 }
 
 .who-live {
-  background: white;
-  border-top: 2px solid var(--amber);
+  background: var(--color-card);
+  border-top: 2px solid var(--color-accent);
 }
 
 .who-soon {
-  background: var(--cream-alt);
+  background: var(--color-bg-alt);
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -305,16 +305,16 @@
 }
 
 .who-head h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 1.1rem;
   font-weight: 400;
-  color: var(--brown);
+  color: var(--color-text);
 }
 
 .who-card p {
   font-size: 0.88rem;
   line-height: 1.65;
-  color: var(--brown-mid);
+  color: var(--color-text-muted);
   font-weight: 300;
 }
 
@@ -329,20 +329,20 @@
 }
 
 .who-badge-live {
-  background: var(--amber-pale);
-  color: var(--amber);
-  border: 1px solid rgba(200, 132, 42, 0.2);
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
 }
 
 .who-badge-soon {
-  background: rgba(26, 18, 8, 0.06);
-  color: var(--brown-soft);
-  border: 1px solid rgba(26, 18, 8, 0.12);
+  background: var(--color-border);
+  color: var(--color-text-faint);
+  border: 1px solid var(--color-border-strong);
 }
 
 /* --- SAMPLE OUTPUT RESULT CARD --- */
 .result-section {
-  background: var(--cream-dark);
+  background: var(--color-bg-alt);
   max-width: 100%;
   padding: 7rem 3rem;
 }
@@ -355,11 +355,11 @@
 .result-card {
   max-width: 680px;
   margin: 0 auto;
-  background: white;
-  border: 1px solid rgba(200, 132, 42, 0.15);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   border-radius: 24px;
   padding: 2.5rem;
-  box-shadow: 0 8px 40px rgba(200, 132, 42, 0.08);
+  box-shadow: 0 8px 40px rgba(98, 129, 65, 0.08);
   position: relative;
   overflow: clip;
 }
@@ -369,7 +369,7 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--amber) 0%, var(--amber-light) 100%);
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
 }
 
 .result-top {
@@ -381,9 +381,9 @@
 
 .result-badge {
   display: inline-block;
-  background: var(--amber-pale);
-  color: var(--amber);
-  border: 1px solid rgba(200, 132, 42, 0.2);
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -394,17 +394,17 @@
 }
 
 .result-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 1.6rem;
   font-weight: 400;
-  color: var(--brown);
+  color: var(--color-text);
   letter-spacing: -0.01em;
   margin-bottom: 0.25rem;
 }
 
 .result-meta {
   font-size: 0.8rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   font-weight: 300;
 }
 
@@ -413,17 +413,17 @@
 }
 
 .match-num {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 2.8rem;
   font-weight: 400;
-  color: var(--amber);
+  color: var(--color-accent);
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
 .match-label {
   font-size: 0.72rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -441,14 +441,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.1rem;
-  background: var(--cream);
-  border: 1px solid rgba(200, 132, 42, 0.1);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   transition: border-color var(--transition), transform 0.15s;
 }
 
 .path-item:hover {
-  border-color: rgba(200, 132, 42, 0.3);
+  border-color: var(--color-accent-border);
   transform: translateX(4px);
 }
 
@@ -460,7 +460,7 @@
 
 .path-rank {
   font-size: 0.75rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   font-weight: 400;
   min-width: 1.5rem;
 }
@@ -468,7 +468,7 @@
 .path-name {
   font-size: 0.92rem;
   font-weight: 500;
-  color: var(--brown);
+  color: var(--color-text);
   letter-spacing: -0.01em;
 }
 
@@ -482,21 +482,21 @@
   width: 100px;
   height: 4px;
   border-radius: 100px;
-  background: var(--cream-dark);
+  background: var(--color-bg-alt);
   overflow: clip;
 }
 
 .path-fill {
   height: 100%;
   border-radius: 100px;
-  background: linear-gradient(90deg, var(--amber), var(--amber-light));
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
   width: 0%;
   transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .path-pct {
   font-size: 0.8rem;
-  color: var(--amber);
+  color: var(--color-accent);
   font-weight: 500;
   min-width: 2.5rem;
   text-align: right;
@@ -504,8 +504,8 @@
 
 /* --- WHY BOX --- */
 .why-box {
-  background: var(--amber-pale);
-  border: 1px solid rgba(200, 132, 42, 0.2);
+  background: var(--color-accent-light);
+  border: 1px solid var(--color-accent-border);
   border-radius: 14px;
   padding: 1.25rem 1.5rem;
 }
@@ -515,13 +515,13 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--color-accent);
   margin-bottom: 0.6rem;
 }
 
 .why-text {
   font-size: 0.9rem;
-  color: var(--brown-mid);
+  color: var(--color-text-muted);
   line-height: 1.75;
   font-weight: 300;
 }
@@ -530,7 +530,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(26, 18, 8, 0.5);
+  background: rgba(34, 40, 49, 0.5);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   z-index: 500;
@@ -548,7 +548,7 @@
 }
 
 .not-cs-modal-card {
-  background: white;
+  background: var(--color-card);
   border-radius: 20px;
   padding: 2.5rem;
   max-width: 480px;
@@ -563,7 +563,7 @@
   right: 1rem;
   background: transparent;
   border: none;
-  color: var(--brown-soft);
+  color: var(--color-text-faint);
   font-size: 1.8rem;
   line-height: 1;
   cursor: pointer;
@@ -575,16 +575,16 @@
 }
 
 .not-cs-modal-card h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 1.5rem;
   margin-bottom: 0.75rem;
-  color: var(--brown);
+  color: var(--color-text);
   font-weight: 400;
 }
 
 .not-cs-modal-card p {
   font-size: 0.9rem;
-  color: var(--brown-soft);
+  color: var(--color-text-faint);
   line-height: 1.7;
   margin-bottom: 1rem;
   font-weight: 300;
@@ -599,21 +599,21 @@
 .not-cs-form input {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 1px solid rgba(26, 18, 8, 0.15);
+  border: 1px solid var(--color-border-strong);
   border-radius: 100px;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.88rem;
   outline: none;
-  color: var(--brown);
+  color: var(--color-text);
 }
 
 .not-cs-form input:focus {
-  border-color: var(--amber);
+  border-color: var(--color-accent);
 }
 
 .not-cs-confirm {
   display: none;
-  color: var(--amber);
+  color: var(--color-accent);
   font-weight: 500;
 }
 
@@ -625,7 +625,7 @@
 
 .about-content p {
   font-size:     1.05rem;
-  color:         var(--brown-mid);
+  color:         var(--color-text-muted);
   line-height:   1.85;
   font-weight:   300;
   margin-bottom: 1.25rem;
@@ -643,22 +643,22 @@
 .contact-input {
   width:          100%;
   padding:        0.9rem 1.25rem;
-  border:         1px solid rgba(26, 18, 8, 0.15);
+  border:         1px solid var(--color-border-strong);
   border-radius:  12px;
-  font-family:    var(--font-sans);
+  font-family:    var(--font-body);
   font-size:      0.95rem;
-  color:          var(--brown);
-  background:     var(--cream);
+  color:          var(--color-text);
+  background:     var(--color-bg);
   transition:     border-color var(--transition);
   outline:        none;
 }
 
 .contact-input:focus {
-  border-color: var(--amber);
+  border-color: var(--color-accent);
 }
 
 .contact-input::placeholder {
-  color:       var(--brown-soft);
+  color:       var(--color-text-faint);
   font-weight: 300;
 }
 
@@ -671,14 +671,14 @@
 
 .footer-links a {
   font-size:       0.8rem;
-  color:           var(--brown-muted);
+  color:           var(--color-text-muted);
   font-weight:     400;
   text-decoration: none;
   transition:      color var(--transition);
 }
 
 .footer-links a:hover {
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 /* --- FINAL CTA SECTION --- */
@@ -687,7 +687,7 @@
   text-align: center;
   position: relative;
   overflow: clip;
-  background: var(--cream);
+  background: var(--color-bg);
 }
 
 .cta-inner {
@@ -698,23 +698,23 @@
 }
 
 .final-cta h2 {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: clamp(2.5rem, 5.5vw, 4.5rem);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.025em;
-  color: var(--brown);
+  color: var(--color-text);
   margin-bottom: 1.25rem;
 }
 
 .final-cta h2 em {
   font-style: italic;
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 .final-cta p {
   font-size: 0.95rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   margin-bottom: 2.5rem;
   font-weight: 300;
   letter-spacing: 0.01em;
@@ -723,18 +723,18 @@
 /* --- FOOTER --- */
 footer {
   padding: 1.75rem 3rem;
-  border-top: 1px solid rgba(200, 132, 42, 0.12);
+  border-top: 1px solid var(--color-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  background: var(--cream);
+  background: var(--color-bg);
 }
 
 footer p {
   font-size: 0.8rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   font-weight: 300;
 }
 

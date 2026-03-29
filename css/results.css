@@ -18,22 +18,22 @@
 
 /* --- RESULTS HEADING & SUBTEXT --- */
 .results-header h1 {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: clamp(3rem, 7vw, 5rem);
   font-weight: 400;
-  color: var(--brown);
+  color: var(--color-text);
   letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
 }
 
 .results-header em {
   font-style: italic;
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 .results-header p {
   font-size: 1.1rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   font-weight: 300;
   margin-bottom: 4rem;
 }
@@ -56,7 +56,7 @@
 
 .email-results-label {
   font-size: 0.9rem;
-  color: var(--brown-soft);
+  color: var(--color-text-faint);
   margin-bottom: 0.75rem;
 }
 
@@ -69,18 +69,18 @@
 .email-results-form input {
   flex: 1;
   max-width: 340px;
-  border: 1px solid rgba(26, 18, 8, 0.15);
+  border: 1px solid var(--color-border-strong);
   border-radius: 100px;
   padding: 0.75rem 1rem;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.88rem;
-  color: var(--brown);
+  color: var(--color-text);
 }
 
 .email-results-confirm {
   display: none;
   margin-top: 0.8rem;
-  color: var(--amber);
+  color: var(--color-accent);
   font-size: 0.85rem;
   font-weight: 500;
 }
@@ -92,14 +92,14 @@
 
 .retake-text {
   font-size: 0.88rem;
-  color: var(--brown-soft);
+  color: var(--color-text-faint);
   margin-bottom: 0.75rem;
 }
 
 /* --- RESULT CARDS --- */
 .r-card {
-  background: white;
-  border: 1px solid rgba(26, 18, 8, 0.1);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   border-radius: 20px;
   padding: 2.5rem;
   cursor: none;
@@ -111,12 +111,12 @@
 
 .r-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(200, 131, 10, 0.08);
-  border-color: rgba(200, 131, 10, 0.25);
+  box-shadow: 0 20px 40px rgba(98, 129, 65, 0.08);
+  border-color: var(--color-accent-border);
 }
 
 .r-card.rank-1 {
-  border-color: rgba(200, 131, 10, 0.2);
+  border-color: var(--color-accent-border);
   transform: scale(1.02);
 }
 
@@ -129,7 +129,7 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--amber) 0%, rgba(200, 131, 10, 0.4) 100%);
+  background: linear-gradient(90deg, var(--color-accent) 0%, rgba(98, 129, 65, 0.4) 100%);
   border-radius: 20px 20px 0 0;
 }
 
@@ -137,7 +137,7 @@
 .r-rank {
   font-size: 0.75rem;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--color-accent);
   font-weight: 500;
   letter-spacing: 0.12em;
   margin-bottom: 1rem;
@@ -145,25 +145,25 @@
 
 /* --- FIELD NAME --- */
 .r-field {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 2rem;
-  color: var(--brown);
+  color: var(--color-text);
   margin-bottom: 0.5rem;
   line-height: 1.1;
 }
 
 /* --- PERCENTAGE --- */
 .r-pct {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 3.5rem;
-  color: var(--amber);
+  color: var(--color-accent);
   margin-bottom: 0.5rem;
   line-height: 1;
 }
 
 .r-desc {
   font-size: 0.95rem;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   font-weight: 300;
   margin-bottom: 2rem;
   flex-grow: 1;
@@ -173,7 +173,7 @@
 .r-bar-wrap {
   width: 100%;
   height: 4px;
-  background: var(--cream-dark);
+  background: var(--color-bg-alt);
   border-radius: 100px;
   margin-bottom: 1.5rem;
   overflow: clip;
@@ -181,7 +181,7 @@
 
 .r-bar-fill {
   height: 100%;
-  background: var(--amber);
+  background: var(--color-accent);
   width: 0%;
   border-radius: 100px;
   transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -189,7 +189,7 @@
 
 .r-link {
   font-size: 0.9rem;
-  color: var(--brown);
+  color: var(--color-text);
   font-weight: 500;
   text-decoration: none;
   display: inline-flex;
@@ -199,14 +199,14 @@
 }
 
 .r-card:hover .r-link {
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 /* --- MODAL OVERLAY --- */
 .modal-backdrop {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(26, 18, 8, 0.4);
+  background: rgba(34, 40, 49, 0.4);
   backdrop-filter: blur(8px);
   z-index: 1000;
   opacity: 0;
@@ -224,7 +224,7 @@
   position: fixed;
   top: 50%; left: 50%;
   transform: translate(-50%, -45%) scale(0.95);
-  background: white;
+  background: var(--color-card);
   width: 90%;
   max-width: 640px;
   max-height: 90vh;
@@ -235,7 +235,7 @@
   pointer-events: none;
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   padding: 3rem 2.5rem;
-  box-shadow: 0 40px 80px rgba(26, 18, 8, 0.15);
+  box-shadow: 0 40px 80px rgba(34, 40, 49, 0.15);
 }
 
 .modal.active {
@@ -252,21 +252,21 @@
   border: none;
   font-size: 2.5rem;
   line-height: 1;
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   cursor: none;
   transition: color var(--transition);
   padding: 0;
 }
 
 .modal-close:hover {
-  color: var(--amber);
+  color: var(--color-accent);
 }
 
 .modal-badge {
   display: inline-block;
-  background: var(--amber-pale);
-  color: var(--amber);
-  border: 1px solid rgba(200, 131, 10, 0.2);
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
   padding: 0.4rem 1rem;
   border-radius: 100px;
   font-size: 0.75rem;
@@ -277,17 +277,17 @@
 }
 
 .modal-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 2.5rem;
-  color: var(--brown);
+  color: var(--color-text);
   line-height: 1.1;
   margin-bottom: 0.75rem;
 }
 
 .modal-pct {
-  font-family: var(--font-serif);
+  font-family: var(--font-headline);
   font-size: 4rem;
-  color: var(--amber);
+  color: var(--color-accent);
   line-height: 1;
   margin-bottom: 2.5rem;
 }
@@ -295,7 +295,7 @@
 .modal-section-title {
   font-size: 0.75rem;
   text-transform: uppercase;
-  color: var(--amber);
+  color: var(--color-accent);
   letter-spacing: 0.1em;
   font-weight: 500;
   margin-bottom: 1rem;
@@ -303,7 +303,7 @@
 
 .modal-desc {
   font-size: 1.05rem;
-  color: var(--brown-mid);
+  color: var(--color-text-muted);
   line-height: 1.8;
   font-weight: 300;
   margin-bottom: 2.5rem;
@@ -318,8 +318,8 @@
 }
 
 .tag {
-  background: var(--amber);
-  color: var(--cream);
+  background: var(--color-accent);
+  color: var(--color-bg);
   padding: 0.5rem 1rem;
   border-radius: 100px;
   font-size: 0.85rem;
@@ -328,9 +328,9 @@
 
 /* --- CONSIDERATIONS TAGS --- */
 .tags-row.neutral .tag {
-  background: var(--cream);
-  color: var(--brown-soft);
-  border: 1px solid rgba(26, 18, 8, 0.1);
+  background: var(--color-bg);
+  color: var(--color-text-faint);
+  border: 1px solid var(--color-border);
   font-weight: 400;
 }
 
@@ -343,8 +343,8 @@
 .role-tag {
   display: inline-block;
   background: transparent;
-  color: var(--amber);
-  border: 1px solid rgba(200, 131, 10, 0.35);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
   padding: 0.5rem 1rem;
   border-radius: 100px;
   font-size: 0.85rem;
@@ -353,17 +353,17 @@
 }
 
 .role-tag:hover {
-  background: rgba(200, 131, 10, 0.08);
+  background: var(--color-accent-light);
 }
 
 .modal-footer {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(26, 18, 8, 0.08);
+  border-top: 1px solid var(--color-border);
 }
 
 .modal-link {
-  color: var(--brown-muted);
+  color: var(--color-text-muted);
   text-decoration: none;
   font-weight: 500;
   display: inline-block;
@@ -387,16 +387,16 @@
   gap: 1rem;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(26, 18, 8, 0.07);
+  border-top: 1px solid var(--color-border);
 }
 
 .share-btn {
   background: transparent;
-  border: 1px solid var(--amber-border);
-  color: var(--amber);
+  border: 1px solid var(--color-accent-border);
+  color: var(--color-accent);
   padding: 0.65rem 1.5rem;
   border-radius: 100px;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -404,12 +404,12 @@
 }
 
 .share-btn:hover {
-  background: var(--amber-light);
+  background: var(--color-accent-light);
 }
 
 .share-confirm {
   font-size: 0.82rem;
-  color: var(--amber);
+  color: var(--color-accent);
   font-weight: 500;
   opacity: 0;
   transition: opacity 0.3s ease;
