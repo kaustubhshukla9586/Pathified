@@ -225,14 +225,14 @@ let msgInterval;
 // ==========================================
 // API CALL (via vercel function)
 // ==========================================
-async function callGroq(messages, maxRetries = 2) {
+async function callGroq(messages, maxRetries = 2, modelOverride = "small") {
   let retries = 0;
   while (retries <= maxRetries) {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages })
+        body: JSON.stringify({ messages, modelOverride })
       });
 
       const data = await response.json();
@@ -280,8 +280,8 @@ async function fetchNextBatch() {
     { role: "user", content: `Answers so far: ${summary}\n\nGenerate next batch of 4 questions (PERSONALITY, SITUATION, CSE DISCIPLINE, VALUES). Must be based on patterns above.` }
   ];
 
-  const response = await callGroq(messages);
-  
+  const response = await callGroq(messages, 2, "small");
+
   let batch = response?.batch || response?.questions || response;
   if (!Array.isArray(batch)) {
     const key = Object.keys(response).find(k => Array.isArray(response[k]));
@@ -569,7 +569,7 @@ async function handleFinalSubmit(optionalText) {
   document.body.style.overflow = 'hidden';
 
   try {
-    const finalData = await callGroq(finalMessages, 3);
+    const finalData = await callGroq(finalMessages, 3, "large");
     clearProgress();
     sessionStorage.setItem('pathifiedResults', JSON.stringify(finalData));
     window.location.href = 'results.html';
@@ -595,7 +595,7 @@ async function showProgressSummary() {
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages })
+    body: JSON.stringify({ messages, modelOverride: "small" })
   });
 
   if (!response.ok) throw new Error('Trait API failed');
