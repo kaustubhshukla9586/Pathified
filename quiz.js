@@ -59,6 +59,8 @@ Rules for questions:
 - No option should feel like the "obviously correct" answer
 - If the user added any extra text context to a previous answer, use that context to make this batch more specific and personal
 
+- Never use em dashes (—) in questions or options. Use plain commas, periods, or reword instead.
+- Options must be full sentences of 8-15 words minimum. Never one or two word answers.
 Keep question text between 15-40 words.
 Keep each option under 15 words.
 Use simple words a non-native English speaker can understand.
@@ -509,8 +511,7 @@ async function advanceStep() {
 // ==========================================
 function showOptionalStep() {
   updateProgress();
-  questionText.textContent = "Anything else you'd like us to know?";
-  optionsContainer.style.display = 'none';
+  innerEls.style.display = 'none';
   optionalContainer.style.display = 'block';
   backBtn.style.display = 'inline-block';
 
@@ -525,6 +526,8 @@ function showOptionalStep() {
 // FINAL SUBMIT
 // ==========================================
 async function handleFinalSubmit(optionalText) {
+  document.getElementById('optional-container').style.display = 'none';
+  document.getElementById('quiz-inner').style.display = 'none';
   if (optionalText?.trim()) {
     conversationHistory.push({
       role: "user",
