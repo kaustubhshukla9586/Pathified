@@ -1,10 +1,32 @@
+// In-memory rate limit store: IP -> { count, resetAt }
+const rateLimitStore = new Map();
+const RATE_LIMIT = 3;
+const RATE_WINDOW_MS = 60 * 1000;
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const entry = rateLimitStore.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT) return false;
+  entry.count++;
+  return true;
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const ip = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.socket?.remoteAddress || "unknown";
+  if (!checkRateLimit(ip)) {
+    return res.status(429).json({ error: "Too many requests. Please slow down." });
+  }
+
   try {
-    const { messages } = req.body;
+    const { messages, modelOverride } = req.body;
 
     if (!process.env.GROQ_API_KEY) {
       console.error("GROQ_API_KEY is not set");
@@ -18,7 +40,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
+        model: modelOverride === "large" ? "llama-3.3-70b-versatile" : "llama-3.1-8b-instant",
         messages: messages,
         max_tokens: 800,
         temperature: 0.7
