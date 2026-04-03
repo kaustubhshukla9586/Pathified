@@ -228,38 +228,70 @@ body:has(a:hover) .cursor {
    instead of CSS variables)
 ================================ */
 
-/* Body and base */
 [data-theme="dark"] body {
-  background-color: #141210;
-  color: #f0ece4;
+  background-color: #1a1c1a;
+  background-image: radial-gradient(rgba(240,236,228,0.08) 1px, transparent 1px);
+  color: #f2f1ee;
 }
 
-/* Nav */
-[data-theme="dark"] nav {
-  background: rgba(20, 18, 16, 0.92);
-  border-bottom: 1px solid rgba(240, 236, 228, 0.06);
+[data-theme="dark"] .bg-\[#faf9f6\],
+[data-theme="dark"] .bg-background,
+[data-theme="dark"] .bg-surface,
+[data-theme="dark"] .bg-surface-bright {
+  background-color: #1a1c1a !important;
 }
 
-/* Cards — anything with white background */
-[data-theme="dark"] .step,
-[data-theme="dark"] .who-card,
-[data-theme="dark"] .result-card,
-[data-theme="dark"] .r-card,
-[data-theme="dark"] .not-cs-modal-card {
-  background: #1c1916;
-  border-color: rgba(240, 236, 228, 0.08);
+[data-theme="dark"] .bg-surface-container-lowest,
+[data-theme="dark"] .bg-white {
+  background-color: #252825 !important;
 }
 
-/* Quiz option buttons */
+[data-theme="dark"] .bg-surface-container,
+[data-theme="dark"] .bg-surface-container-low {
+  background-color: #2a2c2a !important;
+}
+
+[data-theme="dark"] .text-on-surface {
+  color: #f2f1ee !important;
+}
+
+[data-theme="dark"] .text-on-surface-variant {
+  color: #c8bfb0 !important;
+}
+
+[data-theme="dark"] nav,
+[data-theme="dark"] header {
+  background-color: rgba(26, 28, 26, 0.92) !important;
+  border-color: rgba(240, 236, 228, 0.06) !important;
+}
+
+[data-theme="dark"] footer {
+  background-color: #141614 !important;
+}
+
+[data-theme="dark"] .bg-\[#f4f3f1\] {
+  background-color: #1a1c1a !important;
+}
+
+[data-theme="dark"] .border-outline-variant\/10,
+[data-theme="dark"] .border-outline-variant\/15,
+[data-theme="dark"] .border-outline-variant\/30 {
+  border-color: rgba(240, 236, 228, 0.08) !important;
+}
+
+[data-theme="dark"] .text-\[#1a1c1a\] {
+  color: #f2f1ee !important;
+}
+
 [data-theme="dark"] .quiz-option {
-  background: #1c1916;
-  border-color: rgba(240, 236, 228, 0.1);
-  color: #f0ece4;
+  background-color: #252825 !important;
+  border-color: rgba(240, 236, 228, 0.1) !important;
+  color: #f2f1ee !important;
 }
 
 [data-theme="dark"] .quiz-option:hover {
-  border-color: var(--amber);
-  background: var(--amber-light);
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: #f59e0b !important;
 }
 
 [data-theme="dark"] .quiz-option.selected {
@@ -267,57 +299,32 @@ body:has(a:hover) .cursor {
   background: var(--amber-light);
 }
 
-/* Hero float card */
-[data-theme="dark"] .hero-float-card {
-  background: #1c1916;
-  border-color: rgba(240, 236, 228, 0.08);
+[data-theme="dark"] #modal,
+[data-theme="dark"] .bg-surface-bright {
+  background-color: #252825 !important;
+  color: #f2f1ee !important;
 }
 
-/* Why box on landing */
-[data-theme="dark"] .why-box {
-  background: rgba(200, 131, 10, 0.1);
-  border-color: rgba(200, 131, 10, 0.2);
+[data-theme="dark"] .r-card {
+  background-color: #252825 !important;
+  border-color: rgba(240, 236, 228, 0.08) !important;
 }
 
-/* Modal */
-[data-theme="dark"] .modal {
-  background: #1c1916;
-  border: 1px solid rgba(240, 236, 228, 0.08);
+[data-theme="dark"] .summary-screen,
+[data-theme="dark"] .full-loader {
+  background-color: #1a1c1a !important;
 }
 
-[data-theme="dark"] .modal-backdrop {
-  background: rgba(0, 0, 0, 0.75);
-}
-
-/* Tags */
-[data-theme="dark"] .tag {
-  background: rgba(240, 236, 228, 0.07);
-  border-color: rgba(240, 236, 228, 0.12);
-  color: #c8bfb0;
-}
-
-[data-theme="dark"] .role-tag {
-  background: transparent;
-  border-color: rgba(200, 131, 10, 0.35);
-  color: var(--amber);
-}
-
-/* Inputs */
-[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input,
 [data-theme="dark"] textarea {
-  background: #1c1916;
-  border-color: rgba(240, 236, 228, 0.12);
-  color: #f0ece4;
+  background-color: #252825 !important;
+  color: #f2f1ee !important;
+  border-color: rgba(240, 236, 228, 0.15) !important;
 }
 
-[data-theme="dark"] input[type="email"]::placeholder,
+[data-theme="dark"] input::placeholder,
 [data-theme="dark"] textarea::placeholder {
-  color: #8a7a66;
-}
-
-[data-theme="dark"] input[type="email"]:focus,
-[data-theme="dark"] textarea:focus {
-  border-color: var(--amber);
+  color: #8a7a66 !important;
 }
 
 /* Ghost button in dark mode */
@@ -330,62 +337,21 @@ body:has(a:hover) .cursor {
   background: rgba(240, 236, 228, 0.06);
 }
 
-/* Summary screen */
-[data-theme="dark"] .summary-screen {
-  background: #141210;
-}
-
 /* Trait tags */
 [data-theme="dark"] .trait-tag {
-  background: #1c1916;
+  background: #252825;
   border-color: rgba(200, 131, 10, 0.25);
-  color: #f0ece4;
+  color: #f2f1ee;
 }
-
-/* Full loader */
-[data-theme="dark"] .full-loader {
-  background: #141210;
-}
-
-/* Loading overlay */
-[data-theme="dark"] .loading-overlay {
-  background: rgba(20, 18, 16, 0.92);
-}
-
-/* Orbs — slightly adjust for dark */
-[data-theme="dark"] .orb {
-  opacity: 0.4;
-}
-
-/* Step numbers */
 
 /* Section labels */
 [data-theme="dark"] .section-label {
   color: var(--amber);
 }
 
-/* Who cards — coming soon ones */
-[data-theme="dark"] .who-soon {
-  background: #181512;
-  border-color: rgba(240, 236, 228, 0.05);
-}
-
-/* Final CTA section — already dark, just deepen it */
-[data-theme="dark"] .final-cta {
-  background: #0e0c0a;
-}
-
-/* Footer */
-[data-theme="dark"] footer {
-  background: #0e0c0a;
-  border-top: 1px solid rgba(240, 236, 228, 0.06);
-}
-
-/* Marquee */
-[data-theme="dark"] .marquee-wrap {
-  background: #1c1916;
-  border-top: 1px solid rgba(240, 236, 228, 0.06);
-  border-bottom: 1px solid rgba(240, 236, 228, 0.06);
+/* Loading overlay */
+[data-theme="dark"] .loading-overlay {
+  background: rgba(26, 28, 26, 0.92);
 }
 
 /* ================================
