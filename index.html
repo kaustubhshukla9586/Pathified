@@ -1,232 +1,417 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="scroll-smooth" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pathified — Find Your CS Path</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Pathified | Find Where You Belong</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-fixed": "#ffddb8",
+            "surface-bright": "#faf9f6",
+            "on-surface": "#1a1c1a",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#ffddb8",
+            "on-error": "#ffffff",
+            "background": "#faf9f6",
+            "on-primary-container": "#613b00",
+            "primary-container": "#f59e0b",
+            "secondary-fixed-dim": "#f0bd82",
+            "tertiary": "#00658b",
+            "surface-container-high": "#e9e8e5",
+            "secondary-container": "#ffcb8f",
+            "on-primary-fixed": "#2a1700",
+            "inverse-surface": "#2f312f",
+            "primary": "#855300",
+            "surface-variant": "#e3e2e0",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e3e2e0",
+            "inverse-on-surface": "#f2f1ee",
+            "on-tertiary": "#ffffff",
+            "on-background": "#1a1c1a",
+            "on-secondary": "#ffffff",
+            "surface-dim": "#dbdad7",
+            "surface-container": "#efeeeb",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#ffb95f",
+            "primary-fixed-dim": "#ffb95f",
+            "on-surface-variant": "#534434",
+            "secondary": "#7d5725",
+            "surface-container-low": "#f4f3f1",
+            "outline-variant": "#d8c3ad",
+            "outline": "#867461",
+            "error": "#ba1a1a",
+            "surface": "#faf9f6",
+            "on-secondary-container": "#795423"
+          },
+          fontFamily: {
+            "serif": ["Playfair Display", "serif"],
+            "sans": ["Inter", "sans-serif"],
+            "headline": ["Playfair Display", "serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"]
+          },
+          borderRadius: {"none": "0px", "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+  </script>
   <link rel="stylesheet" href="css/global.css"/>
   <link rel="stylesheet" href="css/animations.css"/>
   <link rel="stylesheet" href="css/nav.css"/>
   <link rel="stylesheet" href="css/landing.css"/>
+  <style>
+    body {
+      background-image: radial-gradient(#d8c3ad 1px, transparent 1px);
+      background-size: 32px 32px;
+      background-attachment: fixed;
+      cursor: auto;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-panel {
+      background: rgba(244, 243, 241, 0.8);
+      backdrop-filter: blur(12px);
+    }
+    .ghost-border {
+      outline: 1px solid rgba(216, 195, 173, 0.15);
+    }
+  </style>
 </head>
-<body>
+<body class="bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container">
 
   <div class="cursor"></div>
   <div class="cursor-dot"></div>
 
-  <nav>
-    <a href="#" class="logo">Pathified</a>
-    <div class="nav-links">
-      <a href="#how-it-works">How it works</a>
-      <a href="#sample-result">Sample result</a>
-    </div>
-    <button class="btn-nav start-quiz-btn" onclick="window.location.href='quiz.html'">Start the quiz</button>
-  </nav>
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-50 bg-[#faf9f6]/80 dark:bg-[#1a1c1a]/80 backdrop-blur-md border-b border-outline-variant/10">
+    <nav class="flex justify-between items-center w-full px-12 py-6 max-w-screen-2xl mx-auto">
+      <div class="text-2xl font-serif font-bold text-[#F59E0B] tracking-tight">Pathified</div>
+      <div class="hidden md:flex items-center gap-10">
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-80 hover:text-[#F59E0B] transition-colors duration-300 font-medium" href="#how-it-works">How it works</a>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-80 hover:text-[#F59E0B] transition-colors duration-300 font-medium" href="#about-section">About</a>
+        <span class="material-symbols-outlined text-[#1a1c1a] cursor-pointer hover:text-[#F59E0B] transition-colors" id="dark-mode-toggle">dark_mode</span>
+        <button class="bg-[#F59E0B] text-[#2a1700] px-8 py-3 font-bold active:scale-95 duration-200 ease-in-out start-quiz-btn">Start Quiz</button>
+      </div>
+      <button class="md:hidden text-[#1a1c1a]">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </nav>
+  </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-tag reveal">For CS students</div>
-      <h1 class="reveal">
-        Still unsure<br>
-        <em>where you're going</em><br>
-        after CS?
+  <main>
+    <!-- Hero Section -->
+    <section class="relative min-h-[921px] flex flex-col justify-center items-center text-center px-6 py-20 max-w-screen-xl mx-auto">
+      <div class="inline-block px-4 py-1 border-l-4 border-primary-container bg-surface-container-low text-primary-container font-bold tracking-widest text-xs uppercase mb-8 reveal">
+        For CS Students
+      </div>
+      <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl text-on-surface font-black leading-[0.9] tracking-tighter mb-8 reveal">
+        Stop guessing.<br/>
+        Find where <span class="text-primary-container italic">you</span> belong.
       </h1>
-      <p class="hero-sub reveal">
-        25 deep questions. Real answers.<br>
-        A path built around you — not copied from a template.
+      <p class="font-sans text-xl md:text-2xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-light leading-relaxed reveal">
+        Made for CS students who refuse to guess. Discover your engineering path through data, not generic advice.
       </p>
-      <div class="hero-btns reveal">
-        <button class="btn-primary start-quiz-btn" onclick="window.location.href='quiz.html'">Find my path &rarr;</button>
-        <button class="btn-ghost" onclick="document.querySelector('#sample-result').scrollIntoView()">See a sample result</button>
+      <div class="flex flex-col md:flex-row gap-6 items-center reveal">
+        <button class="bg-primary-container text-on-primary-fixed px-12 py-5 font-bold text-lg hover:bg-primary transition-colors active:scale-95 start-quiz-btn">
+          Start Quiz
+        </button>
+        <button class="px-12 py-5 font-bold text-lg ghost-border hover:bg-surface-container-low transition-colors active:scale-95" onclick="document.querySelector('#sample-result').scrollIntoView({behavior:'smooth'})">
+          See a sample result
+        </button>
       </div>
-      <p class="not-cs-text reveal">
+      <button class="mt-16 text-sm text-outline hover:text-primary transition-colors flex items-center gap-2 group reveal" id="not-cs-btn">
         Not from CS?
-        <button class="not-cs-btn" id="not-cs-btn">Click here</button>
-      </p>
-      <div class="hero-float-card reveal">
-        <div class="float-badge">Top match</div>
-        <div class="float-title">AI / Machine Learning</div>
-        <div class="float-pct">92% fit</div>
+        <span class="material-symbols-outlined text-xs group-hover:translate-x-1 transition-transform">arrow_forward</span>
+      </button>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-32 px-12 max-w-screen-2xl mx-auto" id="how-it-works">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <h2 class="font-serif text-5xl md:text-6xl font-bold max-w-md leading-tight reveal">
+          How it actually works
+        </h2>
+        <div class="h-[2px] w-full max-w-xs bg-outline-variant opacity-30 mb-4 hidden md:block"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Step 01 -->
+        <div class="bg-surface-container-lowest p-12 ghost-border relative group hover:bg-white transition-colors reveal">
+          <span class="absolute top-0 right-0 font-serif text-9xl text-surface-container-high opacity-40 font-black -translate-y-1/4 translate-x-1/4 select-none group-hover:text-primary-container group-hover:opacity-20 transition-all">01</span>
+          <h3 class="font-serif text-3xl font-bold mb-6 relative z-10">Answer deep questions</h3>
+          <p class="text-on-surface-variant leading-relaxed font-light">
+            We don't ask if you "like computers." We evaluate your logic patterns, creative thresholds, and problem-solving velocity through specialized engineering scenarios.
+          </p>
+        </div>
+        <!-- Step 02 -->
+        <div class="bg-surface-container-lowest p-12 ghost-border relative group hover:bg-white transition-colors reveal">
+          <span class="absolute top-0 right-0 font-serif text-9xl text-surface-container-high opacity-40 font-black -translate-y-1/4 translate-x-1/4 select-none group-hover:text-primary-container group-hover:opacity-20 transition-all">02</span>
+          <h3 class="font-serif text-3xl font-bold mb-6 relative z-10">AI builds your profile</h3>
+          <p class="text-on-surface-variant leading-relaxed font-light">
+            Our engine maps your cognitive profile against real-world engineering roles—from Distributed Systems to Frontend Architectures.
+          </p>
+        </div>
+        <!-- Step 03 -->
+        <div class="bg-surface-container-lowest p-12 ghost-border relative group hover:bg-white transition-colors reveal">
+          <span class="absolute top-0 right-0 font-serif text-9xl text-surface-container-high opacity-40 font-black -translate-y-1/4 translate-x-1/4 select-none group-hover:text-primary-container group-hover:opacity-20 transition-all">03</span>
+          <h3 class="font-serif text-3xl font-bold mb-6 relative z-10">Get your roadmap</h3>
+          <p class="text-on-surface-variant leading-relaxed font-light">
+            Receive a personalized roadmap including languages, frameworks, and projects specifically tailored to your identified strengths.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sample Result Preview -->
+    <section class="py-32 px-12 bg-surface-container-low" id="sample-result">
+      <div class="max-w-screen-2xl mx-auto">
+        <div class="text-center mb-20">
+          <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6 reveal">Your future, mapped.</h2>
+          <p class="text-on-surface-variant max-w-xl mx-auto font-light reveal">A glimpse into the depth of your Pathified profile report.</p>
+        </div>
+        <div class="max-w-4xl mx-auto bg-white p-8 md:p-16 ghost-border shadow-xl reveal">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-outline-variant/30 pb-8 mb-8 gap-6">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-primary-container">Primary Path Match</span>
+              <h3 class="font-serif text-4xl font-bold mt-2">Systems Architect</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-5xl font-serif font-black text-primary-container">94%</div>
+              <div class="text-xs font-bold uppercase tracking-widest opacity-60">Compatibility Score</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+              <h4 class="font-serif text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary-container">psychology</span>
+                Cognitive Strengths
+              </h4>
+              <ul class="space-y-4">
+                <li class="flex items-center gap-3">
+                  <div class="w-2 h-2 rounded-full bg-primary-container flex-shrink-0"></div>
+                  <span class="text-on-surface-variant font-light">High abstraction capability</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-2 h-2 rounded-full bg-primary-container flex-shrink-0"></div>
+                  <span class="text-on-surface-variant font-light">Strong concurrency logic</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="w-2 h-2 rounded-full bg-primary-container flex-shrink-0"></div>
+                  <span class="text-on-surface-variant font-light">Risk-averse code structuring</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-serif text-xl font-bold mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary-container">near_me</span>
+                Quick Roadmap
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">Rust</span>
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">Kubernetes</span>
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">gRPC</span>
+                <span class="px-3 py-1 bg-surface-container text-xs font-bold rounded-full">Distributed DBs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who is this for -->
+    <section class="bg-background py-32 px-12" id="about-section">
+      <div class="max-w-screen-2xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-16 items-start">
+          <div class="w-full md:w-1/3">
+            <h2 class="font-serif text-5xl font-bold leading-tight mb-8 reveal">Who is this built for?</h2>
+            <p class="text-on-surface-variant font-light leading-relaxed reveal">
+              I'm building this for the students who feel lost in the noise. Whether you're just starting or graduating, we have your back.
+            </p>
+          </div>
+          <div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- CS Card -->
+            <div class="bg-white p-10 flex flex-col justify-between min-h-[320px] border-l-4 border-primary-container shadow-sm reveal">
+              <div>
+                <h4 class="font-serif text-2xl font-bold mb-4">CS Students</h4>
+                <p class="text-on-surface-variant text-sm leading-relaxed">
+                  Final year or early graduates looking to specialize and escape the "generalist" trap.
+                </p>
+              </div>
+              <div class="flex items-center gap-2 text-primary-container font-bold text-xs tracking-widest uppercase mt-8">
+                <span class="material-symbols-outlined text-sm">check_circle</span>
+                Available Now
+              </div>
+            </div>
+            <!-- Class 12 Card -->
+            <div class="bg-surface-container-lowest p-10 flex flex-col justify-between min-h-[320px] ghost-border opacity-60 grayscale hover:grayscale-0 transition-all reveal">
+              <div>
+                <h4 class="font-serif text-2xl font-bold mb-4">Class 12 Students</h4>
+                <p class="text-on-surface-variant text-sm leading-relaxed">
+                  Planning your undergrad? We'll help you pick the right specialization before you even enroll.
+                </p>
+              </div>
+              <div class="flex items-center gap-2 text-outline font-bold text-xs tracking-widest uppercase mt-8">
+                <span class="material-symbols-outlined text-sm">schedule</span>
+                Coming Soon
+              </div>
+            </div>
+            <!-- Class 10 Card -->
+            <div class="bg-surface-container-lowest p-10 flex flex-col justify-between min-h-[320px] ghost-border opacity-60 grayscale hover:grayscale-0 transition-all reveal">
+              <div>
+                <h4 class="font-serif text-2xl font-bold mb-4">Class 10 Students</h4>
+                <p class="text-on-surface-variant text-sm leading-relaxed">
+                  Deciding your stream? Discover if engineering is actually your true calling.
+                </p>
+              </div>
+              <div class="flex items-center gap-2 text-outline font-bold text-xs tracking-widest uppercase mt-8">
+                <span class="material-symbols-outlined text-sm">schedule</span>
+                Coming Soon
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About the Creator -->
+    <section class="py-32 px-12 max-w-screen-2xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+        <div>
+          <h2 class="font-serif text-4xl md:text-5xl font-bold mb-10 leading-tight reveal">
+            Built because the internet gave us bad advice.
+          </h2>
+          <div class="space-y-6 text-on-surface-variant leading-relaxed font-light text-lg">
+            <p class="reveal">
+              We grew tired of "Top 10 Languages to Learn in 2024" videos. They don't know you. They don't know your cognitive strengths or what makes you lose track of time while coding.
+            </p>
+            <p class="reveal">
+              Pathified was born out of a simple frustration: the transition from student to specialized professional is broken. We use psychometrics and engineering market data to build the bridge.
+            </p>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest p-16 ghost-border flex flex-col items-center text-center reveal">
+          <div class="w-32 h-32 bg-surface-container-high mb-8 overflow-hidden">
+            <img alt="Kaustubh Shukla" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARDxYNpo2rCcyKYQCXe7fbH6kyam-C44TSxGvXxTpABGjUBAE285bPZ1K2-Agd2B4k4t2cAA9HOdfx5oxto8e0fB-_t2kbIj9FPLp-JCWNmV0RPLVaE3nEGXEFLnUNQ_lqJNFq_3LIWX04VaUx6ZJx2VdNk-pT5j6LNBwe85o0kG56D9PsU5qHTWNKOXziRWyoSwOqe3yXun23lk5wEXa5_KgYucRn5fSAW-4y15AKGx36wNaZFkEoIk0oznahEyusN9jr7wQklfw"/>
+          </div>
+          <h3 class="font-serif text-2xl font-bold mb-2">Built by Kaustubh Shukla</h3>
+          <p class="text-primary-container font-medium mb-8 max-w-sm">First year CS student. Built Pathified because career advice for CS students is genuinely terrible.</p>
+          <div class="flex gap-6">
+            <a class="text-outline hover:text-primary transition-colors flex items-center gap-2" href="https://www.linkedin.com/in/kaustubhshukla9586/" target="_blank">
+              <span class="material-symbols-outlined">link</span>
+              LinkedIn
+            </a>
+            <a class="text-outline hover:text-primary transition-colors flex items-center gap-2" href="https://github.com/kaustubhshukla9586" target="_blank">
+              <span class="material-symbols-outlined">terminal</span>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-32 bg-white relative overflow-hidden" id="contact-section">
+      <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image:url('https://www.transparenttextures.com/patterns/asfalt-dark.png')"></div>
+      <div class="max-w-2xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <h2 class="font-serif text-5xl font-bold mb-4 reveal">Get in touch</h2>
+          <p class="text-on-surface-variant font-light reveal">Questions, collabs, or just want to say hi?</p>
+        </div>
+        <form class="space-y-10" id="contact-form">
+          <div class="space-y-1 reveal">
+            <label class="block font-sans text-xs font-bold uppercase tracking-widest text-outline">Your Name</label>
+            <input class="w-full bg-transparent border-0 border-b border-outline/30 focus:border-primary-container focus:ring-0 px-0 py-4 transition-all font-sans" id="contact-name" placeholder="Enter your full name" type="text"/>
+          </div>
+          <div class="space-y-1 reveal">
+            <label class="block font-sans text-xs font-bold uppercase tracking-widest text-outline">Email Address</label>
+            <input class="w-full bg-transparent border-0 border-b border-outline/30 focus:border-primary-container focus:ring-0 px-0 py-4 transition-all font-sans" id="contact-email" placeholder="name@university.edu" type="email"/>
+          </div>
+          <div class="space-y-1 reveal">
+            <label class="block font-sans text-xs font-bold uppercase tracking-widest text-outline">Phone (Optional)</label>
+            <input class="w-full bg-transparent border-0 border-b border-outline/30 focus:border-primary-container focus:ring-0 px-0 py-4 transition-all font-sans" id="contact-phone" placeholder="+1 (555) 000-0000" type="tel"/>
+          </div>
+          <div class="pt-8 reveal">
+            <button class="w-full bg-primary-container text-on-primary-fixed py-6 font-bold text-xl active:scale-95 transition-all" id="contact-submit" type="button">
+              Send it. We don't bite. 🚀
+            </button>
+          </div>
+          <div class="hidden mt-8 text-center text-primary font-bold" id="contact-confirm">
+            ✓ Message received! We'll get back to you shortly.
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#f4f3f1] dark:bg-[#252625] border-t border-[#d8c3ad]/15">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-16 w-full px-12 py-20 max-w-screen-2xl mx-auto">
+      <div>
+        <div class="text-xl font-serif font-bold text-[#F59E0B] mb-6">Pathified</div>
+        <p class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 text-sm leading-relaxed max-w-xs font-sans tracking-wide">
+          Made for CS students who refuse to guess.
+        </p>
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#F59E0B] mb-2">Company</div>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="#">Support</a>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="#contact-section">Contact us</a>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="#">Made by Kaustubh</a>
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#F59E0B] mb-2">Social</div>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="https://www.linkedin.com/in/kaustubhshukla9586/" target="_blank">LinkedIn</a>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="https://github.com/kaustubhshukla9586" target="_blank">GitHub</a>
+        <div class="mt-8 text-[#1a1c1a] dark:text-[#faf9f6] opacity-50 text-xs font-sans tracking-wide">© 2025 Pathified. Built with purpose.</div>
       </div>
     </div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-  </section>
+  </footer>
 
+  <!-- Not From CS Modal — uses modal-overlay class for script.js active/inactive toggle -->
   <div class="modal-overlay" id="not-cs-modal">
-    <div class="not-cs-modal-card">
-      <button class="modal-close" id="not-cs-close" aria-label="Close">&times;</button>
-      <div class="not-cs-icon">🚧</div>
-      <h3>We're building this for you</h3>
-      <p>Pathified is currently built for CS college students. We're working on versions for students from all backgrounds and streams.</p>
-      <p class="not-cs-sub">Drop your email and we'll let you know the moment it's ready.</p>
-      <div class="not-cs-form" id="not-cs-form">
-        <input type="email" id="not-cs-email" placeholder="your@email.com"/>
-        <button class="btn-primary" id="not-cs-submit">Notify me</button>
+    <div class="w-full max-w-xl bg-surface-bright p-12 ghost-border shadow-2xl relative">
+      <div class="flex justify-between items-start mb-10">
+        <h2 class="font-serif text-4xl font-bold leading-tight">We're expanding, slowly.</h2>
+        <button class="text-outline hover:text-on-surface transition-colors" id="not-cs-close">
+          <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
       </div>
-      <p class="not-cs-confirm" id="not-cs-confirm">
+      <p class="text-on-surface-variant font-light leading-relaxed mb-10">
+        Right now, Pathified's assessment engine is specifically tuned for the nuances of Computer Science curricula. We're currently developing frameworks for other disciplines.
+      </p>
+      <ul class="space-y-6 mb-12">
+        <li class="flex items-center gap-4 group">
+          <div class="h-[1px] w-8 bg-primary-container group-hover:w-12 transition-all"></div>
+          <span class="font-medium">UX/UI &amp; Product Design</span>
+        </li>
+        <li class="flex items-center gap-4 group opacity-60">
+          <div class="h-[1px] w-8 bg-outline-variant"></div>
+          <span class="font-medium">Digital Marketing &amp; SEO</span>
+        </li>
+        <li class="flex items-center gap-4 group opacity-60">
+          <div class="h-[1px] w-8 bg-outline-variant"></div>
+          <span class="font-medium">Product Management</span>
+        </li>
+      </ul>
+      <div id="not-cs-form">
+        <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-4">Get notified when we launch your major</label>
+        <div class="flex gap-4">
+          <input class="flex-1 bg-surface-container border-0 px-6 py-4 focus:ring-2 focus:ring-primary-container transition-all font-sans" id="not-cs-email" placeholder="email@example.com" type="email"/>
+          <button class="bg-primary-container text-on-primary-fixed px-8 py-4 font-bold active:scale-95 transition-all" id="not-cs-submit">Notify Me</button>
+        </div>
+      </div>
+      <p class="text-primary font-bold text-sm mt-4 text-center" id="not-cs-confirm" style="display:none">
         ✓ You're on the list. We'll reach out soon.
       </p>
     </div>
   </div>
-
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>AI / Machine Learning</span><span class="dot">&bull;</span>
-      <span>Cybersecurity</span><span class="dot">&bull;</span>
-      <span>Data Engineering</span><span class="dot">&bull;</span>
-      <span>Web Development</span><span class="dot">&bull;</span>
-      <span>Cloud &amp; DevOps</span><span class="dot">&bull;</span>
-      <span>Embedded Systems</span><span class="dot">&bull;</span>
-      <span>Game Development</span><span class="dot">&bull;</span>
-      <span>Blockchain</span><span class="dot">&bull;</span>
-      <span>UI / UX Engineering</span><span class="dot">&bull;</span>
-      <span>AI / Machine Learning</span><span class="dot">&bull;</span>
-      <span>Cybersecurity</span><span class="dot">&bull;</span>
-      <span>Data Engineering</span><span class="dot">&bull;</span>
-      <span>Web Development</span><span class="dot">&bull;</span>
-      <span>Cloud &amp; DevOps</span><span class="dot">&bull;</span>
-      <span>Embedded Systems</span><span class="dot">&bull;</span>
-      <span>Game Development</span><span class="dot">&bull;</span>
-      <span>Blockchain</span><span class="dot">&bull;</span>
-      <span>UI / UX Engineering</span><span class="dot">&bull;</span>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS -->
-  <section id="how-it-works" class="section hiw">
-    <div class="section-header reveal">
-      <div class="section-label">How it works</div>
-      <h2>Three steps.<br>One clear direction.</h2>
-    </div>
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <h3>Answer deep questions</h3>
-        <p>Not surface-level. We ask about how you think, what drains you, and what kind of work actually feels alive to you.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">02</div>
-        <h3>AI builds your profile</h3>
-        <p>Every answer shapes the next question. No two people get the same quiz — it adapts around you in real time.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">03</div>
-        <h3>Get your roadmap</h3>
-        <p>A ranked list of fields, a clear explanation of why they fit you, and a concrete plan to get started today.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section who-for">
-    <div class="section-header reveal">
-      <div class="section-label">Who is this for</div>
-      <h2>Built for students at a crossroads</h2>
-    </div>
-    <div class="who-grid">
-      <article class="who-card who-live reveal">
-        <div class="who-icon">🎓</div>
-        <div class="who-head">
-          <h3>CS College Students</h3>
-          <span class="who-badge who-badge-live">Available now</span>
-        </div>
-        <p>You're in your first or second year, you picked CS but now you're not sure which direction to go. Pathified helps you figure out your specific path before it's too late to choose.</p>
-      </article>
-      <article class="who-card who-soon reveal" aria-disabled="true">
-        <div class="who-icon">📘</div>
-        <div class="who-head">
-          <h3>Class 12 Students</h3>
-          <span class="who-badge who-badge-soon">Coming soon</span>
-        </div>
-        <p>Deciding between engineering branches? Pathified will help you figure out if CS is even right for you before you commit.</p>
-      </article>
-      <article class="who-card who-soon reveal" aria-disabled="true">
-        <div class="who-icon">🧭</div>
-        <div class="who-head">
-          <h3>Class 10 Students</h3>
-          <span class="who-badge who-badge-soon">Coming soon</span>
-        </div>
-        <p>Too early to decide? Not really. Pathified will help you understand your strengths early so you can make the right stream choice.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- RESULT PREVIEW -->
-  <section id="sample-result" class="section result-section">
-    <div class="section-header reveal">
-      <div class="section-label">Sample output</div>
-      <h2>What you'll walk<br>away with</h2>
-    </div>
-    <div class="result-card reveal">
-      <div class="result-top">
-        <div>
-          <div class="result-badge">Sample result</div>
-          <div class="result-name">Yash's Career Profile</div>
-          <div class="result-meta">24 responses &middot; 8 minutes</div>
-        </div>
-        <div class="result-match">
-          <div class="match-num">92%</div>
-          <div class="match-label">top match</div>
-        </div>
-      </div>
-      <div class="paths">
-        <div class="path-item">
-          <div class="path-left">
-            <span class="path-rank">#1</span>
-            <span class="path-name">AI / Machine Learning</span>
-          </div>
-          <div class="path-right">
-            <div class="path-bar"><div class="path-fill animated-bar" data-width="92"></div></div>
-            <span class="path-pct">92%</span>
-          </div>
-        </div>
-        <div class="path-item">
-          <div class="path-left">
-            <span class="path-rank">#2</span>
-            <span class="path-name">Data Engineering</span>
-          </div>
-          <div class="path-right">
-            <div class="path-bar"><div class="path-fill animated-bar" data-width="74"></div></div>
-            <span class="path-pct">74%</span>
-          </div>
-        </div>
-        <div class="path-item">
-          <div class="path-left">
-            <span class="path-rank">#3</span>
-            <span class="path-name">Cybersecurity</span>
-          </div>
-          <div class="path-right">
-            <div class="path-bar"><div class="path-fill animated-bar" data-width="58"></div></div>
-            <span class="path-pct">58%</span>
-          </div>
-        </div>
-      </div>
-      <div class="why-box">
-        <div class="why-label">Why AI / ML fits Yash</div>
-        <div class="why-text">You scored high on abstract thinking, prefer working independently on hard problems, and said financial growth matters to you. AI/ML rewards exactly the kind of deep, focused problem solving you described, and has one of the highest earning ceilings in CS.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section class="final-cta">
-    <div class="cta-inner reveal">
-      <h2>Your path is waiting.<br><em>Find it in 8 minutes.</em></h2>
-      <p>Free. No signup. Just honest answers.</p>
-      <button class="btn-primary btn-lg start-quiz-btn" onclick="window.location.href='quiz.html'">Start the quiz &rarr;</button>
-    </div>
-    <div class="orb orb-cta1"></div>
-    <div class="orb orb-cta2"></div>
-  </section>
-
-  <footer>
-    <div class="logo">Pathified</div>
-    <p>Made for CS students who refuse to guess.</p>
-  </footer>
 
   <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
     <span class="theme-icon-light">☀︎</span>
@@ -234,5 +419,34 @@
   </button>
 
   <script src="script.js"></script>
+  <script>
+    // Wire nav dark-mode-toggle to the same toggle as theme-toggle button
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('dark-mode-toggle');
+      const themeBtn = document.getElementById('theme-toggle');
+      if (navToggle && themeBtn) {
+        navToggle.addEventListener('click', () => themeBtn.click());
+      }
+
+      // Contact form handler
+      const contactSubmit = document.getElementById('contact-submit');
+      const contactConfirm = document.getElementById('contact-confirm');
+      if (contactSubmit) {
+        contactSubmit.addEventListener('click', () => {
+          const name = document.getElementById('contact-name')?.value.trim();
+          const email = document.getElementById('contact-email')?.value.trim();
+          if (!name || !email || !email.includes('@')) return;
+          localStorage.setItem('pathified_contact', JSON.stringify({
+            name, email,
+            phone: document.getElementById('contact-phone')?.value.trim() || '',
+            timestamp: new Date().toISOString()
+          }));
+          contactSubmit.textContent = '✓ Message received!';
+          contactSubmit.disabled = true;
+          if (contactConfirm) contactConfirm.classList.remove('hidden');
+        });
+      }
+    });
+  </script>
 </body>
 </html>
