@@ -41,7 +41,7 @@
 
 /* --- QUIZ CONTAINER --- */
 .quiz-container {
-  height: calc(100vh - 130px);
+  height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,6 +50,17 @@
   position: relative;
   overflow: hidden;
   background: var(--cream);
+}
+
+body {
+  overflow: hidden;
+}
+
+/* Ensure cursor elements don't interfere with quiz layout */
+.cursor, .cursor-dot {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
 }
 
 .quiz-inner {
@@ -395,9 +406,10 @@
 
 /* --- QUIZ RESPONSIVE: MOBILE --- */
 @media (max-width: 639px) {
+  body { overflow: auto; }
   .quiz-container {
     height: auto;
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 80px);
     overflow: auto;
     padding: 1rem 1.25rem 2rem;
   }
