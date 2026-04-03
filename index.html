@@ -71,6 +71,7 @@
       background-image: radial-gradient(#d8c3ad 1px, transparent 1px);
       background-size: 32px 32px;
       background-attachment: fixed;
+      background-color: #faf9f6;
       cursor: auto;
     }
     .material-symbols-outlined {
@@ -97,8 +98,7 @@
       <div class="hidden md:flex items-center gap-10">
         <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-80 hover:text-[#F59E0B] transition-colors duration-300 font-medium" href="#how-it-works">How it works</a>
         <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-80 hover:text-[#F59E0B] transition-colors duration-300 font-medium" href="#about-section">About</a>
-        <span class="material-symbols-outlined text-[#1a1c1a] cursor-pointer hover:text-[#F59E0B] transition-colors" id="dark-mode-toggle">dark_mode</span>
-        <button class="bg-[#F59E0B] text-[#2a1700] px-8 py-3 font-bold active:scale-95 duration-200 ease-in-out start-quiz-btn">Start Quiz</button>
+<button class="bg-[#F59E0B] text-[#2a1700] px-8 py-3 font-bold active:scale-95 duration-200 ease-in-out start-quiz-btn">Start Quiz</button>
       </div>
       <button class="md:hidden text-[#1a1c1a]">
         <span class="material-symbols-outlined">menu</span>
@@ -170,7 +170,7 @@
     </section>
 
     <!-- Sample Result Preview -->
-    <section class="py-32 px-12 bg-surface-container-low" id="sample-result">
+    <section class="py-32 px-12" id="sample-result">
       <div class="max-w-screen-2xl mx-auto">
         <div class="text-center mb-20">
           <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6 reveal">Your future, mapped.</h2>
@@ -225,93 +225,24 @@
       </div>
     </section>
 
-    <!-- Who is this for -->
-    <section class="bg-background py-32 px-12" id="about-section">
-      <div class="max-w-screen-2xl mx-auto">
-        <div class="flex flex-col md:flex-row gap-16 items-start">
-          <div class="w-full md:w-1/3">
-            <h2 class="font-serif text-5xl font-bold leading-tight mb-8 reveal">Who is this built for?</h2>
-            <p class="text-on-surface-variant font-light leading-relaxed reveal">
-              I'm building this for the students who feel lost in the noise. Whether you're just starting or graduating, we have your back.
-            </p>
-          </div>
-          <div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- CS Card -->
-            <div class="bg-white p-10 flex flex-col justify-between min-h-[320px] border-l-4 border-primary-container shadow-sm reveal">
-              <div>
-                <h4 class="font-serif text-2xl font-bold mb-4">CS Students</h4>
-                <p class="text-on-surface-variant text-sm leading-relaxed">
-                  Final year or early graduates looking to specialize and escape the "generalist" trap.
-                </p>
-              </div>
-              <div class="flex items-center gap-2 text-primary-container font-bold text-xs tracking-widest uppercase mt-8">
-                <span class="material-symbols-outlined text-sm">check_circle</span>
-                Available Now
-              </div>
-            </div>
-            <!-- Class 12 Card -->
-            <div class="bg-surface-container-lowest p-10 flex flex-col justify-between min-h-[320px] ghost-border opacity-60 grayscale hover:grayscale-0 transition-all reveal">
-              <div>
-                <h4 class="font-serif text-2xl font-bold mb-4">Class 12 Students</h4>
-                <p class="text-on-surface-variant text-sm leading-relaxed">
-                  Planning your undergrad? We'll help you pick the right specialization before you even enroll.
-                </p>
-              </div>
-              <div class="flex items-center gap-2 text-outline font-bold text-xs tracking-widest uppercase mt-8">
-                <span class="material-symbols-outlined text-sm">schedule</span>
-                Coming Soon
-              </div>
-            </div>
-            <!-- Class 10 Card -->
-            <div class="bg-surface-container-lowest p-10 flex flex-col justify-between min-h-[320px] ghost-border opacity-60 grayscale hover:grayscale-0 transition-all reveal">
-              <div>
-                <h4 class="font-serif text-2xl font-bold mb-4">Class 10 Students</h4>
-                <p class="text-on-surface-variant text-sm leading-relaxed">
-                  Deciding your stream? Discover if engineering is actually your true calling.
-                </p>
-              </div>
-              <div class="flex items-center gap-2 text-outline font-bold text-xs tracking-widest uppercase mt-8">
-                <span class="material-symbols-outlined text-sm">schedule</span>
-                Coming Soon
-              </div>
-            </div>
-          </div>
+    <section class="py-32 px-12 max-w-screen-2xl mx-auto" id="about-section">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-xs font-bold uppercase tracking-widest text-primary-container mb-6">
+          Why Pathified
         </div>
-      </div>
-    </section>
-
-    <!-- About the Creator -->
-    <section class="py-32 px-12 max-w-screen-2xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-        <div>
-          <h2 class="font-serif text-4xl md:text-5xl font-bold mb-10 leading-tight reveal">
-            Built because the internet gave us bad advice.
-          </h2>
-          <div class="space-y-6 text-on-surface-variant leading-relaxed font-light text-lg">
-            <p class="reveal">
-              We grew tired of "Top 10 Languages to Learn in 2024" videos. They don't know you. They don't know your cognitive strengths or what makes you lose track of time while coding.
-            </p>
-            <p class="reveal">
-              Pathified was born out of a simple frustration: the transition from student to specialized professional is broken. We use psychometrics and engineering market data to build the bridge.
-            </p>
-          </div>
-        </div>
-        <div class="bg-surface-container-lowest p-16 ghost-border flex flex-col items-center text-center reveal">
-          <div class="w-32 h-32 bg-surface-container-high mb-8 overflow-hidden">
-            <img alt="Kaustubh Shukla" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARDxYNpo2rCcyKYQCXe7fbH6kyam-C44TSxGvXxTpABGjUBAE285bPZ1K2-Agd2B4k4t2cAA9HOdfx5oxto8e0fB-_t2kbIj9FPLp-JCWNmV0RPLVaE3nEGXEFLnUNQ_lqJNFq_3LIWX04VaUx6ZJx2VdNk-pT5j6LNBwe85o0kG56D9PsU5qHTWNKOXziRWyoSwOqe3yXun23lk5wEXa5_KgYucRn5fSAW-4y15AKGx36wNaZFkEoIk0oznahEyusN9jr7wQklfw"/>
-          </div>
-          <h3 class="font-serif text-2xl font-bold mb-2">Built by Kaustubh Shukla</h3>
-          <p class="text-primary-container font-medium mb-8 max-w-sm">First year CS student. Built Pathified because career advice for CS students is genuinely terrible.</p>
-          <div class="flex gap-6">
-            <a class="text-outline hover:text-primary transition-colors flex items-center gap-2" href="https://www.linkedin.com/in/kaustubhshukla9586/" target="_blank">
-              <span class="material-symbols-outlined">link</span>
-              LinkedIn
-            </a>
-            <a class="text-outline hover:text-primary transition-colors flex items-center gap-2" href="https://github.com/kaustubhshukla9586" target="_blank">
-              <span class="material-symbols-outlined">terminal</span>
-              GitHub
-            </a>
-          </div>
+        <h2 class="font-serif text-5xl md:text-6xl font-bold mb-12 leading-tight">
+          Built because everyone had advice.<br>Nobody had answers.
+        </h2>
+        <div class="space-y-6 text-on-surface-variant leading-relaxed font-light text-lg max-w-2xl">
+          <p>
+            There's no shortage of people telling CS students what to do. Watch this video. Learn this language. Follow this roadmap. But none of it is built for you specifically — it's built for everyone, which means it's built for no one.
+          </p>
+          <p>
+            The problem is real. When you're surrounded by noise and can't figure out your direction, it doesn't feel like an information problem. It feels personal. Like maybe you're the one who's broken.
+          </p>
+          <p>
+            Pathified exists because AI can actually listen to who you are — not just what you've learned. Twenty-five questions that adapt to your answers, and a result that was built specifically around you.
+          </p>
         </div>
       </div>
     </section>
@@ -342,8 +273,9 @@
               Send it. We don't bite. 🚀
             </button>
           </div>
-          <div class="hidden mt-8 text-center text-primary font-bold" id="contact-confirm">
-            ✓ Message received! We'll get back to you shortly.
+          <div class="hidden mt-6 text-center" id="contact-success">
+            <p class="font-serif text-2xl font-bold text-primary-container">We got it. 👀</p>
+            <p class="text-on-surface-variant mt-2 font-light">We'll get back to ya — probably faster than you'd expect.</p>
           </div>
         </form>
       </div>
@@ -361,8 +293,7 @@
       </div>
       <div class="flex flex-col gap-4">
         <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#F59E0B] mb-2">Company</div>
-        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="#">Support</a>
-        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="#contact-section">Contact us</a>
+<a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="#contact-section">Contact us</a>
         <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-colors text-sm font-sans tracking-wide" href="#">Made by Kaustubh</a>
       </div>
       <div class="flex flex-col gap-4">
@@ -374,41 +305,28 @@
     </div>
   </footer>
 
-  <!-- Not From CS Modal — uses modal-overlay class for script.js active/inactive toggle -->
-  <div class="modal-overlay" id="not-cs-modal">
-    <div class="w-full max-w-xl bg-surface-bright p-12 ghost-border shadow-2xl relative">
-      <div class="flex justify-between items-start mb-10">
-        <h2 class="font-serif text-4xl font-bold leading-tight">We're expanding, slowly.</h2>
-        <button class="text-outline hover:text-on-surface transition-colors" id="not-cs-close">
-          <span class="material-symbols-outlined text-3xl">close</span>
+  <!-- Not From CS Modal -->
+  <div class="fixed inset-0 z-[100] modal-overlay" id="not-cs-modal" style="display:none; opacity:0; pointer-events:none; transition: opacity 0.25s ease;">
+    <div class="absolute inset-0 bg-on-surface/40 backdrop-blur-sm" id="not-cs-backdrop"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-surface-bright p-12 shadow-2xl">
+      <button class="absolute top-6 right-6 text-outline hover:text-on-surface transition-colors text-2xl leading-none" id="not-cs-close">&times;</button>
+      <h2 class="font-serif text-3xl font-bold mb-4 leading-tight">We're building this for you.</h2>
+      <p class="text-on-surface-variant font-light leading-relaxed mb-8">
+        Pathified is currently for CS students. Drop your email and we'll reach out when your version is ready.
+      </p>
+      <div id="not-cs-form">
+        <input
+          type="email"
+          id="not-cs-email"
+          placeholder="your@email.com"
+          class="w-full bg-surface-container border-0 border-b-2 border-outline-variant focus:border-primary-container focus:ring-0 px-0 py-4 mb-6 text-lg transition-all"
+        />
+        <button id="not-cs-submit" class="w-full bg-primary-container text-on-primary-fixed py-4 font-bold tracking-widest uppercase text-sm active:scale-95 transition-all">
+          Notify me
         </button>
       </div>
-      <p class="text-on-surface-variant font-light leading-relaxed mb-10">
-        Right now, Pathified's assessment engine is specifically tuned for the nuances of Computer Science curricula. We're currently developing frameworks for other disciplines.
-      </p>
-      <ul class="space-y-6 mb-12">
-        <li class="flex items-center gap-4 group">
-          <div class="h-[1px] w-8 bg-primary-container group-hover:w-12 transition-all"></div>
-          <span class="font-medium">UX/UI &amp; Product Design</span>
-        </li>
-        <li class="flex items-center gap-4 group opacity-60">
-          <div class="h-[1px] w-8 bg-outline-variant"></div>
-          <span class="font-medium">Digital Marketing &amp; SEO</span>
-        </li>
-        <li class="flex items-center gap-4 group opacity-60">
-          <div class="h-[1px] w-8 bg-outline-variant"></div>
-          <span class="font-medium">Product Management</span>
-        </li>
-      </ul>
-      <div id="not-cs-form">
-        <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-4">Get notified when we launch your major</label>
-        <div class="flex gap-4">
-          <input class="flex-1 bg-surface-container border-0 px-6 py-4 focus:ring-2 focus:ring-primary-container transition-all font-sans" id="not-cs-email" placeholder="email@example.com" type="email"/>
-          <button class="bg-primary-container text-on-primary-fixed px-8 py-4 font-bold active:scale-95 transition-all" id="not-cs-submit">Notify Me</button>
-        </div>
-      </div>
-      <p class="text-primary font-bold text-sm mt-4 text-center" id="not-cs-confirm" style="display:none">
-        ✓ You're on the list. We'll reach out soon.
+      <p class="hidden text-primary-container font-medium mt-4 text-center" id="not-cs-confirm">
+        ✓ You're on the list. We'll reach out when it's ready.
       </p>
     </div>
   </div>
@@ -419,34 +337,5 @@
   </button>
 
   <script src="script.js"></script>
-  <script>
-    // Wire nav dark-mode-toggle to the same toggle as theme-toggle button
-    document.addEventListener('DOMContentLoaded', () => {
-      const navToggle = document.getElementById('dark-mode-toggle');
-      const themeBtn = document.getElementById('theme-toggle');
-      if (navToggle && themeBtn) {
-        navToggle.addEventListener('click', () => themeBtn.click());
-      }
-
-      // Contact form handler
-      const contactSubmit = document.getElementById('contact-submit');
-      const contactConfirm = document.getElementById('contact-confirm');
-      if (contactSubmit) {
-        contactSubmit.addEventListener('click', () => {
-          const name = document.getElementById('contact-name')?.value.trim();
-          const email = document.getElementById('contact-email')?.value.trim();
-          if (!name || !email || !email.includes('@')) return;
-          localStorage.setItem('pathified_contact', JSON.stringify({
-            name, email,
-            phone: document.getElementById('contact-phone')?.value.trim() || '',
-            timestamp: new Date().toISOString()
-          }));
-          contactSubmit.textContent = '✓ Message received!';
-          contactSubmit.disabled = true;
-          if (contactConfirm) contactConfirm.classList.remove('hidden');
-        });
-      }
-    });
-  </script>
 </body>
 </html>
