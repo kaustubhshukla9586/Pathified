@@ -170,19 +170,29 @@ function renderCards() {
 
   resultsData.forEach((item, idx) => {
     const card = document.createElement('div');
-    card.className = `r-card ${item.rank === 1 ? 'rank-1' : ''}`;
+    const isFirst = item.rank === 1;
+    card.className = `bg-surface-container-lowest p-12 flex flex-col justify-between min-h-[400px] cursor-pointer transition-all duration-300 hover:-translate-y-1 ${isFirst ? 'border-t-2 border-primary-container' : 'border-l border-outline-variant/15'}`;
     card.style.opacity = 0;
     card.style.transform = 'translateY(20px)';
 
     card.innerHTML = `
-      <div class="r-rank">${getRankLabel(item.rank)}</div>
-      <div class="r-field">${item.field}</div>
-      <div class="r-pct">${item.percentage}%</div>
-      <div class="r-desc">${item.type || 'Recommended specialization'}</div>
-      <div class="r-bar-wrap">
-        <div class="r-bar-fill" style="width:0%" data-target="${item.percentage}"></div>
+      <div>
+        <span class="font-sans text-xs tracking-widest uppercase font-bold ${isFirst ? 'text-primary-container' : 'text-on-surface/40'} mb-8 block">${getRankLabel(item.rank)}</span>
+        <h3 class="font-serif text-3xl font-bold mb-4 text-on-surface">${item.field}</h3>
+        <p class="font-sans text-sm opacity-70 leading-relaxed mb-8 text-on-surface-variant">${item.type || 'Recommended specialization'}</p>
       </div>
-      <a href="#" class="r-link">See full breakdown &rarr;</a>
+      <div>
+        <div class="flex items-baseline gap-1 mb-2">
+          <span class="font-serif text-6xl font-black text-primary-container">${item.percentage}</span>
+          <span class="font-serif text-2xl text-primary-container">%</span>
+        </div>
+        <div class="w-full h-0.5 bg-surface-variant">
+          <div class="h-full bg-primary-container r-bar-fill" data-target="${item.percentage}" style="width:0%;transition:width 1.5s cubic-bezier(0.2,0.8,0.2,1)"></div>
+        </div>
+        <a href="#" class="r-link mt-6 inline-flex items-center gap-2 font-sans font-bold text-xs tracking-widest uppercase text-primary hover:text-primary-container transition-colors">
+          See full breakdown →
+        </a>
+      </div>
     `;
 
     card.addEventListener('click', (e) => {
@@ -214,7 +224,7 @@ const modalClose = document.getElementById('modal-close');
 function openModal(item) {
   currentResult = item;
 
-  document.getElementById('m-rank').textContent = item.rank === 1 ? 'Top match' : `Rank #${item.rank}`;
+  document.getElementById('m-rank').textContent = item.rank === 1 ? '#1 Best Match' : `Rank #${item.rank}`;
   document.getElementById('m-field').textContent = item.field;
   document.getElementById('m-pct').textContent = `${item.percentage}%`;
   document.getElementById('m-desc').textContent = item.explanation;
@@ -224,39 +234,34 @@ function openModal(item) {
   strengthsRow.innerHTML = '';
   (item.strengths || []).forEach(s => {
     const tag = document.createElement('span');
-    tag.className = 'tag';
+    tag.className = 'px-3 py-1.5 bg-secondary-container/20 text-on-secondary-container text-xs font-medium rounded-full border border-secondary-container/30';
     tag.textContent = s;
     strengthsRow.appendChild(tag);
   });
-  if (!item.strengths?.length) strengthsRow.innerHTML = '<span class="tag">Not specified</span>';
+  if (!item.strengths?.length) strengthsRow.innerHTML = '<span class="px-3 py-1.5 text-xs opacity-50">Not specified</span>';
 
   // Considerations
   const considerationsRow = document.getElementById('m-considerations');
   considerationsRow.innerHTML = '';
   (item.considerations || []).forEach(c => {
     const tag = document.createElement('span');
-    tag.className = 'tag';
+    tag.className = 'px-3 py-1.5 bg-surface-container text-on-surface-variant text-xs font-medium rounded-full border border-outline-variant/30';
     tag.textContent = c;
     considerationsRow.appendChild(tag);
   });
-  if (!item.considerations?.length) considerationsRow.innerHTML = '<span class="tag">Not specified</span>';
+  if (!item.considerations?.length) considerationsRow.innerHTML = '<span class="px-3 py-1.5 text-xs opacity-50">Not specified</span>';
 
-  // Roles
-  const existing = document.querySelector('.modal-roles');
-  if (existing) existing.remove();
-
-  if (item.roles?.length) {
-    const rolesContainer = document.createElement('div');
-    rolesContainer.className = 'modal-roles';
-    rolesContainer.innerHTML = `
-      <div class="modal-section-title">Roles you could grow into</div>
-      <div class="tags-row roles">
-        ${item.roles.map(r => `<span class="role-tag">${r}</span>`).join('')}
-      </div>
-    `;
-    const footer = document.querySelector('.modal-footer');
-    if (footer) footer.before(rolesContainer);
-    else document.querySelector('.modal-content').appendChild(rolesContainer);
+  // Roles — use the m-growth-roles container in the HTML
+  const rolesRow = document.getElementById('m-growth-roles');
+  if (rolesRow) {
+    rolesRow.innerHTML = '';
+    (item.roles || []).forEach(r => {
+      const tag = document.createElement('span');
+      tag.className = 'px-3 py-1.5 border border-outline-variant text-on-surface-variant text-xs font-medium rounded-full';
+      tag.textContent = r;
+      rolesRow.appendChild(tag);
+    });
+    if (!item.roles?.length) rolesRow.innerHTML = '<span class="px-3 py-1.5 text-xs opacity-50">Not specified</span>';
   }
 
   modal.classList.add('active');

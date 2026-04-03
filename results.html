@@ -1,89 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pathified — Your Results</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Pathified | Your Results</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-fixed": "#ffddb8",
+            "surface-bright": "#faf9f6",
+            "on-surface": "#1a1c1a",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#ffddb8",
+            "on-error": "#ffffff",
+            "background": "#faf9f6",
+            "on-primary-container": "#613b00",
+            "primary-container": "#f59e0b",
+            "secondary-fixed-dim": "#f0bd82",
+            "tertiary": "#00658b",
+            "surface-container-high": "#e9e8e5",
+            "secondary-container": "#ffcb8f",
+            "on-primary-fixed": "#2a1700",
+            "inverse-surface": "#2f312f",
+            "primary": "#855300",
+            "surface-variant": "#e3e2e0",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e3e2e0",
+            "inverse-on-surface": "#f2f1ee",
+            "on-tertiary": "#ffffff",
+            "on-background": "#1a1c1a",
+            "on-secondary": "#ffffff",
+            "surface-dim": "#dbdad7",
+            "surface-container": "#efeeeb",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#ffb95f",
+            "primary-fixed-dim": "#ffb95f",
+            "on-surface-variant": "#534434",
+            "secondary": "#7d5725",
+            "surface-container-low": "#f4f3f1",
+            "outline-variant": "#d8c3ad",
+            "outline": "#867461",
+            "error": "#ba1a1a",
+            "surface": "#faf9f6",
+            "on-secondary-container": "#795423"
+          },
+          fontFamily: {
+            "serif": ["Playfair Display", "serif"],
+            "sans": ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            "none": "0px",
+            "DEFAULT": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "0px"
+          },
+        },
+      },
+    }
+  </script>
   <link rel="stylesheet" href="css/global.css"/>
   <link rel="stylesheet" href="css/animations.css"/>
   <link rel="stylesheet" href="css/nav.css"/>
   <link rel="stylesheet" href="css/results.css"/>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .dot-grid {
+      background-image: radial-gradient(circle, #d8c3ad 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.05;
+    }
+    body { cursor: auto; }
+  </style>
 </head>
-<body>
+<body class="bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-fixed min-h-screen flex flex-col relative">
 
   <div class="cursor"></div>
   <div class="cursor-dot"></div>
 
-  <nav class="results-nav">
-    <a href="index.html" class="logo">Pathified</a>
+  <!-- Texture Overlay -->
+  <div class="fixed inset-0 dot-grid pointer-events-none"></div>
+
+  <!-- Nav -->
+  <nav class="bg-[#faf9f6] dark:bg-[#1a1c1a] border-none flex justify-between items-center w-full px-12 py-6 max-w-screen-2xl mx-auto z-20 sticky top-0">
+    <a class="text-2xl font-serif font-bold text-[#F59E0B] tracking-tight" href="index.html">Pathified</a>
+    <div class="hidden md:flex items-center gap-8">
+      <span class="material-symbols-outlined text-[#1a1c1a] dark:text-[#faf9f6] opacity-80 cursor-pointer hover:text-[#F59E0B] transition-colors duration-300" id="dark-mode-toggle">dark_mode</span>
+    </div>
   </nav>
 
-  <main class="results-container">
-    <div class="results-header reveal">
-      <h1>Your path, <em>mapped.</em></h1>
-      <p>Based on your 25 answers, here's what we found.</p>
-    </div>
-
-    <!-- Cards container -->
-    <div class="results-grid reveal" id="results-grid">
-      <!-- Injected by JS -->
-    </div>
-    <div class="email-results-wrap reveal">
-      <p class="email-results-label">Want to save your results?</p>
-      <div class="email-results-form" id="email-results-form">
-        <input type="email" id="results-email" placeholder="your@email.com"/>
-        <button class="btn-primary" id="results-email-btn">Email my results</button>
-      </div>
-      <p class="email-results-confirm" id="email-confirm">
-        ✓ Results saved — check your inbox shortly.
+  <main class="flex-grow max-w-screen-xl mx-auto px-12 py-20 relative z-10">
+    <!-- Header -->
+    <header class="mb-24 text-center">
+      <h1 class="font-serif font-extrabold text-6xl md:text-7xl text-on-surface tracking-tight mb-6">
+        Your path, <span class="text-primary-container italic">mapped.</span>
+      </h1>
+      <p class="font-sans text-sm tracking-widest uppercase opacity-70 mb-2">Analysis Complete</p>
+      <p class="font-sans text-xl opacity-80 max-w-2xl mx-auto leading-relaxed">
+        Based on your 25 answers, here's what we found.
       </p>
-    </div>
-    <div class="retake-wrap reveal">
-      <p class="retake-text">Want to try again with different answers?</p>
-      <button class="btn-ghost" id="retake-btn">Retake the quiz</button>
-    </div>
+    </header>
+
+    <!-- Results Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-outline-variant/15" id="results-grid">
+      <!-- Dynamically populated by results.js -->
+    </section>
+
+    <!-- Email Results -->
+    <section class="mt-32 max-w-2xl mx-auto text-center">
+      <h2 class="font-serif text-4xl font-bold mb-6">Want to save your results?</h2>
+      <p class="font-sans opacity-70 mb-10">Get your full results delivered to your inbox.</p>
+      <div class="flex flex-col md:flex-row gap-0 border border-outline-variant/30 focus-within:border-primary-container transition-colors duration-300" id="email-results-form">
+        <input class="flex-grow bg-transparent border-none py-6 px-8 focus:ring-0 placeholder:text-outline/50 font-sans text-lg" id="results-email" placeholder="Enter your email" type="email"/>
+        <button class="bg-primary-container hover:bg-primary text-on-primary-fixed font-bold py-6 px-12 transition-all duration-300 active:scale-95" id="results-email-btn">
+          Email my results
+        </button>
+      </div>
+      <p class="mt-4 text-primary-container font-sans text-sm font-medium" id="email-confirm" style="display:none">Results sent. Check your inbox.</p>
+    </section>
+
+    <!-- Retake -->
+    <section class="mt-40 text-center pb-20 border-b border-outline-variant/15">
+      <h4 class="font-sans text-sm tracking-widest uppercase opacity-50 mb-6">Not what you expected?</h4>
+      <p class="font-serif text-2xl mb-8">Want to try again...?</p>
+      <button class="border border-outline-variant/30 hover:border-primary-container hover:text-primary-container text-on-surface py-4 px-12 font-sans tracking-widest text-xs uppercase font-bold transition-all duration-300 active:scale-95" id="retake-btn">
+        Retake the quiz
+      </button>
+    </section>
   </main>
 
-  <!-- Detail Modal -->
+  <!-- Footer -->
+  <footer class="bg-[#f4f3f1] dark:bg-[#252625] border-t border-[#d8c3ad]/15">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-16 w-full px-12 py-20 max-w-screen-2xl mx-auto font-sans text-sm tracking-wide">
+      <div>
+        <div class="text-xl font-serif font-bold text-[#F59E0B] mb-6">Pathified</div>
+        <p class="opacity-70 leading-loose">Made for CS students who refuse to guess.</p>
+      </div>
+      <div class="flex flex-col gap-4">
+        <span class="font-bold text-on-surface/40 uppercase text-xs tracking-[0.2em] mb-2">Company</span>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-all" href="#">Support</a>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-all" href="#">Contact us</a>
+      </div>
+      <div class="flex flex-col gap-4">
+        <span class="font-bold text-on-surface/40 uppercase text-xs tracking-[0.2em] mb-2">Connect</span>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-all" href="https://www.linkedin.com/in/kaustubhshukla9586/" target="_blank">LinkedIn</a>
+        <a class="text-[#1a1c1a] dark:text-[#faf9f6] opacity-70 hover:opacity-100 hover:text-[#F59E0B] transition-all" href="https://github.com/kaustubhshukla9586" target="_blank">GitHub</a>
+        <p class="mt-8 text-xs opacity-50">© 2025 Pathified. Built with purpose.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Backdrop — uses modal-backdrop class for results.js active toggle -->
   <div class="modal-backdrop" id="modal-backdrop"></div>
-  <div class="modal" id="modal">
-    <button class="modal-close" id="modal-close">&times;</button>
-    <div class="modal-content">
-      <div class="modal-badge" id="m-rank">Top match</div>
-      <h2 class="modal-title" id="m-field">AI / Machine Learning</h2>
-      <div class="modal-pct" id="m-pct">92%</div>
-      
-      <div class="modal-section-title">Why this fits you</div>
-      <p class="modal-desc" id="m-desc">...</p>
-      
-      <div class="modal-section-title">Strengths</div>
-      <div class="tags-row" id="m-strengths">
-        <!-- Tags injected -->
-      </div>
-      
-      <div class="modal-section-title">Considerations</div>
-      <div class="tags-row neutral" id="m-considerations">
-        <!-- Tags injected -->
-      </div>
-      
-      <div class="modal-footer">
-        <a href="#" class="modal-link disabled">Explore a roadmap for this path &rarr; <br><small>(Coming soon)</small></a>
-        <div class="share-wrap">
-          <button class="share-btn" id="share-btn">Share my result</button>
-          <span class="share-confirm" id="share-confirm">✓ Copied to clipboard</span>
+
+  <!-- Modal — uses modal class for results.js active toggle -->
+  <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl bg-surface-bright z-50 border-t-2 border-primary-container modal" id="modal">
+    <div class="p-16 relative">
+      <button class="absolute top-8 right-8 text-on-surface/30 hover:text-on-surface transition-colors" id="modal-close">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+        <div class="md:col-span-8">
+          <span class="font-sans text-xs tracking-[0.3em] uppercase font-bold text-primary-container mb-4 block" id="m-rank">RANK #1</span>
+          <h2 class="font-serif text-5xl font-bold mb-8 text-on-surface" id="m-field">Field Title</h2>
+          <p class="font-sans text-lg opacity-70 leading-relaxed mb-12" id="m-desc">
+            Description goes here.
+          </p>
+          <div class="space-y-10">
+            <div>
+              <h4 class="font-sans text-xs tracking-widest uppercase font-bold mb-4">Core Strengths</h4>
+              <div class="flex flex-wrap gap-2" id="m-strengths"></div>
+            </div>
+            <div>
+              <h4 class="font-sans text-xs tracking-widest uppercase font-bold mb-4">Key Considerations</h4>
+              <div class="flex flex-wrap gap-2" id="m-considerations"></div>
+            </div>
+            <div>
+              <h4 class="font-sans text-xs tracking-widest uppercase font-bold mb-4">Roles you could grow into</h4>
+              <div class="flex flex-wrap gap-2" id="m-growth-roles"></div>
+            </div>
+          </div>
+        </div>
+        <div class="md:col-span-4 flex flex-col justify-between">
+          <div class="text-right">
+            <span class="font-serif text-8xl font-black text-primary-container leading-none" id="m-pct">0%</span>
+            <p class="font-sans text-xs tracking-widest uppercase opacity-40 mt-2">Overall Match</p>
+          </div>
+          <div class="space-y-4">
+            <button class="w-full bg-primary-container hover:bg-primary text-on-primary-fixed font-bold py-5 px-6 transition-all active:scale-95 flex items-center justify-center gap-2" id="share-btn">
+              <span class="material-symbols-outlined text-sm">share</span>
+              Share Result
+            </button>
+            <p class="text-center text-primary text-xs font-bold" id="share-confirm" style="opacity:0;transition:opacity 0.3s ease">Link copied to clipboard</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="config.js"></script>
+
   <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
     <span class="theme-icon-light">☀︎</span>
     <span class="theme-icon-dark">☽</span>
   </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="config.js"></script>
   <script src="script.js"></script>
   <script src="results.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('dark-mode-toggle');
+      const themeBtn = document.getElementById('theme-toggle');
+      if (navToggle && themeBtn) {
+        navToggle.addEventListener('click', () => themeBtn.click());
+      }
+    });
+  </script>
 </body>
 </html>

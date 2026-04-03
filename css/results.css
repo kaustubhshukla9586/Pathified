@@ -224,19 +224,16 @@
 .modal {
   position: fixed;
   top: 50%; left: 50%;
-  transform: translate(-50%, -45%) scale(0.95);
-  background: white;
+  transform: translate(-50%, -50%) scale(0.95);
   width: 90%;
-  max-width: 640px;
+  max-width: 768px;
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: 24px;
   z-index: 1001;
   opacity: 0;
   pointer-events: none;
-  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-  padding: 3rem 2.5rem;
-  box-shadow: 0 40px 80px rgba(26, 18, 8, 0.15);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 40px 80px rgba(26, 18, 8, 0.2);
 }
 
 .modal.active {
