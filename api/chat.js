@@ -1,6 +1,6 @@
 // In-memory rate limit store: IP -> { count, resetAt }
 const rateLimitStore = new Map();
-const RATE_LIMIT = 3;
+const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 60 * 1000;
 
 function checkRateLimit(ip) {
