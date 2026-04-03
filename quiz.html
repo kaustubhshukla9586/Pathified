@@ -1,88 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pathified — Quiz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Pathified | Discover Your Trajectory</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-fixed": "#ffddb8",
+            "surface-bright": "#faf9f6",
+            "on-surface": "#1a1c1a",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#ffddb8",
+            "on-error": "#ffffff",
+            "background": "#faf9f6",
+            "on-primary-container": "#613b00",
+            "primary-container": "#f59e0b",
+            "secondary-fixed-dim": "#f0bd82",
+            "tertiary": "#00658b",
+            "surface-container-high": "#e9e8e5",
+            "secondary-container": "#ffcb8f",
+            "on-primary-fixed": "#2a1700",
+            "inverse-surface": "#2f312f",
+            "primary": "#855300",
+            "surface-variant": "#e3e2e0",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e3e2e0",
+            "inverse-on-surface": "#f2f1ee",
+            "on-tertiary": "#ffffff",
+            "on-background": "#1a1c1a",
+            "on-secondary": "#ffffff",
+            "surface-dim": "#dbdad7",
+            "surface-container": "#efeeeb",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#ffb95f",
+            "primary-fixed-dim": "#ffb95f",
+            "on-surface-variant": "#534434",
+            "secondary": "#7d5725",
+            "surface-container-low": "#f4f3f1",
+            "outline-variant": "#d8c3ad",
+            "outline": "#867461",
+            "error": "#ba1a1a",
+            "surface": "#faf9f6",
+            "on-secondary-container": "#795423"
+          },
+          fontFamily: {
+            "headline": ["Playfair Display", "serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "9999px",
+            "quiz": "12px"
+          },
+        },
+      },
+    }
+  </script>
   <link rel="stylesheet" href="css/global.css"/>
   <link rel="stylesheet" href="css/animations.css"/>
   <link rel="stylesheet" href="css/nav.css"/>
   <link rel="stylesheet" href="css/quiz.css"/>
+  <style>
+    body {
+      background-color: #faf9f6;
+      background-image: radial-gradient(#d8c3ad 0.5px, transparent 0.5px);
+      background-size: 24px 24px;
+      background-attachment: fixed;
+      cursor: auto;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f4f3f1; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #f59e0b; }
+  </style>
 </head>
-<body>
+<body class="font-body text-on-surface antialiased min-h-screen flex flex-col overflow-hidden">
 
   <div class="cursor"></div>
   <div class="cursor-dot"></div>
 
-  <nav class="quiz-nav">
-    <a href="index.html" class="logo">Pathified</a>
+  <!-- Full Page Loader -->
+  <div class="fixed inset-0 z-[100] bg-surface flex flex-col items-center justify-center" id="full-loader" style="display:none">
+    <div class="text-4xl font-headline font-bold text-primary-container tracking-tight mb-8">Pathified</div>
+    <div class="w-12 h-[2px] bg-surface-variant overflow-hidden">
+      <div class="w-full h-full bg-primary-container origin-left scale-x-0 animate-pulse"></div>
+    </div>
+  </div>
+
+  <!-- Top Navigation -->
+  <nav class="bg-surface-bright dark:bg-[#1a1c1a] border-none sticky top-0 z-50">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 py-6 max-w-screen-2xl mx-auto">
+      <a class="text-2xl font-headline font-bold text-primary-container tracking-tight" href="index.html">Pathified</a>
+      <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-container transition-colors" id="dark-mode-toggle">dark_mode</span>
+      </div>
+    </div>
+    <!-- Progress Bar -->
+    <div class="w-full h-[2px] bg-surface-variant">
+      <div class="h-full bg-primary-container transition-all duration-500 ease-in-out" id="progress-bar" style="width:4%"></div>
+    </div>
   </nav>
 
-  <div class="quiz-progress-wrap">
-    <div class="quiz-progress-bar" id="progress-bar"></div>
-  </div>
-  <div class="quiz-nav-meta">
-    <span id="question-counter">Question 1 of 25</span>
+  <!-- Question Counter -->
+  <div class="w-full max-w-screen-2xl mx-auto px-6 md:px-12 pt-6">
+    <span class="text-xs font-label uppercase tracking-[0.2em] text-primary-container font-bold" id="question-counter">Question 1 of 25</span>
   </div>
 
-  <section class="quiz-container">
-    <div class="quiz-inner" id="quiz-inner">
-      <!-- Question will be injected here -->
-      <h2 class="quiz-question" id="question-text"></h2>
-      
-      <!-- Options will be injected here -->
-      <div class="quiz-options" id="options-container"></div>
-      
-      <!-- Optional input for Q26 -->
-      <div class="quiz-optional" id="optional-container">
-        <br>
-        <p class="optional-subtext">Optional — this won't change your score but may add nuance.</p>
-        <textarea id="optional-input" placeholder="Type here..."></textarea>
-        <div class="optional-btns">
-          <button class="btn-primary" id="submit-btn">Submit &amp; see my results</button>
-          <button class="btn-ghost" id="skip-btn">Skip</button>
+  <!-- Main Quiz Canvas -->
+  <main class="flex-grow flex flex-col items-center justify-center px-6 max-w-4xl mx-auto w-full relative">
+
+    <!-- Loading Overlay — uses style.display='block' from quiz.js, so centering via inner absolute div -->
+    <div id="loading-overlay" style="display:none;position:absolute;inset:0;background:rgba(250,249,246,0.85);backdrop-filter:blur(4px);z-index:20;">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+        <div class="flex gap-2 mb-4 justify-center">
+          <div class="w-2 h-2 bg-primary-container rounded-full animate-bounce"></div>
+          <div class="w-2 h-2 bg-primary-container rounded-full animate-bounce" style="animation-delay:-0.15s"></div>
+          <div class="w-2 h-2 bg-primary-container rounded-full animate-bounce" style="animation-delay:-0.3s"></div>
+        </div>
+        <p class="text-xs font-label uppercase tracking-widest text-primary font-semibold" id="loading-text">Analyzing Response...</p>
+      </div>
+    </div>
+
+    <!-- Question View -->
+    <div class="w-full space-y-12 py-12" id="quiz-inner">
+      <!-- Question Header -->
+      <div class="space-y-4">
+        <h1 class="text-4xl md:text-5xl font-headline leading-tight text-on-surface" id="question-text"></h1>
+      </div>
+
+      <!-- Options Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="options-container"></div>
+
+    </div>
+
+    <!-- Q26 Optional Context Screen -->
+    <div class="w-full space-y-12 py-12" id="optional-container" style="display:none">
+      <div class="space-y-4">
+        <span class="text-xs font-label uppercase tracking-[0.2em] text-primary-container font-bold">Final Step</span>
+        <h1 class="text-4xl md:text-5xl font-headline leading-tight text-on-surface">Anything else you'd like us to know?</h1>
+        <p class="text-on-surface-variant text-lg">Your unique perspective helps us sharpen your trajectory analysis.</p>
+      </div>
+      <div class="space-y-8">
+        <textarea class="w-full bg-surface-container-lowest border border-outline-variant/30 focus:border-primary-container focus:ring-1 focus:ring-primary-container p-6 text-lg font-body transition-all duration-300 min-h-[250px] resize-none rounded-[12px]" id="optional-input" placeholder="Feel free to share any specific goals, constraints, or dreams..."></textarea>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="flex-1 bg-primary-container text-on-primary-fixed px-10 py-5 text-sm font-label font-bold uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all rounded-[12px]" id="submit-btn">
+            Submit &amp; see my results
+          </button>
+          <button class="px-10 py-5 text-sm font-label uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors font-bold" id="skip-btn">
+            Skip
+          </button>
         </div>
       </div>
-
-      <div class="quiz-back-wrap">
-        <button id="back-btn" class="back-link">&#8592; Back</button>
-      </div>
     </div>
 
-    <div class="summary-screen" id="summary-screen">
-      <div class="summary-inner">
-        <p class="summary-label">Building your profile</p>
-        <h2 class="summary-title">Here's what we found<br><em>about you</em></h2>
-        <div class="traits-container" id="traits-container"></div>
-        <p class="summary-sub">Generating your career matches...</p>
+    <!-- Summary Screen -->
+    <div class="w-full space-y-12 py-12" id="summary-screen" style="display:none">
+      <div class="text-center space-y-4">
+        <h2 class="text-4xl font-headline text-on-surface">Your Path Archetype</h2>
+        <p class="text-on-surface-variant max-w-lg mx-auto">Based on your responses, we've identified the core traits that define your professional DNA.</p>
       </div>
-    </div>
-    
-    <!-- Loading overlay inside quiz area -->
-    <div class="loading-overlay" id="loading-overlay">
-      <div class="pixel-loader">
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-      </div>
-      <div class="loading-text" id="loading-text">Reading between the lines...</div>
-    </div>
-    
-    <!-- Full page loader for final submission -->
-    <div class="full-loader" id="full-loader">
-      <div class="orb orb1"></div>
-      <div class="orb orb3"></div>
-      <div class="pixel-loader">
-         <!-- Same pixels -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-      </div>
-      <div class="loading-text">Synthesizing your profile...</div>
+      <div class="flex flex-wrap justify-center gap-3" id="traits-container"></div>
     </div>
 
-  </section>
+  </main>
+
+  <!-- Lower Navigation -->
+  <footer class="w-full max-w-screen-2xl mx-auto px-6 md:px-12 py-12 mt-auto">
+    <div class="flex justify-between items-center border-t border-outline-variant/15 pt-8">
+      <button class="flex items-center gap-2 text-sm font-label uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors group" id="back-btn">
+        <span class="transition-transform group-hover:-translate-x-1">←</span> Previous
+      </button>
+    </div>
+  </footer>
 
   <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
     <span class="theme-icon-light">☀︎</span>
@@ -91,5 +192,14 @@
 
   <script src="script.js"></script>
   <script src="quiz.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navToggle = document.getElementById('dark-mode-toggle');
+      const themeBtn = document.getElementById('theme-toggle');
+      if (navToggle && themeBtn) {
+        navToggle.addEventListener('click', () => themeBtn.click());
+      }
+    });
+  </script>
 </body>
 </html>
