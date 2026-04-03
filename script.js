@@ -122,39 +122,97 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================
+// SUPABASE HELPER
+// ================================
+async function saveToDatabase(type, data) {
+  try {
+    const response = await fetch('/api/supabase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, data })
+    });
+    return response.ok;
+  } catch (err) {
+    console.error('DB save failed:', err);
+    return false;
+  }
+}
+
+// ================================
 // NOT FROM CS MODAL
 // ================================
-const notCsBtn = document.getElementById('not-cs-btn');
-const notCsModal = document.getElementById('not-cs-modal');
-const notCsClose = document.getElementById('not-cs-close');
-const notCsSubmit = document.getElementById('not-cs-submit');
-const notCsEmail = document.getElementById('not-cs-email');
-const notCsForm = document.getElementById('not-cs-form');
-const notCsConfirm = document.getElementById('not-cs-confirm');
+document.addEventListener('DOMContentLoaded', () => {
+  const notCsBtn = document.getElementById('not-cs-btn');
+  const notCsModal = document.getElementById('not-cs-modal');
+  const notCsClose = document.getElementById('not-cs-close');
+  const notCsBackdrop = document.getElementById('not-cs-backdrop');
+  const notCsSubmit = document.getElementById('not-cs-submit');
+  const notCsEmail = document.getElementById('not-cs-email');
+  const notCsForm = document.getElementById('not-cs-form');
+  const notCsConfirm = document.getElementById('not-cs-confirm');
 
-if (notCsBtn && notCsModal && notCsClose) {
-  notCsBtn.addEventListener('click', () => {
-    notCsModal.classList.add('active');
-  });
+  function openNotCsModal() {
+    notCsModal.style.display = 'block';
+    requestAnimationFrame(() => {
+      notCsModal.style.opacity = '1';
+      notCsModal.style.pointerEvents = 'all';
+    });
+  }
 
-  notCsClose.addEventListener('click', () => {
-    notCsModal.classList.remove('active');
-  });
+  function closeNotCsModal() {
+    notCsModal.style.opacity = '0';
+    notCsModal.style.pointerEvents = 'none';
+    setTimeout(() => { notCsModal.style.display = 'none'; }, 250);
+  }
 
-  notCsModal.addEventListener('click', (e) => {
-    if (e.target.id === 'not-cs-modal') {
-      notCsModal.classList.remove('active');
-    }
-  });
-}
+  if (notCsBtn) notCsBtn.addEventListener('click', openNotCsModal);
+  if (notCsClose) notCsClose.addEventListener('click', closeNotCsModal);
+  if (notCsBackdrop) notCsBackdrop.addEventListener('click', closeNotCsModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNotCsModal(); });
 
-if (notCsSubmit && notCsEmail && notCsForm && notCsConfirm) {
-  notCsSubmit.addEventListener('click', () => {
-    const email = notCsEmail.value.trim();
-    if (email && email.includes('@')) {
-      notCsConfirm.style.display = 'block';
-      notCsForm.style.display = 'none';
-      localStorage.setItem('notcs_email', email);
-    }
-  });
-}
+  if (notCsSubmit && notCsEmail) {
+    notCsEmail.addEventListener('keydown', e => {
+      if (e.key === 'Enter') notCsSubmit.click();
+    });
+
+    notCsSubmit.addEventListener('click', async () => {
+      const email = notCsEmail.value.trim();
+      if (!email || !email.includes('@')) {
+        notCsEmail.style.borderColor = 'red';
+        return;
+      }
+      notCsEmail.style.borderColor = '';
+      notCsSubmit.textContent = 'Saving...';
+      notCsSubmit.disabled = true;
+
+      await saveToDatabase('waitlist', { email });
+
+      if (notCsForm) notCsForm.style.display = 'none';
+      if (notCsConfirm) notCsConfirm.classList.remove('hidden');
+    });
+  }
+
+  // ================================
+  // CONTACT FORM
+  // ================================
+  const contactSubmit = document.getElementById('contact-submit');
+  const contactSuccess = document.getElementById('contact-success');
+
+  if (contactSubmit) {
+    contactSubmit.addEventListener('click', async () => {
+      const name = document.getElementById('contact-name')?.value.trim();
+      const email = document.getElementById('contact-email')?.value.trim();
+      const phone = document.getElementById('contact-phone')?.value.trim();
+
+      if (!email || !email.includes('@')) return;
+
+      contactSubmit.textContent = 'Sending...';
+      contactSubmit.disabled = true;
+
+      await saveToDatabase('contact', { name, email, phone });
+
+      contactSubmit.style.display = 'none';
+      if (contactSuccess) contactSuccess.classList.remove('hidden');
+    });
+  }
+});
