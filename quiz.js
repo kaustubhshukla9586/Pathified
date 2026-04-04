@@ -5,32 +5,32 @@
 // ==========================================
 const HARDCODED_QUESTIONS = [
   {
-    question: "It is 11pm, no deadline, nobody checking on you. What are you actually doing on your laptop right now?",
+    question: "It's 11pm. You have no deadline, no one is checking on you. What are you most likely doing on your laptop?",
     options: [
-      "Digging into something broken until I finally understand why it failed",
-      "Building something small and pointless just to see if I can",
-      "Reading or watching something to understand how a concept actually works",
-      "Honestly, I am just scrolling or watching something to switch off"
+      "Going deep into something that broke and figuring out why",
+      "Building something small just to see if I can",
+      "Reading or watching something to understand how things work",
+      "Planning or organising something — a project, a system, an idea"
     ],
     category: "PERSONALITY"
   },
   {
-    question: "Your college gives you 6 free months with no classes and no exams. You have to work on something CS related. What do you actually spend that time doing?",
+    question: "Your college gives you 6 free months — no classes, no exams, no pressure. You have to work on something CS related. What do you actually do?",
     options: [
-      "Building a real product from scratch, even if nobody uses it",
-      "Going very deep into one CS topic I never properly understood before",
-      "Finding a real problem near me and trying to solve it with code",
-      "Learning whatever skills will give me the best job offers afterward"
+      "Build a real working product, even if it's messy",
+      "Go deep into one topic I never had time to properly understand",
+      "Find a real problem around me and try to solve it with code",
+      "Learn whatever gets me the best job after this"
     ],
     category: "SITUATION"
   },
   {
-    question: "Be honest. You hit a really hard logic or math problem in your coursework. What actually happens next?",
+    question: "Be honest — when you hit a really hard math or logic problem in your coursework, what actually happens?",
     options: [
-      "I get completely absorbed and cannot move on until I crack it",
-      "I understand it fine when someone explains it but I never chase more",
-      "I push through it because I have to, but I genuinely do not enjoy it",
-      "I look for the answer or a workaround and move on without guilt"
+      "I get stuck in it until I figure it out, I can't let it go",
+      "I understand it when someone explains it but I won't go looking for more",
+      "I get through it because I have to but I don't enjoy it",
+      "I find a way around it or look for the answer — I'd rather spend time elsewhere"
     ],
     category: "CSE DISCIPLINE"
   }
@@ -53,11 +53,11 @@ QUESTION RULES:
 - Never repeat a theme already covered in this quiz
 
 OPTION RULES:
-- Every option must be exactly 10 to 15 words. Count the words. Never go under 10 or over 15.
-- Never use one, two, or three word answers under any circumstances
-- Each option must be a complete sentence describing a thought, feeling, or behavior
+- Every option must be a full sentence of 8 to 15 words minimum
+- Never use one or two word answers
+- Each option must describe a complete thought, feeling, or behavior
 - All 4 options must feel genuinely different from each other
-- One option must be the uncomfortable honest answer people think but rarely say out loud
+- One option must be the uncomfortable honest answer people think but rarely say
 - No option should feel like the obviously correct answer
 
 CATEGORIES (one per batch):
@@ -214,7 +214,7 @@ let msgInterval;
 // ==========================================
 // API CALL (via vercel function)
 // ==========================================
-async function callGroq(messages, maxRetries = 2, modelOverride = "small") {
+async function callGroq(messages, maxRetries = 3, modelOverride = "small") {
   let retries = 0;
   while (retries <= maxRetries) {
     try {
@@ -226,16 +226,21 @@ async function callGroq(messages, maxRetries = 2, modelOverride = "small") {
 
       const data = await response.json();
 
-      // Log what we actually got back
-      console.log("API response status:", response.status);
-      console.log("API response data:", JSON.stringify(data));
+      if (response.status === 429) {
+        // Rate limited — wait longer before retry
+        retries++;
+        if (retries > maxRetries) throw new Error(data.error || "Too many requests");
+        const wait = 2000 * retries;
+        if (loadingText) loadingText.textContent = `Retrying in ${wait/1000}s...`;
+        await new Promise(r => setTimeout(r, wait));
+        continue;
+      }
 
       if (!response.ok) {
         throw new Error(`Server error ${response.status}: ${data.error || JSON.stringify(data)}`);
       }
 
-      if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-        console.error("Unexpected response shape:", JSON.stringify(data));
+      if (!data.choices?.[0]?.message) {
         throw new Error("Unexpected response from API: " + JSON.stringify(data));
       }
 
@@ -250,7 +255,7 @@ async function callGroq(messages, maxRetries = 2, modelOverride = "small") {
       console.error("callGroq error (attempt " + (retries + 1) + "):", e.message);
       retries++;
       if (retries > maxRetries) throw e;
-      await new Promise(r => setTimeout(r, 1500));
+      await new Promise(r => setTimeout(r, 1500 * retries));
     }
   }
 }
@@ -478,13 +483,15 @@ async function advanceStep() {
         animateQuestionTransition(renderQuestion);
       } catch (e) {
         console.error(e);
-        alert("Error generating next questions: " + e.message);
         stopLoading();
+        if (loadingText) loadingText.textContent = "Something went wrong. Retrying...";
         // Revert
         currentQuestionIndex--;
         allAnswers.pop();
         if (conversationHistory.length >= 3) conversationHistory.splice(-2, 2);
         document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
+        // Auto-retry once after 2s
+        setTimeout(() => advanceStep(), 2000);
       }
     }
   } else {
@@ -563,11 +570,19 @@ async function handleFinalSubmit(optionalText) {
     sessionStorage.setItem('pathifiedResults', JSON.stringify(finalData));
     window.location.href = 'results.html';
   } catch (e) {
-    alert("Error generating your results. Please try again.");
+    console.error(e);
     fullLoader.style.display = 'none';
     if (summaryScreen) summaryScreen.style.display = 'none';
     innerEls.style.display = 'flex';
     document.body.style.overflow = '';
+    // Show error inline rather than alert
+    const errMsg = document.createElement('p');
+    errMsg.style.cssText = 'color:#c8830a;font-size:0.9rem;margin-top:1rem;text-align:center;';
+    errMsg.textContent = 'Something went wrong generating your results. Please try again.';
+    const existing = document.getElementById('results-error-msg');
+    if (existing) existing.remove();
+    errMsg.id = 'results-error-msg';
+    optionalContainer.appendChild(errMsg);
   }
 }
 
