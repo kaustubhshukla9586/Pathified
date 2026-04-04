@@ -5,32 +5,32 @@
 // ==========================================
 const HARDCODED_QUESTIONS = [
   {
-    question: "It's 11pm. You have no deadline, no one is checking on you. What are you most likely doing on your laptop?",
+    question: "It is 11pm, no deadline, nobody checking on you. What are you actually doing on your laptop right now?",
     options: [
-      "Going deep into something that broke and figuring out why",
-      "Building something small just to see if I can",
-      "Reading or watching something to understand how things work",
-      "Planning or organising something — a project, a system, an idea"
+      "Digging into something broken until I finally understand why it failed",
+      "Building something small and pointless just to see if I can",
+      "Reading or watching something to understand how a concept actually works",
+      "Honestly, I am just scrolling or watching something to switch off"
     ],
     category: "PERSONALITY"
   },
   {
-    question: "Your college gives you 6 free months — no classes, no exams, no pressure. You have to work on something CS related. What do you actually do?",
+    question: "Your college gives you 6 free months with no classes and no exams. You have to work on something CS related. What do you actually spend that time doing?",
     options: [
-      "Build a real working product, even if it's messy",
-      "Go deep into one topic I never had time to properly understand",
-      "Find a real problem around me and try to solve it with code",
-      "Learn whatever gets me the best job after this"
+      "Building a real product from scratch, even if nobody uses it",
+      "Going very deep into one CS topic I never properly understood before",
+      "Finding a real problem near me and trying to solve it with code",
+      "Learning whatever skills will give me the best job offers afterward"
     ],
     category: "SITUATION"
   },
   {
-    question: "Be honest — when you hit a really hard math or logic problem in your coursework, what actually happens?",
+    question: "Be honest. You hit a really hard logic or math problem in your coursework. What actually happens next?",
     options: [
-      "I get stuck in it until I figure it out, I can't let it go",
-      "I understand it when someone explains it but I won't go looking for more",
-      "I get through it because I have to but I don't enjoy it",
-      "I find a way around it or look for the answer — I'd rather spend time elsewhere"
+      "I get completely absorbed and cannot move on until I crack it",
+      "I understand it fine when someone explains it but I never chase more",
+      "I push through it because I have to, but I genuinely do not enjoy it",
+      "I look for the answer or a workaround and move on without guilt"
     ],
     category: "CSE DISCIPLINE"
   }
@@ -53,11 +53,11 @@ QUESTION RULES:
 - Never repeat a theme already covered in this quiz
 
 OPTION RULES:
-- Every option must be a full sentence of 8 to 15 words minimum
-- Never use one or two word answers
-- Each option must describe a complete thought, feeling, or behavior
+- Every option must be exactly 10 to 15 words. Count the words. Never go under 10 or over 15.
+- Never use one, two, or three word answers under any circumstances
+- Each option must be a complete sentence describing a thought, feeling, or behavior
 - All 4 options must feel genuinely different from each other
-- One option must be the uncomfortable honest answer people think but rarely say
+- One option must be the uncomfortable honest answer people think but rarely say out loud
 - No option should feel like the obviously correct answer
 
 CATEGORIES (one per batch):

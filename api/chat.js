@@ -23,6 +23,9 @@ const GROQ_KEYS = [
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 
+// Track which Groq keys are rate-limited and when they reset
+const keyRateLimitedUntil = new Array(GROQ_KEYS.length).fill(0);
+
 async function callGroq(key, messages, model) {
   const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
@@ -101,8 +104,16 @@ export default async function handler(req, res) {
     ? 'llama-3.3-70b-versatile'
     : 'llama-3.1-8b-instant';
 
-  // ── Try Groq keys in order ────────────────────────────────
+  const now = Date.now();
+
+  // Try all Groq keys, skipping ones currently rate-limited
   for (let i = 0; i < GROQ_KEYS.length; i++) {
+    // Skip this key if it's still in its cooldown window
+    if (keyRateLimitedUntil[i] > now) {
+      console.log(`Skipping Groq key ${i + 1} — rate limited for ${Math.ceil((keyRateLimitedUntil[i] - now) / 1000)}s more`);
+      continue;
+    }
+
     try {
       console.log(`Trying Groq key ${i + 1}...`);
       const data = await callGroq(GROQ_KEYS[i], messages, groqModel);
@@ -111,11 +122,13 @@ export default async function handler(req, res) {
       if (err.message.startsWith('HARD_FAIL')) {
         return res.status(400).json({ error: err.message });
       }
-      console.warn(`Groq key ${i + 1} rate limited, trying next...`);
+      // Rate limited — mark this key as unavailable for 60s and try next
+      keyRateLimitedUntil[i] = now + 60_000;
+      console.warn(`Groq key ${i + 1} rate limited, cooling down for 60s. Trying next key...`);
     }
   }
 
-  // ── All Groq keys exhausted — try Gemini ─────────────────
+  // All Groq keys exhausted or rate-limited — try Gemini
   if (GEMINI_KEY) {
     try {
       console.log('All Groq keys exhausted, falling back to Gemini...');
@@ -123,15 +136,14 @@ export default async function handler(req, res) {
       return res.status(200).json(data);
     } catch (err) {
       console.error('Gemini fallback also failed:', err.message);
-      return res.status(429).json({
-        error: 'All providers are currently rate limited. Please wait a moment and try again.',
+      return res.status(503).json({
+        error: 'All providers are currently busy. Please wait a moment and try again.',
         detail: err.message
       });
     }
   }
 
-  // ── No fallback available ─────────────────────────────────
-  return res.status(429).json({
+  return res.status(503).json({
     error: 'All API keys are rate limited and no fallback is configured.',
   });
 }
