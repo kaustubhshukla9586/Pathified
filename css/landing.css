@@ -161,23 +161,6 @@
   animation-delay: 4s;
 }
 
-.orb-cta1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(200, 132, 42, 0.15) 0%, transparent 70%);
-  top: -100px;
-  right: -100px;
-  animation-delay: 1s;
-}
-
-.orb-cta2 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(240, 192, 112, 0.12) 0%, transparent 70%);
-  bottom: -60px;
-  left: -60px;
-  animation-delay: 3s;
-}
 
 /* --- MARQUEE --- */
 .marquee-wrap {

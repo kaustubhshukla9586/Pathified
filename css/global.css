@@ -370,9 +370,9 @@ body:has(a:hover) .cursor {
   border-color: rgba(240, 236, 228, 0.05);
 }
 
-/* Final CTA section — already dark, just deepen it */
+/* Final CTA section — match body background */
 [data-theme="dark"] .final-cta {
-  background: #0e0c0a;
+  background: var(--cream);
 }
 
 /* Footer */
