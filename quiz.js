@@ -56,6 +56,7 @@ OPTION RULES:
 - Every option must be a full sentence of 8 to 15 words minimum
 - Never use one or two word answers
 - Each option must describe a complete thought, feeling, or behavior
+- Only generate 4 options in the options.
 - All 4 options must feel genuinely different from each other
 - One option must be the uncomfortable honest answer people think but rarely say
 - No option should feel like the obviously correct answer
